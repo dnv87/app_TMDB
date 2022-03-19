@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.mttnow.android.app_tmdb.ui.dashboard.DashboardFragment"
+        android:name="com.mttnow.android.app_tmdb.ui.home.HomeFragment"
         android:label="@string/title_Top"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/navigation_notifications"
