@@ -15,6 +15,7 @@ import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.modeldata.Movie
+import com.mttnow.android.app_tmdb.ui.notifications.NotificationsFragment
 
 class MoviePagedListAdapter (public val context: Context)
     : PagedListAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffCallback()) {
@@ -95,7 +96,7 @@ class MoviePagedListAdapter (public val context: Context)
                 .into(itemView.findViewById<ImageView>(R.id.cv_iv_movie_poster))
 
             itemView.setOnClickListener{
-                val intent = Intent(context, SingleMovie::class.java)
+                val intent = Intent(context, NotificationsFragment::class.java)
                 intent.putExtra("id", movie?.movieId)
                 context.startActivity(intent)
             }
