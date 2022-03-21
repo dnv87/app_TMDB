@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 
 class MovieDataSource (private val apiService : TMDBInterface,
                        private val compositeDisposable: CompositeDisposable,
-                       private val getMovie:Boolean = Const.GET_POPULAR_MOVIE)
+                       private val choiceMovie:Boolean = Const.GET_POPULAR_MOVIE)
     : PageKeyedDataSource<Int, Movie>(){
 
     private var page = FIRST_PAGE
@@ -25,7 +25,7 @@ class MovieDataSource (private val apiService : TMDBInterface,
                              callback: LoadInitialCallback<Int, Movie>) {
 
         networkState.postValue(NetworkState.LOADING)
-        if (getMovie) {
+        if (choiceMovie) {
         compositeDisposable.add(
             apiService.getPopularMovie(page)
                 .subscribeOn(Schedulers.io())
@@ -61,7 +61,7 @@ class MovieDataSource (private val apiService : TMDBInterface,
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         networkState.postValue(NetworkState.LOADING)
-        if (getMovie) {
+        if (choiceMovie) {
             compositeDisposable.add(
                 apiService.getPopularMovie(params.key)
                     .subscribeOn(Schedulers.io())

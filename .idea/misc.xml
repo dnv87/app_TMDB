@@ -3,18 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/KTExemple/app_TMDB/app/src/main/res/drawable-v24/ic_baseline_video_library_24.xml" value="0.193" />
-        <entry key="..\:/KTExemple/app_TMDB/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.193" />
-        <entry key="..\:/KTExemple/app_TMDB/app/src/main/res/drawable/ic_tmdb.xml" value="0.193" />
-        <entry key="..\:/KTExemple/app_TMDB/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/KTExemple/app_TMDB/app/src/main/res/layout/activity_splach_screen.xml" value="0.18489583333333334" />
-        <entry key="..\:/KTExemple/app_TMDB/app/src/main/res/layout/activity_splash_screen.xml" value="0.18489583333333334" />
-        <entry key="..\:/KTExemple/app_TMDB/app/src/main/res/layout/fragment_dashboard.xml" value="0.18489583333333334" />
-        <entry key="..\:/KTExemple/app_TMDB/app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="..\:/KTExemple/app_TMDB/app/src/main/res/layout/fragment_notifications.xml" value="0.18489583333333334" />
-        <entry key="..\:/KTExemple/app_TMDB/app/src/main/res/layout/movie_list_item.xml" value="0.18489583333333334" />
-        <entry key="..\:/KTExemple/app_TMDB/app/src/main/res/layout/network_state_item.xml" value="0.18489583333333334" />
-        <entry key="..\:/KTExemple/app_TMDB/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/app_TMDB/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.163" />
         <entry key="..\:/Users/user/AndroidStudioProjects/app_TMDB/app/src/main/res/drawable/ic_baseline_emoji_emotions_24.xml" value="0.16" />
         <entry key="..\:/Users/user/AndroidStudioProjects/app_TMDB/app/src/main/res/drawable/ic_baseline_emoji_people_24.xml" value="0.1625" />
@@ -24,6 +12,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/app_TMDB/app/src/main/res/drawable/ic_launcher_background.xml" value="0.163" />
         <entry key="..\:/Users/user/AndroidStudioProjects/app_TMDB/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.163" />
         <entry key="..\:/Users/user/AndroidStudioProjects/app_TMDB/app/src/main/res/layout/activity_main.xml" value="0.37228260869565216" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/app_TMDB/app/src/main/res/layout/activity_splash_screen.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/app_TMDB/app/src/main/res/layout/fragment_dashboard.xml" value="0.36684782608695654" />
         <entry key="..\:/Users/user/AndroidStudioProjects/app_TMDB/app/src/main/res/layout/fragment_home.xml" value="0.39114583333333336" />
         <entry key="..\:/Users/user/AndroidStudioProjects/app_TMDB/app/src/main/res/layout/fragment_notifications.xml" value="0.20572916666666666" />

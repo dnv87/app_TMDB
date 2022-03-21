@@ -1,12 +1,14 @@
-package com.mttnow.android.app_tmdb.ui.home
+package com.mttnow.android.app_tmdb.ui.movie
 
 import android.content.Context
-import android.content.Intent
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -15,13 +17,14 @@ import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.modeldata.Movie
-import com.mttnow.android.app_tmdb.ui.notifications.NotificationsFragment
 
-class MoviePagedListAdapter (public val context: Context)
+class MoviePagedListAdapter (public val context: Context, bundle: Bundle)
     : PagedListAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffCallback()) {
 
     val MOVIE_VIEW_TYPE = 1
     val NETWORK_VIEW_TYPE = 2
+
+//    val bundleIt = bundle
 
     private var networkState: NetworkState? = null
 
@@ -30,6 +33,7 @@ class MoviePagedListAdapter (public val context: Context)
 
         val layoutInflater = LayoutInflater.from(parent.context)
         val view: View
+
 
         if (viewType == MOVIE_VIEW_TYPE) {
             view = layoutInflater.inflate(R.layout.movie_list_item, parent, false)
@@ -67,9 +71,6 @@ class MoviePagedListAdapter (public val context: Context)
         }
     }
 
-
-
-
     class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.movieId == newItem.movieId
@@ -82,8 +83,7 @@ class MoviePagedListAdapter (public val context: Context)
     }
 
 
-    class MovieItemViewHolder (view: View)
-        : RecyclerView.ViewHolder(view) {
+    class MovieItemViewHolder (view: View): RecyclerView.ViewHolder(view) {
 
         fun bind(movie: Movie?,context: Context) {
 
@@ -96,14 +96,19 @@ class MoviePagedListAdapter (public val context: Context)
                 .into(itemView.findViewById<ImageView>(R.id.cv_iv_movie_poster))
 
             itemView.setOnClickListener{
-                val intent = Intent(context, NotificationsFragment::class.java)
+
+                /*val intent = Intent(context, NotificationsFragment::class.java)
                 intent.putExtra("id", movie?.movieId)
-                context.startActivity(intent)
+                context.startActivity(intent)*/
+
+                Log.d("my","setOnClickListener ${movie?.movieId}")
+
             }
 
         }
 
     }
+
 
     class NetworkStateItemViewHolder (view: View) : RecyclerView.ViewHolder(view) {
 

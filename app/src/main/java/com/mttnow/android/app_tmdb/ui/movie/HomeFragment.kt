@@ -1,7 +1,8 @@
-package com.mttnow.android.app_tmdb.ui.home
+package com.mttnow.android.app_tmdb.ui.movie
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +11,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.databinding.FragmentHomeBinding
+import com.mttnow.android.app_tmdb.modeldata.Movie
 
 class HomeFragment : Fragment() {
 
@@ -32,6 +36,8 @@ class HomeFragment : Fragment() {
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
+        val bundle = Bundle()
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -41,7 +47,8 @@ class HomeFragment : Fragment() {
         viewModel = getViewModel()
         thiscontext = container!!.getContext();
 
-        val movieAdapter = MoviePagedListAdapter(thiscontext)
+        val movieAdapter = MoviePagedListAdapter(thiscontext, bundle)
+//что то там clickItem
 
         val gridLayoutManager = GridLayoutManager(thiscontext, 2)
 
@@ -76,6 +83,12 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    fun clickItem(bundle:Bundle, i:Int){
+        bundle.putInt("idMovie", i)
+        findNavController().navigate(R.id.action_movieFragment_to_detailMovieFragment, bundle)
+    }
+
+
     private fun getViewModel(): HomeViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -87,6 +100,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("my","OnDestroy")
         _binding = null
     }
 }

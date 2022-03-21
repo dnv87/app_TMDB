@@ -3,23 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/movieFragment">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.mttnow.android.app_tmdb.ui.home.HomeFragment"
+        android:id="@+id/movieFragment"
+        android:name="com.mttnow.android.app_tmdb.ui.movie.HomeFragment"
         android:label="@string/title_Popular"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_dashboard"
+            app:destination="@id/serchFragment" />
+        <action
+            android:id="@+id/action_movieFragment_to_detailMovieFragment"
+            app:destination="@id/detailMovieFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.mttnow.android.app_tmdb.ui.home.HomeFragment"
+        android:id="@+id/serchFragment"
+        android:name="com.mttnow.android.app_tmdb.ui.movie.HomeFragment"
         android:label="@string/title_Top"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications" >
+
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.mttnow.android.app_tmdb.ui.notifications.NotificationsFragment"
+        android:id="@+id/detailMovieFragment"
+        android:name="com.mttnow.android.app_tmdb.ui.detailMovie.NotificationsFragment"
         android:label="@string/title_Search"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications" >
+        <action
+            android:id="@+id/action_detailMovieFragment_to_serchFragment"
+            app:destination="@id/serchFragment" />
+    </fragment>
+
 </navigation>

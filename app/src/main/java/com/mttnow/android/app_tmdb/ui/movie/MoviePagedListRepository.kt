@@ -1,4 +1,4 @@
-package com.mttnow.android.app_tmdb.ui.home
+package com.mttnow.android.app_tmdb.ui.movie
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
