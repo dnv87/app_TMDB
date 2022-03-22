@@ -1,7 +1,8 @@
-package com.mttnow.android.app_tmdb.ui.home
+package com.mttnow.android.app_tmdb.ui.Movie
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,39 +11,55 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
-import com.mttnow.android.app_tmdb.databinding.FragmentHomeBinding
+import com.mttnow.android.app_tmdb.databinding.FragmentMovieBinding
 
-class HomeFragment : Fragment() {
+
+class MovieFragment : Fragment() {
 
     lateinit var  thiscontext: Context
 
-    private var _binding: FragmentHomeBinding? = null
-    private lateinit var viewModel: HomeViewModel
+    private var _binding: FragmentMovieBinding? = null
+    private lateinit var viewModel: MovieViewModel
     lateinit var movieRepository: MoviePagedListRepository
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
+    val args: MovieFragmentArgs by navArgs() // получаем аргумент Safe Args
+
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentMovieBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val apiService : TMDBInterface = TMDBConnect.getClient()
-        movieRepository = MoviePagedListRepository(apiService)
-
-        viewModel = getViewModel()
         thiscontext = container!!.getContext();
 
-        val movieAdapter = MoviePagedListAdapter(thiscontext)
+        return root
+    }
 
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val getMovie = args.top
+//        Log.d("my", "!!!!!!${getMovie.toString()}")
+
+        val apiService : TMDBInterface = TMDBConnect.getClient()
+        movieRepository = MoviePagedListRepository(apiService, getMovie)
+
+        viewModel = getViewModel()
+
+        val movieAdapter = MoviePagedListAdapter(thiscontext)
         val gridLayoutManager = GridLayoutManager(thiscontext, 2)
 
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -72,18 +89,18 @@ class HomeFragment : Fragment() {
                 movieAdapter.setNetworkState(it)
             }
         })
-
-        return root
     }
 
-    private fun getViewModel(): HomeViewModel {
+    private fun getViewModel(): MovieViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return HomeViewModel(movieRepository) as T
+                return MovieViewModel(movieRepository) as T
             }
-        })[HomeViewModel::class.java]
+        })[MovieViewModel::class.java]
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

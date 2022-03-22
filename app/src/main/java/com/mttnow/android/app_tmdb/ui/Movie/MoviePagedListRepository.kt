@@ -1,4 +1,4 @@
-package com.mttnow.android.app_tmdb.ui.home
+package com.mttnow.android.app_tmdb.ui.Movie
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
@@ -12,13 +12,13 @@ import com.mttnow.android.app_tmdb.data.repository.MovieDataSourceFactory
 import com.mttnow.android.app_tmdb.modeldata.Movie
 import io.reactivex.disposables.CompositeDisposable
 
-class MoviePagedListRepository (private val apiService : TMDBInterface) {
+class MoviePagedListRepository (private val apiService : TMDBInterface,private val getMovie:Boolean = Const.GET_POPULAR_MOVIE) {
 
     lateinit var moviePagedList: LiveData<PagedList<Movie>>
     lateinit var moviesDataSourceFactory: MovieDataSourceFactory
 
     fun fetchLiveMoviePagedList (compositeDisposable: CompositeDisposable) : LiveData<PagedList<Movie>> {
-        moviesDataSourceFactory = MovieDataSourceFactory(apiService, compositeDisposable)
+        moviesDataSourceFactory = MovieDataSourceFactory(apiService, compositeDisposable,getMovie)
 
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)

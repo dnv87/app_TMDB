@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 
 class MovieDataSource (private val apiService : TMDBInterface,
                        private val compositeDisposable: CompositeDisposable,
-                       private val getMovie:Boolean = Const.GET_POPULAR_MOVIE)
+                       private val getMovie:Boolean)
     : PageKeyedDataSource<Int, Movie>(){
 
     private var page = FIRST_PAGE

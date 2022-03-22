@@ -1,4 +1,4 @@
-package com.mttnow.android.app_tmdb.ui.home
+package com.mttnow.android.app_tmdb.ui.Movie
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.modeldata.Movie
 import io.reactivex.disposables.CompositeDisposable
 
-class HomeViewModel(private val movieRepository : MoviePagedListRepository): ViewModel() {
+class MovieViewModel(private val movieRepository : MoviePagedListRepository): ViewModel() {
     private val compositeDisposable = CompositeDisposable()
 
     val  moviePagedList : LiveData<PagedList<Movie>> by lazy {

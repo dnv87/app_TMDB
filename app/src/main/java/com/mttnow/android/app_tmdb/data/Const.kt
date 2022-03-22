@@ -1,5 +1,9 @@
 package com.mttnow.android.app_tmdb.data
 
+import com.mttnow.android.app_tmdb.MainActivity
+
+lateinit var MAIN: MainActivity
+
 object Const {
     const val API_KEY = "a980b9c5403a48a0b70e5b9f0ba35a17"
     const val URL_TMDB = "https://api.themoviedb.org/3/"

@@ -1,4 +1,4 @@
-package com.mttnow.android.app_tmdb.ui.home
+package com.mttnow.android.app_tmdb.ui.Movie
 
 import android.content.Context
 import android.content.Intent
