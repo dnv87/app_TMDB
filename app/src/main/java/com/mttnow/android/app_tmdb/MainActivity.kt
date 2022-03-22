@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -15,7 +16,7 @@ import com.mttnow.android.app_tmdb.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    lateinit var navController: NavController
+    lateinit var navControl: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
+        navControl = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main)
+
 
          val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
@@ -34,8 +37,8 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_movie,
-                R.id.navigation_dashboard,
-                R.id.navigation_notifications
+                R.id.navigation_movie_top,
+                R.id.navigation_search
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

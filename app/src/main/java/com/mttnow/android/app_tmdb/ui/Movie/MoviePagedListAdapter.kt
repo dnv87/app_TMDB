@@ -2,6 +2,7 @@ package com.mttnow.android.app_tmdb.ui.Movie
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
+import com.mttnow.android.app_tmdb.data.MAIN
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.modeldata.Movie
 import com.mttnow.android.app_tmdb.ui.notifications.NotificationsFragment
@@ -96,9 +98,11 @@ class MoviePagedListAdapter (public val context: Context)
                 .into(itemView.findViewById<ImageView>(R.id.cv_iv_movie_poster))
 
             itemView.setOnClickListener{
-                val intent = Intent(context, NotificationsFragment::class.java)
+                /*val intent = Intent(context, NotificationsFragment::class.java)
                 intent.putExtra("id", movie?.movieId)
-                context.startActivity(intent)
+                context.startActivity(intent)*/
+                Log.d("my", "setOnClickListener ${movie!!.movieId}")
+//                MAIN.navControl.navigate(R.id.action_navigation_movie_to_navigation_movie_detail)
             }
 
         }

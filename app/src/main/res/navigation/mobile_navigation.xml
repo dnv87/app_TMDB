@@ -14,23 +14,40 @@
             android:name="top"
             app:argType="boolean"
             android:defaultValue="true" />
+        <action
+            android:id="@+id/action_navigation_movie_to_navigation_movie_detail"
+            app:destination="@id/navigation_movie_detail" />
     </fragment>
 
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_movie_top"
         android:name="com.mttnow.android.app_tmdb.ui.Movie.MovieFragment"
         android:label="@string/title_Top"
-        tools:layout="@layout/fragment_notifications" >
+        tools:layout="@layout/fragment_movie" >
         <argument
         android:name="top"
         app:argType="boolean"
         android:defaultValue="false" />
+        <action
+            android:id="@+id/action_navigation_movie_top_to_navigation_movie_detail"
+            app:destination="@id/navigation_movie_detail" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_movie_detail"
+        android:name="com.mttnow.android.app_tmdb.ui.Movie.MovieFragment"
+        android:label="@string/title_Top"
+        tools:layout="@layout/fragment_notifications" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_search"
         android:name="com.mttnow.android.app_tmdb.ui.notifications.NotificationsFragment"
         android:label="@string/title_Search"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications" >
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_movie_detail"
+            app:destination="@id/navigation_movie_detail" />
+    </fragment>
 </navigation>
