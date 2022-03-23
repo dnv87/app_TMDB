@@ -7,25 +7,25 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.mttnow.android.app_tmdb.databinding.FragmentNotificationsBinding
+import com.mttnow.android.app_tmdb.databinding.FragmentSearchBinding
+
 
 class searchFragment : Fragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentSearchBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(searchViewModel::class.java)
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        val notificationsViewModel =ViewModelProvider(this).get(searchViewModel::class.java)
+
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+
         val root: View = binding.root
 
         val textView: TextView = binding.textNotifications
