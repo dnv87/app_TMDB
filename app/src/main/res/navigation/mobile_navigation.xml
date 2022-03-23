@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/navigation_movie_detail"
         android:name="com.mttnow.android.app_tmdb.ui.Movie.MovieFragment"
-        tools:layout="@layout/fragment_dashboard" >
+        tools:layout="@layout/fragment_movie_details" >
     </fragment>
 
     <fragment

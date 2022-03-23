@@ -99,7 +99,6 @@ class MoviePagedListAdapter (public val context: Context)
                 intent.putExtra("id", movie?.movieId)
                 context.startActivity(intent)*/
                 Log.d("my", "setOnClickListener ${movie!!.movieId}")
-//                MAIN.navControl.navigate(R.id.action_navigation_movie_to_navigation_movie_detail)
             }
 
         }
