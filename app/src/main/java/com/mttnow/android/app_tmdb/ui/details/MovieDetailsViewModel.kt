@@ -1,13 +1,25 @@
 package com.mttnow.android.app_tmdb.ui.details
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
+import com.mttnow.android.app_tmdb.modeldata.MovieDetails
+import io.reactivex.disposables.CompositeDisposable
 
-class MovieDetailsViewModel : ViewModel() {
+class MovieDetailsViewModel (private val movieRepository : MovieDetailsRepository, movieId: Int)  : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+    private val compositeDisposable = CompositeDisposable()
+
+    val  movieDetails : LiveData<MovieDetails> by lazy {
+        movieRepository.fetchSingleMovieDetails(compositeDisposable,movieId)
     }
-    val text: LiveData<String> = _text
+
+    val networkState : LiveData<NetworkState> by lazy {
+        movieRepository.getMovieDetailsNetworkState()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
+    }
 }

@@ -42,7 +42,6 @@ class MovieFragment : Fragment() {
         val root: View = binding.root
 
         thiscontext = container!!.getContext();
-
         return root
     }
 
