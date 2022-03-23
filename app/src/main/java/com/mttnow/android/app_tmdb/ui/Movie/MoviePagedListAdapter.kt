@@ -1,6 +1,6 @@
 package com.mttnow.android.app_tmdb.ui.Movie
 
-import android.content.Context
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +16,7 @@ import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.modeldata.Movie
 
-class MoviePagedListAdapter (public val context: Context)
+class MoviePagedListAdapter ()
     : PagedListAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffCallback()) {
 
     val MOVIE_VIEW_TYPE = 1
@@ -42,7 +42,8 @@ class MoviePagedListAdapter (public val context: Context)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == MOVIE_VIEW_TYPE) {
-            (holder as MovieItemViewHolder).bind(getItem(position),context)
+            (holder as MovieItemViewHolder).bind(getItem(position))
+            Log.d("my", "position = ${position.toString()}")
         }
         else {
             (holder as NetworkStateItemViewHolder).bind(networkState)
@@ -66,9 +67,6 @@ class MoviePagedListAdapter (public val context: Context)
         }
     }
 
-
-
-
     class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
         override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.movieId == newItem.movieId
@@ -81,10 +79,11 @@ class MoviePagedListAdapter (public val context: Context)
     }
 
 
-    class MovieItemViewHolder (view: View)
-        : RecyclerView.ViewHolder(view) {
+    class MovieItemViewHolder (view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(movie: Movie?,context: Context) {
+        val MF = MovieFragment()
+
+        fun bind(movie: Movie?) {
 
             itemView.findViewById<TextView>(R.id.cv_movie_title).text = movie?.title
             itemView.findViewById<TextView>(R.id.cv_movie_release_date).text =  movie?.releaseDate
@@ -95,14 +94,19 @@ class MoviePagedListAdapter (public val context: Context)
                 .into(itemView.findViewById<ImageView>(R.id.cv_iv_movie_poster))
 
             itemView.setOnClickListener{
-                /*val intent = Intent(context, NotificationsFragment::class.java)
-                intent.putExtra("id", movie?.movieId)
-                context.startActivity(intent)*/
+
+                MF.showDetailMovie(movie!!.movieId)
                 Log.d("my", "setOnClickListener ${movie!!.movieId}")
+
+
             }
 
         }
 
+    }
+
+    interface MovieClickListener {
+        fun onMovieClicked(movie_id: Int)
     }
 
     class NetworkStateItemViewHolder (view: View) : RecyclerView.ViewHolder(view) {

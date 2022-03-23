@@ -84,7 +84,7 @@ class MovieDetailsFragment : Fragment() {
 
     private fun getViewModel(movieId:Int): MovieDetailsViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
                 return MovieDetailsViewModel(movieRepository,movieId) as T
             }

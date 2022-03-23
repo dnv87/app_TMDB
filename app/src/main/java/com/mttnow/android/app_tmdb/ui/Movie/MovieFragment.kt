@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
@@ -58,7 +59,7 @@ class MovieFragment : Fragment() {
 
         viewModel = getViewModel()
 
-        val movieAdapter = MoviePagedListAdapter(thiscontext)
+        val movieAdapter = MoviePagedListAdapter()
         val gridLayoutManager = GridLayoutManager(thiscontext, 2)
 
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -99,7 +100,10 @@ class MovieFragment : Fragment() {
         })[MovieViewModel::class.java]
     }
 
-
+    fun showDetailMovie(movie_id: Int) {
+        val action = MovieFragmentDirections.actionNavigationMovieToNavigationMovieDetail(movie_id)
+        findNavController().navigate(action)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

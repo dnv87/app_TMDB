@@ -29,9 +29,6 @@
         android:name="top"
         app:argType="boolean"
         android:defaultValue="false" />
-        <action
-            android:id="@+id/action_navigation_movie_top_to_navigation_movie_detail"
-            app:destination="@id/navigation_movie_detail" />
     </fragment>
 
     <fragment
@@ -40,8 +37,7 @@
         tools:layout="@layout/fragment_movie_details" >
         <argument
             android:name="Movie_id"
-            app:argType="integer"
-            android:defaultValue="1000" />
+            app:argType="integer"/>
     </fragment>
 
     <fragment
