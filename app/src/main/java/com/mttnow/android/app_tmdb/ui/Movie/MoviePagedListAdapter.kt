@@ -1,7 +1,6 @@
 package com.mttnow.android.app_tmdb.ui.Movie
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,10 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
-import com.mttnow.android.app_tmdb.data.MAIN
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.modeldata.Movie
-import com.mttnow.android.app_tmdb.ui.notifications.NotificationsFragment
 
 class MoviePagedListAdapter (public val context: Context)
     : PagedListAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffCallback()) {

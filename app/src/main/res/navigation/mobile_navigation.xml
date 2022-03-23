@@ -37,15 +37,14 @@
     <fragment
         android:id="@+id/navigation_movie_detail"
         android:name="com.mttnow.android.app_tmdb.ui.Movie.MovieFragment"
-        android:label="@string/title_Top"
-        tools:layout="@layout/fragment_notifications" >
+        tools:layout="@layout/fragment_dashboard" >
     </fragment>
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="com.mttnow.android.app_tmdb.ui.notifications.NotificationsFragment"
+        android:name="com.mttnow.android.app_tmdb.ui.search.searchFragment"
         android:label="@string/title_Search"
-        tools:layout="@layout/fragment_notifications" >
+        tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_navigation_search_to_navigation_movie_detail"
             app:destination="@id/navigation_movie_detail" />

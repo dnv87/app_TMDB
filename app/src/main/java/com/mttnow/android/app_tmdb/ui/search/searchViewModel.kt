@@ -1,10 +1,10 @@
-package com.mttnow.android.app_tmdb.ui.notifications
+package com.mttnow.android.app_tmdb.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class searchViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is notifications Fragment"

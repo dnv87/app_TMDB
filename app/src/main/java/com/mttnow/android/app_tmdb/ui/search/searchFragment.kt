@@ -1,4 +1,4 @@
-package com.mttnow.android.app_tmdb.ui.notifications
+package com.mttnow.android.app_tmdb.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.mttnow.android.app_tmdb.databinding.FragmentNotificationsBinding
 
-class NotificationsFragment : Fragment() {
+class searchFragment : Fragment() {
 
     private var _binding: FragmentNotificationsBinding? = null
 
@@ -23,7 +23,7 @@ class NotificationsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
+            ViewModelProvider(this).get(searchViewModel::class.java)
 
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
