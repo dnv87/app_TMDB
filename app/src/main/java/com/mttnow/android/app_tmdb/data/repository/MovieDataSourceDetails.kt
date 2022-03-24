@@ -24,10 +24,9 @@ class MovieDataSourceDetails (private val apiService : TMDBInterface,
 
         _networkState.postValue(NetworkState.LOADING)
 
-
         try {
             compositeDisposable.add(
-                apiService.getDetailsMovie(movieId)
+                apiService.getDetailsMovie(id = movieId)
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                         {

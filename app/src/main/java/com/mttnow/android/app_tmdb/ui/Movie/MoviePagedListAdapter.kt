@@ -67,48 +67,6 @@ class MoviePagedListAdapter ()
         }
     }
 
-    class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.movieId == newItem.movieId
-        }
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem == newItem
-        }
-
-    }
-
-
-    class MovieItemViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-
-        val MF = MovieFragment()
-
-        fun bind(movie: Movie?) {
-
-            itemView.findViewById<TextView>(R.id.cv_movie_title).text = movie?.title
-            itemView.findViewById<TextView>(R.id.cv_movie_release_date).text =  movie?.releaseDate
-
-            val moviePosterURL = Const.THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE342 + movie?.poster_path
-            val into = Glide.with(itemView.context)
-                .load(moviePosterURL)
-                .into(itemView.findViewById<ImageView>(R.id.cv_iv_movie_poster))
-
-            itemView.setOnClickListener{
-
-                MF.showDetailMovie(movie!!.movieId)
-                Log.d("my", "setOnClickListener ${movie!!.movieId}")
-
-
-            }
-
-        }
-
-    }
-
-    interface MovieClickListener {
-        fun onMovieClicked(movie_id: Int)
-    }
-
     class NetworkStateItemViewHolder (view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(networkState: NetworkState?) {

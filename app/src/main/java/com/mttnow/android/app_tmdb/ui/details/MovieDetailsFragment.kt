@@ -45,10 +45,12 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movieId: Int = args.movieId
+        val argmovieId: Int = args.movieId
 
+        val movieId:Int = argmovieId
         val apiService : TMDBInterface = TMDBConnect.getClient()
         movieRepository = MovieDetailsRepository(apiService)
+
 
         viewModel = getViewModel(movieId)
 

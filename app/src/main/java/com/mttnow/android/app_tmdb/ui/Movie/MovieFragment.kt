@@ -14,13 +14,15 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.mttnow.android.app_tmdb.data.MAIN
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.databinding.FragmentMovieBinding
+import com.mttnow.android.app_tmdb.modeldata.Movie
 
 
-class MovieFragment : Fragment() {
+class MovieFragment : Fragment(){
 
     lateinit var  thiscontext: Context
 
@@ -98,11 +100,6 @@ class MovieFragment : Fragment() {
                 return MovieViewModel(movieRepository) as T
             }
         })[MovieViewModel::class.java]
-    }
-
-    fun showDetailMovie(movie_id: Int) {
-        val action = MovieFragmentDirections.actionNavigationMovieToNavigationMovieDetail(movie_id)
-        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {
