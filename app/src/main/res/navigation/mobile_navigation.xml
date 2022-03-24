@@ -30,7 +30,7 @@
         app:argType="boolean"
         android:defaultValue="false" />
         <action
-            android:id="@+id/action_navigation_movie_top_to_navigation_movie_detail"
+            android:id="@+id/action_navigation_movie_to_navigation_movie_detail"
             app:destination="@id/navigation_movie_detail" />
     </fragment>
 
