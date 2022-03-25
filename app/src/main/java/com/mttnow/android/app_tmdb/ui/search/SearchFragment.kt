@@ -1,4 +1,4 @@
-package com.mttnow.android.app_tmdb.ui.Movie
+package com.mttnow.android.app_tmdb.ui.search
 
 import android.content.Context
 import android.os.Bundle
@@ -6,58 +6,53 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mttnow.android.app_tmdb.R
-import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
-import com.mttnow.android.app_tmdb.databinding.FragmentMovieBinding
+import com.mttnow.android.app_tmdb.databinding.FragmentSearchBinding
 import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
 
 
-class MovieFragment : Fragment(){
+
+class SearchFragment : Fragment() {
 
     lateinit var  thiscontext: Context
 
-    private var _binding: FragmentMovieBinding? = null
-    private lateinit var viewModel: MovieViewModel
-    lateinit var movieRepository: MoviePagedListRepository
+    private var _binding: FragmentSearchBinding? = null
+    private lateinit var viewModel: SearchViewModel
+    lateinit var movieRepository: SearchMoviePagedListRepository
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
-    val args: MovieFragmentArgs by navArgs() // получаем аргумент Safe Args
 
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
-        _binding = FragmentMovieBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val notificationsViewModel =ViewModelProvider(this).get(SearchViewModel::class.java)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
 
         thiscontext = container!!.getContext();
-        return root
-    }
 
+        return binding.root
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var getMovie = args.top
-        if (getMovie == null) getMovie = false
-//        Log.d("my", "!!!!!!${getMovie.toString()}")
+
+        val getMovie =""
 
         val apiService : TMDBInterface = TMDBConnect.getClient()
-        movieRepository = MoviePagedListRepository(apiService, getMovie)
+        movieRepository = SearchMoviePagedListRepository(apiService, getMovie)
 
         viewModel = getViewModel()
 
@@ -72,7 +67,6 @@ class MovieFragment : Fragment(){
 
 
         val gridLayoutManager = GridLayoutManager(thiscontext, 2)
-
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 val viewType = movieAdapter.getItemViewType(position)
@@ -81,7 +75,7 @@ class MovieFragment : Fragment(){
             }
         }
 
-        //adapter
+        /*//adapter
         binding.rvMovieList.layoutManager = gridLayoutManager
         binding.rvMovieList.setHasFixedSize(true)
         binding.rvMovieList.adapter = movieAdapter
@@ -99,19 +93,17 @@ class MovieFragment : Fragment(){
             if (!viewModel.listIsEmpty()) {
                 movieAdapter.setNetworkState(it)
             }
-        })
+        })*/
     }
 
-    private fun getViewModel(): MovieViewModel {
+    private fun getViewModel(): SearchViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return MovieViewModel(movieRepository) as T
+                return SearchViewModel(movieRepository) as T
             }
-        })[MovieViewModel::class.java]
+        })[SearchViewModel::class.java]
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

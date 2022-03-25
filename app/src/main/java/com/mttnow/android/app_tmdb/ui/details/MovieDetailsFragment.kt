@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -45,10 +46,10 @@ class MovieDetailsFragment : Fragment() {
         return binding.root
     }
 
- /*   private fun setupTopBar() {
-        val navController = findNavController(R.id.nav_host_fragment)
-        toolbar.setupWithNavController(navController)
-    }*/
+//    private fun setupTopBar() {
+//        val navController = findNavController()
+//        toolbar.setupWithNavController(navController)
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

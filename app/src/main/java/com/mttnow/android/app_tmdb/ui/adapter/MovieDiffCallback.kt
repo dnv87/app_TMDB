@@ -1,4 +1,4 @@
-package com.mttnow.android.app_tmdb.ui.Movie
+package com.mttnow.android.app_tmdb.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.mttnow.android.app_tmdb.modeldata.Movie
