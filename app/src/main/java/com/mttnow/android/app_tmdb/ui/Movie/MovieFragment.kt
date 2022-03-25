@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.MAIN
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
@@ -53,7 +55,8 @@ class MovieFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val getMovie = args.top
+        var getMovie = args.top
+        if (getMovie == null) getMovie = false
 //        Log.d("my", "!!!!!!${getMovie.toString()}")
 
         val apiService : TMDBInterface = TMDBConnect.getClient()

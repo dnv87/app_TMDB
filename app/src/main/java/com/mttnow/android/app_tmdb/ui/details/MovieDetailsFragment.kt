@@ -12,7 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
+import com.mttnow.android.app_tmdb.data.MAIN
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
@@ -46,8 +49,13 @@ class MovieDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val argmovieId: Int = args.movieId
+        val nav = MAIN.findViewById<BottomNavigationView>(R.id.nav_view)
+        nav.visibility = View.GONE
+
 
         val movieId:Int = argmovieId
+
+
         val apiService : TMDBInterface = TMDBConnect.getClient()
         movieRepository = MovieDetailsRepository(apiService)
 
@@ -95,6 +103,9 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+        val nav = MAIN.findViewById<BottomNavigationView>(R.id.nav_view)
+        nav.visibility = View.VISIBLE
         _binding = null
     }
 }
