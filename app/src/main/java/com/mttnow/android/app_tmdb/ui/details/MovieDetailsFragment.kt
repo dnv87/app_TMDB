@@ -45,6 +45,11 @@ class MovieDetailsFragment : Fragment() {
         return binding.root
     }
 
+ /*   private fun setupTopBar() {
+        val navController = findNavController(R.id.nav_host_fragment)
+        toolbar.setupWithNavController(navController)
+    }*/
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

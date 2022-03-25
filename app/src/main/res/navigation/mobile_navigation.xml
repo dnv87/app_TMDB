@@ -37,8 +37,7 @@
     <fragment
         android:id="@+id/navigation_movie_detail"
         android:name="com.mttnow.android.app_tmdb.ui.details.MovieDetailsFragment"
-        tools:layout="@layout/fragment_movie_details"
-        android:label="@string/title_Detal">
+        tools:layout="@layout/fragment_movie_details" >
         <argument
             android:name="Movie_id"
             app:argType="integer"/>

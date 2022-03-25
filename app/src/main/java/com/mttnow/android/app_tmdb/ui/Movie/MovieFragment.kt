@@ -66,8 +66,11 @@ class MovieFragment : Fragment(){
 
         val movieAdapter = MoviePagedListAdapter{
 
-            val action = MovieFragmentDirections.actionNavigationMovieToNavigationMovieDetail(it)
-            findNavController().navigate(action)
+            val argTo = Bundle().apply {
+                putInt("Movie_id", it)
+            }
+//            val action = MovieFragmentDirections.actionNavigationMovieToNavigationMovieDetail(it)
+            findNavController().navigate(/*action*/R.id.navigation_movie_detail, args = argTo )
         }
 
 

@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navControl, appBarConfiguration)
         navView.setupWithNavController(navControl)
+//        navView.setOnLongClickListener {  }
 
 
     }

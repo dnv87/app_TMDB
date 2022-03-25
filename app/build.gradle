@@ -8,6 +8,7 @@ android {
     compileSdk 32
 
     defaultConfig {
+        buildToolsVersion = "29.0.0"
         applicationId "com.mttnow.android.app_tmdb"
         minSdk 21
         targetSdk 32
