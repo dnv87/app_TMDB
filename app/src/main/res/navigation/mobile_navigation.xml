@@ -41,12 +41,6 @@
         <argument
             android:name="Movie_id"
             app:argType="integer"/>
-        <action
-            android:id="@+id/action_navigation_movie_detail_to_navigation_movie"
-            app:destination="@id/navigation_movie" />
-        <action
-            android:id="@+id/action_navigation_movie_detail_to_navigation_movie_top"
-            app:destination="@id/navigation_movie_top" />
     </fragment>
 
     <fragment

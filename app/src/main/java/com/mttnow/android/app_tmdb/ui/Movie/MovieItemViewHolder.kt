@@ -11,7 +11,7 @@ import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.MAIN
 import com.mttnow.android.app_tmdb.modeldata.Movie
 
-class MovieItemViewHolder (view: View) : RecyclerView.ViewHolder(view) {
+class MovieItemViewHolder (view: View, val onMovieCkick: (Int)-> Unit) : RecyclerView.ViewHolder(view) {
 
     fun bind(movie: Movie?) {
 
@@ -26,8 +26,12 @@ class MovieItemViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         itemView.setOnClickListener{
 
             Log.d("my", "setOnClickListener ${movie!!.id}")
+
+/*            // бывает глючит
             val action = MovieFragmentDirections.actionNavigationMovieToNavigationMovieDetail(movie!!.id)
-            MAIN.navControl.navigate(action)
+            MAIN.navControl.navigate(action)*/
+
+            onMovieCkick.invoke(movie!!.id)
 
         }
     }

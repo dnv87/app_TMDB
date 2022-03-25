@@ -16,7 +16,7 @@ import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.modeldata.Movie
 
-class MoviePagedListAdapter ()
+class MoviePagedListAdapter (val onMovieCkick: (Int)-> Unit)
     : PagedListAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffCallback()) {
 
     val MOVIE_VIEW_TYPE = 1
@@ -32,7 +32,7 @@ class MoviePagedListAdapter ()
 
         if (viewType == MOVIE_VIEW_TYPE) {
             view = layoutInflater.inflate(R.layout.movie_list_item, parent, false)
-            return MovieItemViewHolder(view)
+            return MovieItemViewHolder(view,onMovieCkick)
 
         } else {
             view = layoutInflater.inflate(R.layout.network_state_item, parent, false)

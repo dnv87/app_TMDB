@@ -61,7 +61,13 @@ class MovieFragment : Fragment(){
 
         viewModel = getViewModel()
 
-        val movieAdapter = MoviePagedListAdapter()
+        val movieAdapter = MoviePagedListAdapter{
+
+            val action = MovieFragmentDirections.actionNavigationMovieToNavigationMovieDetail(it)
+            findNavController().navigate(action)
+        }
+
+
         val gridLayoutManager = GridLayoutManager(thiscontext, 2)
 
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
