@@ -26,5 +26,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <!-- на весь экран -->
+        <item name="android:windowFullscreen">true</item>
+
     </style>
 </resources>
