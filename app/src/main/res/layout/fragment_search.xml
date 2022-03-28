@@ -25,6 +25,14 @@
             android:text="Connection Problem!!"
             android:visibility="gone"/>
 
+        <EditText
+            android:id="@+id/edit_text_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search"
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_movie_list"
             android:layout_margin="4dp"

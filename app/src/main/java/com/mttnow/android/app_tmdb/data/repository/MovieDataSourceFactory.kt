@@ -2,7 +2,6 @@ package com.mttnow.android.app_tmdb.data.repository
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.modeldata.Movie
 import io.reactivex.disposables.CompositeDisposable
