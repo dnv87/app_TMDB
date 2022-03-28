@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mttnow.android.app_tmdb.R
+import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.databinding.FragmentSearchBinding
@@ -35,8 +34,6 @@ class SearchFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-
-        val notificationsViewModel =ViewModelProvider(this).get(SearchViewModel::class.java)
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
 
         thiscontext = container!!.getContext();
@@ -49,7 +46,9 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val getMovie =""
+        var getMovie ="star"
+
+
 
         val apiService : TMDBInterface = TMDBConnect.getClient()
         movieRepository = SearchMoviePagedListRepository(apiService, getMovie)
@@ -58,6 +57,7 @@ class SearchFragment : Fragment() {
 
         val movieAdapter = MoviePagedListAdapter{
 
+            //добавляем параметр для передачи его для
             val argTo = Bundle().apply {
                 putInt("Movie_id", it)
             }
@@ -75,7 +75,7 @@ class SearchFragment : Fragment() {
             }
         }
 
-        /*//adapter
+        //adapter
         binding.rvMovieList.layoutManager = gridLayoutManager
         binding.rvMovieList.setHasFixedSize(true)
         binding.rvMovieList.adapter = movieAdapter
@@ -93,7 +93,7 @@ class SearchFragment : Fragment() {
             if (!viewModel.listIsEmpty()) {
                 movieAdapter.setNetworkState(it)
             }
-        })*/
+        })
     }
 
     private fun getViewModel(): SearchViewModel {
@@ -104,6 +104,7 @@ class SearchFragment : Fragment() {
             }
         })[SearchViewModel::class.java]
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

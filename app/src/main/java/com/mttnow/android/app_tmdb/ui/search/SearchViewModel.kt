@@ -23,7 +23,6 @@ class SearchViewModel (private val movieRepository:SearchMoviePagedListRepositor
         return moviePagedList.value?.isEmpty() ?: true
     }
 
-
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.dispose()

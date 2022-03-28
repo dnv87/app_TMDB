@@ -4,4 +4,5 @@
     <string name="title_Top">Top фильмов</string>
     <string name="title_Search">Поиск фильмов</string>
     <string name="title_Detal">О Фильме</string>
+    <string name="search">Поиск фильмов</string>
 </resources>

@@ -39,7 +39,7 @@ class MoviePagedListAdapter (val onMovieCkick: (Int)-> Unit)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == MOVIE_VIEW_TYPE) {
             (holder as MovieItemViewHolder).bind(getItem(position))
-            Log.d("my", "position = ${position.toString()}")
+//            Log.d("my", "position = ${position.toString()}")
         }
         else {
             (holder as NetworkStateItemViewHolder).bind(networkState)
