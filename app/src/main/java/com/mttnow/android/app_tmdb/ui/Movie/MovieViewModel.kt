@@ -30,7 +30,9 @@ class MovieViewModel(private val apiService : TMDBInterface, private val getMovi
         return moviePagedList.value?.isEmpty() ?: true
     }
 
-    private fun fetchLiveMoviePagedList (compositeDisposable: CompositeDisposable) : LiveData<PagedList<Movie>> {
+    private fun fetchLiveMoviePagedList (compositeDisposable: CompositeDisposable
+    ) : LiveData<PagedList<Movie>> {
+
         moviesDataSourceFactory = MovieDataSourceFactory(apiService, compositeDisposable,getMovie)
 
         val config = PagedList.Config.Builder()
@@ -43,7 +45,7 @@ class MovieViewModel(private val apiService : TMDBInterface, private val getMovi
     }
 
     @JvmName("getNetworkState1")
-    fun getNetworkState(): LiveData<NetworkState> {
+    private fun getNetworkState(): LiveData<NetworkState> {
         return Transformations.switchMap<MovieDataSource, NetworkState>(
             moviesDataSourceFactory.moviesLiveDataSource, MovieDataSource::networkState)
     }

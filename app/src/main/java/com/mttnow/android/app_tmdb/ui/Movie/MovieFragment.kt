@@ -48,7 +48,7 @@ class MovieFragment : Fragment(){
         viewModel = getViewModel(apiService, getMovie)
 
         val movieAdapter = MoviePagedListAdapter{
-
+            //добавляем параметр для передачи его для MovieDetails
             val argTo = Bundle().apply {
                 putInt("Movie_id", it)
             }
