@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mttnow.android.app_tmdb.R
+import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
@@ -24,7 +25,7 @@ class MovieFragment : Fragment(){
 
     private var _binding: FragmentMovieBinding? = null
     private lateinit var viewModel: MovieViewModel
-    lateinit var movieRepository: MoviePagedListRepository
+    private var getMovie: Boolean = Const.GET_POPULAR_MOVIE
 
     // Это свойство допустимо только между onCreateView и onDestroyView.
     private val binding get() = _binding!!
@@ -42,12 +43,9 @@ class MovieFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val getMovie = args.top
-
+        getMovie = args.top
         val apiService : TMDBInterface = TMDBConnect.getClient()
-        movieRepository = MoviePagedListRepository(apiService, getMovie)
-
-        viewModel = getViewModel()
+        viewModel = getViewModel(apiService, getMovie)
 
         val movieAdapter = MoviePagedListAdapter{
 
@@ -90,16 +88,14 @@ class MovieFragment : Fragment(){
         })
     }
 
-    private fun getViewModel(): MovieViewModel {
+    private fun getViewModel(apiService: TMDBInterface, getMovie: Boolean): MovieViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return MovieViewModel(movieRepository) as T
+                return MovieViewModel(apiService, getMovie) as T
             }
         })[MovieViewModel::class.java]
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
