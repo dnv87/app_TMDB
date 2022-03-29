@@ -30,7 +30,6 @@ class MovieDetailsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: MovieDetailsViewModel
-    private lateinit var movieRepository: MovieDetailsRepository
 
     val args:MovieDetailsFragmentArgs by navArgs()
 
@@ -52,9 +51,8 @@ class MovieDetailsFragment : Fragment() {
         navViewVisible(visible=false)
 
         val apiService : TMDBInterface = TMDBConnect.getClient()
-        movieRepository = MovieDetailsRepository(apiService)
 
-        viewModel = getViewModel(movieId)
+        viewModel = getViewModel(apiService,movieId)
         viewModel.movieDetails.observe(viewLifecycleOwner, Observer {
             bindUI(it)
         })
@@ -85,11 +83,11 @@ class MovieDetailsFragment : Fragment() {
     }
 
 
-    private fun getViewModel(movieId:Int): MovieDetailsViewModel {
+    private fun getViewModel(apiService: TMDBInterface, movieId:Int): MovieDetailsViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return MovieDetailsViewModel(movieRepository,movieId) as T
+                return MovieDetailsViewModel(apiService,movieId) as T
             }
         })[MovieDetailsViewModel::class.java]
     }

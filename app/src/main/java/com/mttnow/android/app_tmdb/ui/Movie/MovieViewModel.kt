@@ -32,4 +32,5 @@ class MovieViewModel(private val movieRepository : MoviePagedListRepository): Vi
 //        compositeDisposable.dispose()  //разобрать в чём разница!!!!
         compositeDisposable.clear()
     }
+
 }
