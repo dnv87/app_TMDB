@@ -1,6 +1,7 @@
 package com.mttnow.android.app_tmdb.data.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.mttnow.android.app_tmdb.data.Const.FIRST_PAGE
@@ -22,7 +23,7 @@ class SearchMovieDataSource (private val apiService : TMDBInterface,
 
     override fun loadInitial(params: LoadInitialParams<Int>,
                              callback: LoadInitialCallback<Int, Movie>) {
-
+        Log.d("my", "SearchMDS ")
         networkState.postValue(NetworkState.LOADING)
         compositeDisposable.add(
             apiService.getSearchMovie(page = page, query=getMovie)
@@ -31,6 +32,7 @@ class SearchMovieDataSource (private val apiService : TMDBInterface,
                     {
                         callback.onResult(it.movieList, null, page+1)
                         networkState.postValue(NetworkState.LOADED)
+                        Log.d("my", "SearchMDS ${it.movieList.toString()}")
                     },
                     {
                         networkState.postValue(NetworkState.ERROR)
@@ -67,10 +69,6 @@ class SearchMovieDataSource (private val apiService : TMDBInterface,
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
-
-    }
-
-    private fun getMovieNetwork(){
 
     }
 }
