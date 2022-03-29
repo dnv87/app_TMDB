@@ -17,7 +17,7 @@ class MovieDetailsViewModel (private val apiService : TMDBInterface, private val
 
     val networkState : LiveData<NetworkState> = getMovieDetailsNetworkState()
 
-    fun fetchSingleMovieDetails (compositeDisposable: CompositeDisposable, movieId: Int) : LiveData<MovieDetails> {
+    private fun fetchSingleMovieDetails (compositeDisposable: CompositeDisposable, movieId: Int) : LiveData<MovieDetails> {
 
         movieDetailsNetworkDataSource = MovieDataSourceDetails(apiService,compositeDisposable)
         movieDetailsNetworkDataSource.fetchMovieDetails(movieId)
@@ -26,7 +26,7 @@ class MovieDetailsViewModel (private val apiService : TMDBInterface, private val
 
     }
 
-    fun getMovieDetailsNetworkState(): LiveData<NetworkState> {
+    private fun getMovieDetailsNetworkState(): LiveData<NetworkState> {
         return movieDetailsNetworkDataSource.networkState
     }
 
