@@ -25,29 +25,21 @@ class SearchMoviePagingSource(private val apiService : TMDBInterface,
 
         _networkState.postValue(NetworkState.LOADING)
 
-        try {
-            compositeDisposable.add(
-                apiService.getSearchMovie(page = page, query=getMovie)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(
-                        {
-                            _downloadedMovieDetailsResponse.postValue(it)
-                            _networkState.postValue(NetworkState.LOADED)
-                            Log.d("my", it.movieList.toString())
-                        },
-                        {
-                            _networkState.postValue(NetworkState.ERROR)
-                            Log.e("my", it.message!!)
-                        }
-                    )
-            )
-
-        }
-
-        catch (e: Exception){
-            Log.e("MovieDetailsDataSource",e.message!!)
-        }
-
+        compositeDisposable.add(
+            apiService.getSearchMovie(page = page, query=getMovie)
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    {
+                        _downloadedMovieDetailsResponse.postValue(it)
+                        _networkState.postValue(NetworkState.LOADED)
+                        Log.d("my", it.movieList.toString())
+                    },
+                    {
+                        _networkState.postValue(NetworkState.ERROR)
+                        Log.e("my", it.message!!)
+                    }
+                )
+        )
 
     }
 }

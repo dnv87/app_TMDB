@@ -2,9 +2,7 @@ package com.mttnow.android.app_tmdb
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
-import android.widget.SearchView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -12,7 +10,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.mttnow.android.app_tmdb.data.MAIN
 import com.mttnow.android.app_tmdb.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -25,8 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        MAIN = this // финт ушами чтоб постоянно иметь доступ к MainActivity
 
         val navView: BottomNavigationView = binding.navView
 
@@ -58,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun test(){
-        ///
+        //
     }
 
 }

@@ -24,28 +24,21 @@ class MovieDataSourceDetails (private val apiService : TMDBInterface,
 
         _networkState.postValue(NetworkState.LOADING)
 
-        try {
-            compositeDisposable.add(
-                apiService.getDetailsMovie(id = movieId)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(
-                        {
-                            _downloadedMovieDetailsResponse.postValue(it)
-                            _networkState.postValue(NetworkState.LOADED)
-                        },
-                        {
-                            _networkState.postValue(NetworkState.ERROR)
-                            Log.e("MovieDetailsDataSource", it.message!!)
-                        }
-                    )
-            )
+        compositeDisposable.add(
+            apiService.getDetailsMovie(id = movieId)
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    {
+                        _downloadedMovieDetailsResponse.postValue(it)
+                        _networkState.postValue(NetworkState.LOADED)
+                    },
+                    {
+                        _networkState.postValue(NetworkState.ERROR)
+                        Log.e("MovieDetailsDataSource", it.message!!)
+                    }
+                )
+        )
 
         }
 
-        catch (e: Exception){
-            Log.e("MovieDetailsDataSource",e.message!!)
-        }
-
-
-    }
 }

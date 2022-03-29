@@ -1,6 +1,5 @@
 package com.mttnow.android.app_tmdb.ui.search
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -20,23 +19,18 @@ import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
 
 class SearchFragment : Fragment() {
 
-    lateinit var  thiscontext: Context
-
     private var _binding: FragmentSearchBinding? = null
     private lateinit var viewModel: SearchViewModel
     lateinit var movieRepository: SearchMoviePagedListRepository
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // Это свойство допустимо только между onCreateView и onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
+
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-
-        thiscontext = container!!.getContext();
-
         return binding.root
     }
 
@@ -44,6 +38,7 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // посылаем запрос после нажатия DONE
         binding.editTextSearch.setOnEditorActionListener { textView, actionId, keyEvent ->
             when (actionId){
                 EditorInfo.IME_ACTION_DONE -> {
@@ -74,7 +69,7 @@ class SearchFragment : Fragment() {
         }
 
 
-        val gridLayoutManager = GridLayoutManager(thiscontext, 2)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 val viewType = movieAdapter.getItemViewType(position)

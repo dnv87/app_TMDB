@@ -1,6 +1,5 @@
 package com.mttnow.android.app_tmdb.ui.Movie
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,38 +22,27 @@ import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
 
 class MovieFragment : Fragment(){
 
-    lateinit var  thiscontext: Context
-
     private var _binding: FragmentMovieBinding? = null
     private lateinit var viewModel: MovieViewModel
     lateinit var movieRepository: MoviePagedListRepository
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // Это свойство допустимо только между onCreateView и onDestroyView.
     private val binding get() = _binding!!
 
     val args: MovieFragmentArgs by navArgs() // получаем аргумент Safe Args
-
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        thiscontext = container!!.getContext();
-        return root
+        return binding.root
     }
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var getMovie = args.top
-        if (getMovie == null) getMovie = false
-//        Log.d("my", "!!!!!!${getMovie.toString()}")
+        val getMovie = args.top
 
         val apiService : TMDBInterface = TMDBConnect.getClient()
         movieRepository = MoviePagedListRepository(apiService, getMovie)
@@ -66,12 +54,12 @@ class MovieFragment : Fragment(){
             val argTo = Bundle().apply {
                 putInt("Movie_id", it)
             }
-//            val action = MovieFragmentDirections.actionNavigationMovieToNavigationMovieDetail(it)
-            findNavController().navigate(/*action*/R.id.navigation_movie_detail, args = argTo )
+            // переход на новый фрагмент детальной информации
+            findNavController().navigate(R.id.navigation_movie_detail, args = argTo )
         }
 
 
-        val gridLayoutManager = GridLayoutManager(thiscontext, 2)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
 
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
