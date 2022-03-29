@@ -20,6 +20,9 @@ class MovieDetailsRepository (private val apiService : TMDBInterface) {
 
     }
 
+//    private val data = ArrayList<Any>()
+
+
     fun getMovieDetailsNetworkState(): LiveData<NetworkState> {
         return movieDetailsNetworkDataSource.networkState
     }

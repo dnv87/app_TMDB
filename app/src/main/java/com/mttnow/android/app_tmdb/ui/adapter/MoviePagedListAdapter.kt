@@ -65,24 +65,29 @@ class MoviePagedListAdapter (val onMovieCkick: (Int)-> Unit)
 
     class NetworkStateItemViewHolder (view: View) : RecyclerView.ViewHolder(view) {
 
+        //Пример!!!!
+        private val pbItem: View = view.findViewById<View>(R.id.progress_bar_item)
+        private val tvErrorMessageV: View = view.findViewById<View>(R.id.error_msg_item)
+        private val tvErrorMessageT: TextView = view.findViewById<TextView>(R.id.error_msg_item)
+
         fun bind(networkState: NetworkState?) {
             if (networkState != null && networkState == NetworkState.LOADING) {
-                itemView.findViewById<View>(R.id.progress_bar_item).visibility = View.VISIBLE;
+                pbItem.visibility = View.VISIBLE;
             }
             else  {
-                itemView.findViewById<View>(R.id.progress_bar_item).visibility = View.GONE;
+                pbItem.visibility = View.GONE;
             }
 
             if (networkState != null && networkState == NetworkState.ERROR) {
-                itemView.findViewById<View>(R.id.error_msg_item).visibility = View.VISIBLE;
-                itemView.findViewById<TextView>(R.id.error_msg_item).text = networkState.msg;
+                tvErrorMessageV.visibility = View.VISIBLE;
+                tvErrorMessageT.text = networkState.msg;
             }
             else if (networkState != null && networkState == NetworkState.ENDOFLIST) {
-                itemView.findViewById<View>(R.id.error_msg_item).visibility = View.VISIBLE;
-                itemView.findViewById<TextView>(R.id.error_msg_item).text = networkState.msg;
+                tvErrorMessageV.visibility = View.VISIBLE;
+                tvErrorMessageT.text = networkState.msg;
             }
             else {
-                itemView.findViewById<View>(R.id.error_msg_item).visibility = View.GONE;
+                tvErrorMessageV.visibility = View.GONE;
             }
         }
     }

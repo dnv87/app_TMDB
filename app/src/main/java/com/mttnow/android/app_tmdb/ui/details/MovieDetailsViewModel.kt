@@ -14,6 +14,12 @@ class MovieDetailsViewModel (private val movieRepository : MovieDetailsRepositor
         movieRepository.fetchSingleMovieDetails(compositeDisposable,movieId)
     }
 
+    // ViewModel должен содержать ф-ции которые показывают что делается
+  /*  fun loadData(){
+        networkState.pos
+        movieRepository.fetchSingleMovieDetails(compositeDisposable,movieId)
+    }*/
+
     val networkState : LiveData<NetworkState> by lazy {
         movieRepository.getMovieDetailsNetworkState()
     }

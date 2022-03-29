@@ -56,4 +56,9 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+
+    fun test(){
+        ///
+    }
+
 }

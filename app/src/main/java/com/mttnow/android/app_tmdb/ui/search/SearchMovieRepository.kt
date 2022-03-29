@@ -9,16 +9,39 @@ import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.data.repository.SearchMovieDataSource
 import com.mttnow.android.app_tmdb.data.repository.SearchMovieDataSourceFactory
+import com.mttnow.android.app_tmdb.data.repository.SearchMoviePagingSource
 import com.mttnow.android.app_tmdb.modeldata.Movie
+import com.mttnow.android.app_tmdb.modeldata.MovieResponse
 import io.reactivex.disposables.CompositeDisposable
 
-class SearchMoviePagedListRepository (private val apiService : TMDBInterface,private val getMovie:String = "") {
+class SearchMovieRepository (private val apiService : TMDBInterface) {
 
-    lateinit var moviePagedList: LiveData<PagedList<Movie>>
-    lateinit var moviesDataSourceFactory: SearchMovieDataSourceFactory
-    private var searchNewMovie:String = ""
+    lateinit var movieSearchNetworkDataSource: SearchMoviePagingSource
 
-    fun fetchLiveMoviePagedList (compositeDisposable: CompositeDisposable) : LiveData<PagedList<Movie>> {
+    lateinit var moviePagedList: LiveData<MovieResponse>
+    private var page = Const.FIRST_PAGE
+
+
+    fun fetchSingleMovieDetails (compositeDisposable: CompositeDisposable, movieSearch: String) : LiveData<MovieResponse> {
+
+        movieSearchNetworkDataSource = SearchMoviePagingSource(apiService,compositeDisposable)
+        movieSearchNetworkDataSource.fetchMovieDetails(page= page, getMovie=movieSearch)
+
+//        val moviePaged = movieSearchNetworkDataSource.downloadedMovieResponse.movieList
+        return movieSearchNetworkDataSource.downloadedMovieResponse
+
+    }
+
+    fun getMovieDetailsNetworkState(): LiveData<NetworkState> {
+        return movieSearchNetworkDataSource.networkState
+    }
+
+
+
+
+
+
+    /*fun fetchLiveMoviePagedList (compositeDisposable: CompositeDisposable) : LiveData<PagedList<Movie>> {
 
         moviesDataSourceFactory = SearchMovieDataSourceFactory(apiService, compositeDisposable,getMovie)
 
@@ -40,9 +63,7 @@ class SearchMoviePagedListRepository (private val apiService : TMDBInterface,pri
 
         return moviePagedList
     }
+*/
 
-    fun getNetworkState(): LiveData<NetworkState> {
-        return Transformations.switchMap<SearchMovieDataSource, NetworkState>(
-            moviesDataSourceFactory.moviesLiveDataSource, SearchMovieDataSource::networkState)
-    }
+
 }

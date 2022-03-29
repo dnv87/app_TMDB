@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mttnow.android.app_tmdb.MainActivity
 import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.MAIN
@@ -53,6 +54,11 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val a = requireContext()
+        val b = context
+
+        (requireActivity() as? MainActivity)?.test()
 
         val argmovieId: Int = args.movieId
         val nav = MAIN.findViewById<BottomNavigationView>(R.id.nav_view)

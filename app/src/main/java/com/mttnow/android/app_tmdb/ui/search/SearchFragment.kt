@@ -30,7 +30,6 @@ class SearchFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -50,8 +49,7 @@ class SearchFragment : Fragment() {
                 EditorInfo.IME_ACTION_DONE -> {
                     val textbuf = binding.editTextSearch.text.toString()
                     getRequestMovie(textbuf)
-                    Log.d("my" , "$textbuf");
-                    binding.editTextSearch.isFocusable = false
+                    Log.d("my" , "onViewCreated $textbuf");
                     true
                 }
                 else -> false
@@ -121,5 +119,6 @@ class SearchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
     }
 }

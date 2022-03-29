@@ -54,6 +54,7 @@ class SearchMovieDataSource (private val apiService : TMDBInterface,
                             if(it.total_pages >= params.key) {
                                 callback.onResult(it.movieList, params.key+1)
                                 networkState.postValue(NetworkState.LOADED)
+                                Log.d("my", "loadAfter ${it.page.toString()}")
                             }
                             else{
                                 networkState.postValue(NetworkState.ENDOFLIST)
