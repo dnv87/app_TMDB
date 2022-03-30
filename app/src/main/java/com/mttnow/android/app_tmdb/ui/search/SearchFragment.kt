@@ -21,7 +21,7 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private lateinit var viewModel: SearchViewModel
-    lateinit var movieRepository: SearchMoviePagedListRepository
+//    lateinit var movieRepository: SearchMoviePagedListRepository
 
     // Это свойство допустимо только между onCreateView и onDestroyView.
     private val binding get() = _binding!!
@@ -56,9 +56,9 @@ class SearchFragment : Fragment() {
 
         val apiService : TMDBInterface = TMDBConnect.getClient()
 
-        movieRepository = SearchMoviePagedListRepository(apiService, getMovie)
+//        movieRepository = SearchMoviePagedListRepository(apiService, getMovie)
 
-        viewModel = getViewModel()
+        viewModel = getViewModel(apiService, getMovie)
 
         val movieAdapter = MoviePagedListAdapter{
             //добавляем параметр для передачи его для MovieDetails
@@ -101,11 +101,11 @@ class SearchFragment : Fragment() {
 
     }
 
-    private fun getViewModel(): SearchViewModel {
+    private fun getViewModel(apiService : TMDBInterface, getMovie:String): SearchViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return SearchViewModel(movieRepository) as T
+                return SearchViewModel(apiService, getMovie) as T
             }
         })[SearchViewModel::class.java]
     }
