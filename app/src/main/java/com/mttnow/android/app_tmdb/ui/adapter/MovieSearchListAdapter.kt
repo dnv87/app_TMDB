@@ -12,7 +12,7 @@ import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.modeldata.Movie
 
-class MoviePagedListAdapter (val onMovieCkick: (Int)-> Unit)
+class MovieSearchListAdapter (val onMovieCkick: (Int)-> Unit)
     : PagedListAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffCallback()) {
 
     val MOVIE_VIEW_TYPE = 1

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
+import com.mttnow.android.app_tmdb.modeldata.Movie
 import com.mttnow.android.app_tmdb.modeldata.MovieResponse
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -17,9 +18,13 @@ class SearchMoviePagingSource(private val apiService : TMDBInterface,
     val networkState: LiveData<NetworkState>
     get() = _networkState //with this get, no need to implement get function to get networkSate
 
+    private val _downloadedListMovieResponse = MutableLiveData<List<Movie>>()
+    val downloadedListMovieResponse: LiveData<List<Movie>>
+        get() = _downloadedListMovieResponse
+
     private val _downloadedMovieDetailsResponse =  MutableLiveData<MovieResponse>()
     val downloadedMovieResponse: LiveData<MovieResponse>
-    get() = _downloadedMovieDetailsResponse
+        get() = _downloadedMovieDetailsResponse
 
     fun fetchMovieDetails(page: Int, getMovie: String) {
 
@@ -32,7 +37,9 @@ class SearchMoviePagingSource(private val apiService : TMDBInterface,
                     {
                         _downloadedMovieDetailsResponse.postValue(it)
                         _networkState.postValue(NetworkState.LOADED)
-                        Log.d("my", it.movieList.toString())
+                        _downloadedListMovieResponse.postValue(it.movieList)
+                        Log.d("my", "otvet: ${it.movieList.toString()}")
+
                     },
                     {
                         _networkState.postValue(NetworkState.ERROR)

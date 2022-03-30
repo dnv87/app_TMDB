@@ -1,68 +1,78 @@
 package com.mttnow.android.app_tmdb.ui.search
 
+import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
+import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
-import com.mttnow.android.app_tmdb.data.repository.SearchMovieDataSource
-import com.mttnow.android.app_tmdb.data.repository.SearchMovieDataSourceFactory
+import com.mttnow.android.app_tmdb.data.repository.SearchMoviePagingSource
 import com.mttnow.android.app_tmdb.modeldata.Movie
+import com.mttnow.android.app_tmdb.modeldata.MovieResponse
 import io.reactivex.disposables.CompositeDisposable
 
-class SearchViewModel (private val apiService : TMDBInterface, private val getMovie:String):ViewModel() {
+class SearchViewModel ():ViewModel() {
 
-    lateinit var moviesDataSourceFactory: SearchMovieDataSourceFactory
+//    lateinit var movieSearchNetworkDataSource: SearchMoviePagingSource
 
     private val compositeDisposable = CompositeDisposable()
-    private var searchNewMovie:String = ""
+//    private var searchNewMovie:String = ""
 
 
-    var moviePagedList = fetchLiveMoviePagedList(compositeDisposable)
+    private var page = Const.FIRST_PAGE
 
-    val  networkState = getNetworkState()
+//    var moviePagedList = fetchSearchMovie(compositeDisposable, getMovie)
 
 
-    fun listIsEmpty(): Boolean {
-        return moviePagedList.value?.isEmpty() ?: true
+//    val  networkState = getSearchMovieNetworkState()
+
+    fun zapros(getMovie:String) {
+
+        val apiService : TMDBInterface = TMDBConnect.getClient()
+        var moviePagedList = fetchSearchMovie(compositeDisposable, getMovie, apiService)
+        val ddd = moviePagedList.value?.copy()
+
+        Log.d("my" , "movieResp = ${moviePagedList.value?.page.toString()} ")
+        Log.d("my" , "movieResp = $ddd ")
     }
 
-    private fun fetchLiveMoviePagedList (compositeDisposable: CompositeDisposable) : LiveData<PagedList<Movie>> {
+//    fun chtototam(){
+//        Log.d("my" , "movieResp = ${moviePagedList.value.toString()} ")
+//        Log.d("my" , "movieResp = ${moviePagedList.value?.page.toString()} ")
+//    }
 
-        moviesDataSourceFactory = SearchMovieDataSourceFactory(apiService, compositeDisposable,getMovie)
-
-
-        if (getMovie == searchNewMovie) {
-            val config = PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .setPageSize(Const.POST_PER_PAGE)
-                .build()
-            moviePagedList = LivePagedListBuilder(moviesDataSourceFactory, config).build()
-        } else {
-            searchNewMovie = getMovie
-            val config = PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .setPageSize(Const.POST_PER_PAGE)
-                .build()
-            moviePagedList = LivePagedListBuilder(moviesDataSourceFactory, config).build()
-        }
-
-        return moviePagedList
+    fun clear(){
+        clearDisposible(compositeDisposable)
     }
 
-    @JvmName("getNetworkState1")
-    private fun getNetworkState(): LiveData<NetworkState> {
-        return Transformations.switchMap<SearchMovieDataSource, NetworkState>(
-            moviesDataSourceFactory.moviesLiveDataSource, SearchMovieDataSource::networkState)
+//    fun listIsEmpty(): Boolean {
+//        return moviePagedList.value?/*.isEmpty()*/ ?: true
+//    }
+
+    fun fetchSearchMovie (compositeDisposable: CompositeDisposable, movieSearch: String, apiService: TMDBInterface) : LiveData<MovieResponse> {
+
+        var movieSearchNetworkDataSource = SearchMoviePagingSource(apiService,compositeDisposable)
+        movieSearchNetworkDataSource.fetchMovieDetails(page= page, getMovie=movieSearch)
+        Log.d("my" , "SearchViewModel $movieSearch");
+
+
+        return movieSearchNetworkDataSource.downloadedMovieResponse
+    }
+
+//    private fun getSearchMovieNetworkState(): LiveData<NetworkState> {
+//        return movieSearchNetworkDataSource.networkState
+//    }
+
+    private fun clearDisposible(compositeDisposable:CompositeDisposable){
+        compositeDisposable.dispose()
+        Log.d("my", "clear disposible")
     }
 
 
     override fun onCleared() {
         super.onCleared()
-//        compositeDisposable.dispose()
+        clear()
         compositeDisposable.clear()
     }
 }

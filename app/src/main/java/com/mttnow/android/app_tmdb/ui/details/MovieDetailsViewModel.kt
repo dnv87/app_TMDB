@@ -8,7 +8,8 @@ import com.mttnow.android.app_tmdb.data.repository.MovieDataSourceDetails
 import com.mttnow.android.app_tmdb.modeldata.MovieDetails
 import io.reactivex.disposables.CompositeDisposable
 
-class MovieDetailsViewModel (private val apiService : TMDBInterface, private val movieId: Int)  : ViewModel() {
+class MovieDetailsViewModel (private val apiService : TMDBInterface,
+                             private val movieId: Int)  : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
     lateinit var movieDetailsNetworkDataSource: MovieDataSourceDetails
@@ -17,7 +18,8 @@ class MovieDetailsViewModel (private val apiService : TMDBInterface, private val
 
     val networkState : LiveData<NetworkState> = getMovieDetailsNetworkState()
 
-    private fun fetchSingleMovieDetails (compositeDisposable: CompositeDisposable, movieId: Int) : LiveData<MovieDetails> {
+    private fun fetchSingleMovieDetails (compositeDisposable: CompositeDisposable,
+                                         movieId: Int) : LiveData<MovieDetails> {
 
         movieDetailsNetworkDataSource = MovieDataSourceDetails(apiService,compositeDisposable)
         movieDetailsNetworkDataSource.fetchMovieDetails(movieId)

@@ -9,19 +9,16 @@ import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mttnow.android.app_tmdb.R
-import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.databinding.FragmentSearchBinding
-import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
-
+import com.mttnow.android.app_tmdb.ui.adapter.MovieSearchListAdapter
 
 
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
-    private lateinit var viewModel: SearchViewModel
-//    lateinit var movieRepository: SearchMoviePagedListRepository
+    private val viewModel=SearchViewModel()
 
     // Это свойство допустимо только между onCreateView и onDestroyView.
     private val binding get() = _binding!!
@@ -44,7 +41,7 @@ class SearchFragment : Fragment() {
                 EditorInfo.IME_ACTION_DONE -> {
                     val textbuf = binding.editTextSearch.text.toString()
                     getRequestMovie(textbuf)
-                    Log.d("my" , "onViewCreated $textbuf");
+
                     true
                 }
                 else -> false
@@ -54,13 +51,12 @@ class SearchFragment : Fragment() {
 
     private fun getRequestMovie (getMovie:String){
 
-        val apiService : TMDBInterface = TMDBConnect.getClient()
+//        val apiService : TMDBInterface = TMDBConnect.getClient()
 
-//        movieRepository = SearchMoviePagedListRepository(apiService, getMovie)
+//        viewModel = getViewModel()
+        viewModel.zapros(getMovie)
 
-        viewModel = getViewModel(apiService, getMovie)
-
-        val movieAdapter = MoviePagedListAdapter{
+        val movieAdapter = MovieSearchListAdapter{
             //добавляем параметр для передачи его для MovieDetails
             val argTo = Bundle().apply {
                 putInt("Movie_id", it)
@@ -83,33 +79,37 @@ class SearchFragment : Fragment() {
         binding.rvMovieList.setHasFixedSize(true)
         binding.rvMovieList.adapter = movieAdapter
 
-        viewModel.moviePagedList.observe(viewLifecycleOwner, Observer {
-            movieAdapter.submitList(it)
-        })
 
-        viewModel.networkState.observe(viewLifecycleOwner, Observer {
-            binding.progressBarPopular.visibility = if (viewModel.listIsEmpty() && it == NetworkState.LOADING
-            ) View.VISIBLE else View.GONE
-            binding.txtErrorPopular.visibility = if (viewModel.listIsEmpty() && it == NetworkState.ERROR
-            ) View.VISIBLE else View.GONE
+//        viewModel.clear()
 
-            if (!viewModel.listIsEmpty()) {
-                movieAdapter.setNetworkState(it)
-            }
-        })
+
+//        viewModel.moviePagedList.observe(viewLifecycleOwner, Observer {
+//            movieAdapter.submitList(it)
+//        })
+//
+//        viewModel.networkState.observe(viewLifecycleOwner, Observer {
+//            binding.progressBarPopular.visibility = if (viewModel.listIsEmpty() && it == NetworkState.LOADING
+//            ) View.VISIBLE else View.GONE
+//            binding.txtErrorPopular.visibility = if (viewModel.listIsEmpty() && it == NetworkState.ERROR
+//            ) View.VISIBLE else View.GONE
+//
+//            if (!viewModel.listIsEmpty()) {
+//                movieAdapter.setNetworkState(it)
+//            }
+//        })
 
 
     }
 
-    private fun getViewModel(apiService : TMDBInterface, getMovie:String): SearchViewModel {
+ /*   private fun getViewModel(): SearchViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return SearchViewModel(apiService, getMovie) as T
+                return SearchViewModel() as T
             }
         })[SearchViewModel::class.java]
     }
-
+*/
 
     override fun onDestroyView() {
         super.onDestroyView()
