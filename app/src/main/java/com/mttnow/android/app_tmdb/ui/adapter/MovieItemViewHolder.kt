@@ -15,7 +15,7 @@ class MovieItemViewHolder (view: View, private val onMovieClick: (Int)-> Unit) :
     //!!!!!!!! взаранее нужно инициализировать findViewById<>
     private val tvMovieTitle: TextView = view.findViewById<TextView>(R.id.cv_movie_title)
     private val ivMoviePoster: ImageView = view.findViewById<ImageView>(R.id.cv_iv_movie_poster)
-
+    var movieId:Int = 0
 
     // следует избавиться от setOnClickListener здесь
     fun bind(movie: Movie?) {
@@ -27,12 +27,17 @@ class MovieItemViewHolder (view: View, private val onMovieClick: (Int)-> Unit) :
         val into = Glide.with(itemView.context)
             .load(moviePosterURL)
             .into(ivMoviePoster)
-
-        itemView.setOnClickListener{
-            Log.d("my", "setOnClickListener ${movie!!.id}")
-            onMovieClick.invoke(movie!!.id)
-        }
+            movieId = movie!!.id
     }
+
+    //избавились от setOnClickListener в Bind и инициализировани его в onCreateViewHolder
+     fun setClickList () {
+         itemView.setOnClickListener {
+             Log.d("my", "setOnClickListener $movieId")
+             onMovieClick.invoke(movieId)
+         }
+     }
+
 
 
 }

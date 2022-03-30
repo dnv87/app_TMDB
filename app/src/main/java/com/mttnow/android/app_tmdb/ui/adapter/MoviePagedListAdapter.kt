@@ -28,7 +28,9 @@ class MoviePagedListAdapter (val onMovieCkick: (Int)-> Unit)
 
         if (viewType == MOVIE_VIEW_TYPE) {
             view = layoutInflater.inflate(R.layout.movie_list_item, parent, false)
-            return MovieItemViewHolder(view,onMovieCkick)
+            val holder = MovieItemViewHolder(view,onMovieCkick)
+            holder.setClickList() //инициализируем действие на элементе при создании холдера
+            return holder
 
         } else {
             view = layoutInflater.inflate(R.layout.network_state_item, parent, false)
