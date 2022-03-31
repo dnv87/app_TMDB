@@ -18,6 +18,7 @@ class MovieItemViewHolder(view: View, val onMovieCkick: (Int) -> Unit) :
     private val tvMovieRelease = itemView.findViewById<TextView>(R.id.cv_movie_release_date)
     private val ivMoviePoster = itemView.findViewById<ImageView>(R.id.cv_iv_movie_poster)
 
+    private var movieId: Int = 0
     fun bind(movie: Movie?) {
 
         tvMovieTitle.text = movie?.title
@@ -28,13 +29,14 @@ class MovieItemViewHolder(view: View, val onMovieCkick: (Int) -> Unit) :
             .load(moviePosterURL)
             .into(ivMoviePoster)
 
-        itemView.setOnClickListener {
-            onClick(movie!!.id)
-        }
+        movieId = movie!!.id
+
     }
 
-    fun onClick(movieId: Int) {
-        onMovieCkick.invoke(movieId)
+    fun setOnClick() {
+        itemView.setOnClickListener {
+            movieId = movieId
+        }
     }
 
 }
