@@ -16,8 +16,6 @@ import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
 
 class SearchFragment : Fragment() {
 
-    lateinit var thiscontext: Context
-
     private var _binding: FragmentSearchBinding? = null
     private lateinit var viewModel: SearchViewModel
 
@@ -31,8 +29,6 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-
-        thiscontext = container!!.getContext();
 
         return binding.root
     }
@@ -67,7 +63,7 @@ class SearchFragment : Fragment() {
         }
 
 
-        val gridLayoutManager = GridLayoutManager(thiscontext, 2)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 val viewType = movieAdapter.getItemViewType(position)
