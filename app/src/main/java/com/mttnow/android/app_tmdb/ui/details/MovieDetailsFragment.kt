@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mttnow.android.app_tmdb.MainActivity
 import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.MAIN
@@ -31,38 +32,34 @@ class MovieDetailsFragment : Fragment() {
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
 
-    lateinit var  thiscontext: Context
     private lateinit var viewModel: MovieDetailsViewModel
     private lateinit var movieRepository: MovieDetailsRepository
 
-    val args:MovieDetailsFragmentArgs by navArgs()
+    val args: MovieDetailsFragmentArgs by navArgs()
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
-        thiscontext = container!!.getContext();
+
         return binding.root
     }
 
-//    private fun setupTopBar() {
-//        val navController = findNavController()
-//        toolbar.setupWithNavController(navController)
-//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val argmovieId: Int = args.movieId
-        val nav = MAIN.findViewById<BottomNavigationView>(R.id.nav_view)
-        nav.visibility = View.GONE
+        (requireActivity() as MainActivity)?.hideBottomNavigation(true)
 
 
-        val movieId:Int = argmovieId
+        val movieId: Int = argmovieId
 
 
-        val apiService : TMDBInterface = TMDBConnect.getClient()
+        val apiService: TMDBInterface = TMDBConnect.getClient()
         movieRepository = MovieDetailsRepository(apiService)
 
 
@@ -73,13 +70,14 @@ class MovieDetailsFragment : Fragment() {
         })
 
         viewModel.networkState.observe(viewLifecycleOwner, Observer {
-            binding.progressBar.visibility = if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
+            binding.progressBar.visibility =
+                if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
             binding.txtError.visibility = if (it == NetworkState.ERROR) View.VISIBLE else View.GONE
 
         })
     }
 
-    fun bindUI( it: MovieDetails){
+    fun bindUI(it: MovieDetails) {
         binding.movieTitle.text = it.title
         binding.movieTagline.text = it.tagline
         binding.movieReleaseDate.text = it.releaseDate
@@ -98,20 +96,18 @@ class MovieDetailsFragment : Fragment() {
     }
 
 
-    private fun getViewModel(movieId:Int): MovieDetailsViewModel {
+    private fun getViewModel(movieId: Int): MovieDetailsViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return MovieDetailsViewModel(movieRepository,movieId) as T
+                return MovieDetailsViewModel(movieRepository, movieId) as T
             }
         })[MovieDetailsViewModel::class.java]
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-
-        val nav = MAIN.findViewById<BottomNavigationView>(R.id.nav_view)
-        nav.visibility = View.VISIBLE
+        (requireActivity() as MainActivity)?.hideBottomNavigation(false)
         _binding = null
     }
 }

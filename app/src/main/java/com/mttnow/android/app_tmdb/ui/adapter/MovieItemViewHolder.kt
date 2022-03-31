@@ -36,7 +36,7 @@ class MovieItemViewHolder(view: View, val onMovieCkick: (Int) -> Unit) :
     //инициализирован в onCreateViewHolder
     fun setOnClick() {
         itemView.setOnClickListener {
-            movieId = movieId
+            onMovieCkick.invoke(movieId)
         }
     }
 

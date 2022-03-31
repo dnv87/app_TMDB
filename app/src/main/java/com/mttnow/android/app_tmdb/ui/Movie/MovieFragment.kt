@@ -21,9 +21,7 @@ import com.mttnow.android.app_tmdb.databinding.FragmentMovieBinding
 import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
 
 
-class MovieFragment : Fragment(){
-
-    lateinit var  thiscontext: Context
+class MovieFragment : Fragment() {
 
     private var _binding: FragmentMovieBinding? = null
     private lateinit var viewModel: MovieViewModel
@@ -36,47 +34,43 @@ class MovieFragment : Fragment(){
     val args: MovieFragmentArgs by navArgs() // получаем аргумент Safe Args
 
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        thiscontext = container!!.getContext();
         return root
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var getMovie = args.top
-        if (getMovie == null) getMovie = false
-//        Log.d("my", "!!!!!!${getMovie.toString()}")
+        val getMovie = args.top
 
-        val apiService : TMDBInterface = TMDBConnect.getClient()
+        val apiService: TMDBInterface = TMDBConnect.getClient()
         movieRepository = MoviePagedListRepository(apiService, getMovie)
 
         viewModel = getViewModel()
 
-        val movieAdapter = MoviePagedListAdapter{
-
+        val movieAdapter = MoviePagedListAdapter {
             val argTo = Bundle().apply {
                 putInt("Movie_id", it)
             }
-//            val action = MovieFragmentDirections.actionNavigationMovieToNavigationMovieDetail(it)
-            findNavController().navigate(/*action*/R.id.navigation_movie_detail, args = argTo )
+            findNavController().navigate(R.id.navigation_movie_detail, args = argTo)
         }
 
 
-        val gridLayoutManager = GridLayoutManager(thiscontext, 2)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
 
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 val viewType = movieAdapter.getItemViewType(position)
-                if (viewType == movieAdapter.MOVIE_VIEW_TYPE) return  1    // Movie_VIEW_TYPE will occupy 1 out of 3 span
+                if (viewType == movieAdapter.MOVIE_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 3 span
                 else return 3                                              // NETWORK_VIEW_TYPE will occupy all 3 span
             }
         }
@@ -91,10 +85,12 @@ class MovieFragment : Fragment(){
         })
 
         viewModel.networkState.observe(viewLifecycleOwner, Observer {
-            binding.progressBarPopular.visibility = if (viewModel.listIsEmpty() && it == NetworkState.LOADING
-            ) View.VISIBLE else View.GONE
-            binding.txtErrorPopular.visibility = if (viewModel.listIsEmpty() && it == NetworkState.ERROR
-            ) View.VISIBLE else View.GONE
+            binding.progressBarPopular.visibility =
+                if (viewModel.listIsEmpty() && it == NetworkState.LOADING
+                ) View.VISIBLE else View.GONE
+            binding.txtErrorPopular.visibility =
+                if (viewModel.listIsEmpty() && it == NetworkState.ERROR
+                ) View.VISIBLE else View.GONE
 
             if (!viewModel.listIsEmpty()) {
                 movieAdapter.setNetworkState(it)
@@ -110,7 +106,6 @@ class MovieFragment : Fragment(){
             }
         })[MovieViewModel::class.java]
     }
-
 
 
     override fun onDestroyView() {
