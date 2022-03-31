@@ -5,15 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.modeldata.Movie
 
-class MoviePagedListAdapter (val onMovieCkick: (Int)-> Unit)
-    : PagedListAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffCallback()) {
+class MoviePagedListAdapter(val onMovieCkick: (Int) -> Unit) :
+    PagedListAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffCallback()) {
 
     val MOVIE_VIEW_TYPE = 1
     val NETWORK_VIEW_TYPE = 2
@@ -28,7 +27,7 @@ class MoviePagedListAdapter (val onMovieCkick: (Int)-> Unit)
 
         if (viewType == MOVIE_VIEW_TYPE) {
             view = layoutInflater.inflate(R.layout.movie_list_item, parent, false)
-            val holder = MovieItemViewHolder(view,onMovieCkick)
+            val holder = MovieItemViewHolder(view, onMovieCkick)
             holder.setOnClick() //инициализируем действие на элементе при создании холдера
             return holder
         } else {
@@ -40,9 +39,7 @@ class MoviePagedListAdapter (val onMovieCkick: (Int)-> Unit)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == MOVIE_VIEW_TYPE) {
             (holder as MovieItemViewHolder).bind(getItem(position))
-//            Log.d("my", "position = ${position.toString()}")
-        }
-        else {
+        } else {
             (holder as NetworkStateItemViewHolder).bind(networkState)
         }
     }
@@ -61,30 +58,6 @@ class MoviePagedListAdapter (val onMovieCkick: (Int)-> Unit)
             NETWORK_VIEW_TYPE
         } else {
             MOVIE_VIEW_TYPE
-        }
-    }
-
-    class NetworkStateItemViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-
-        fun bind(networkState: NetworkState?) {
-            if (networkState != null && networkState == NetworkState.LOADING) {
-                itemView.findViewById<View>(R.id.progress_bar_item).visibility = View.VISIBLE;
-            }
-            else  {
-                itemView.findViewById<View>(R.id.progress_bar_item).visibility = View.GONE;
-            }
-
-            if (networkState != null && networkState == NetworkState.ERROR) {
-                itemView.findViewById<View>(R.id.error_msg_item).visibility = View.VISIBLE;
-                itemView.findViewById<TextView>(R.id.error_msg_item).text = networkState.msg;
-            }
-            else if (networkState != null && networkState == NetworkState.ENDOFLIST) {
-                itemView.findViewById<View>(R.id.error_msg_item).visibility = View.VISIBLE;
-                itemView.findViewById<TextView>(R.id.error_msg_item).text = networkState.msg;
-            }
-            else {
-                itemView.findViewById<View>(R.id.error_msg_item).visibility = View.GONE;
-            }
         }
     }
 
