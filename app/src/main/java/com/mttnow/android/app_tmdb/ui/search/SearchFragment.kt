@@ -1,8 +1,6 @@
 package com.mttnow.android.app_tmdb.ui.search
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
@@ -10,6 +8,7 @@ import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mttnow.android.app_tmdb.R
+import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.databinding.FragmentSearchBinding
 import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
@@ -44,13 +43,12 @@ class SearchFragment : Fragment() {
                     val searchMovieText = binding.editTextSearch.text.toString()
                     viewModel.Search(searchMovieText)
                     noNullMovie()
-//                    binding.editTextSearch.isFocusable = false
                     true
                 }
                 else -> false
             }
         }
-
+        // если у нас остася список фильмов то при переходе с фрагмента Details мы его показываем
         if (viewModel.moviePagedList != null) noNullMovie()
     }
 
@@ -63,12 +61,15 @@ class SearchFragment : Fragment() {
             findNavController().navigate(R.id.navigation_movie_detail, args = argTo)
         }
 
-        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+        val gridLayoutManager = GridLayoutManager(
+            requireContext(),
+            Const.SPAN_COUNT
+        )
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 val viewType = movieAdapter.getItemViewType(position)
-                if (viewType == movieAdapter.MOVIE_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 3 span
-                else return 3                                              // NETWORK_VIEW_TYPE will occupy all 3 span
+                if (viewType == movieAdapter.MOVIE_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 2 span
+                else return Const.SPAN_COUNT     //это исключение говорит о том сколько будет занимать NETWORK_VIEW_TYPE
             }
         }
         //adapter

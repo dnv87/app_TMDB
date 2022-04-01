@@ -8,11 +8,13 @@ object Const {
     private const val IMAGE_SIZE_DEFAULT_500 = "w500/"
     private const val IMAGE_SIZE_DEFAULT_342 = "w342/"
     const val THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE500 = IMAGE_BASE_URL + IMAGE_SIZE_DEFAULT_500
-    const val THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE342 = IMAGE_BASE_URL + IMAGE_SIZE_DEFAULT_500
+    const val THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE342 = IMAGE_BASE_URL + IMAGE_SIZE_DEFAULT_342
 
     const val FIRST_PAGE = 1
     const val POST_PER_PAGE = 20
 
     const val GET_TOP_MOVIE = false
     const val GET_POPULAR_MOVIE = true
+
+    const val SPAN_COUNT = 2
 }
