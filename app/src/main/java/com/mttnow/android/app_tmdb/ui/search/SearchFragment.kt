@@ -10,6 +10,7 @@ import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mttnow.android.app_tmdb.R
+import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.databinding.FragmentSearchBinding
 import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
 
@@ -79,7 +80,7 @@ class SearchFragment : Fragment() {
             movieAdapter.submitList(it)
         })
 
-/*        viewModel.networkState.observe(viewLifecycleOwner, Observer {
+        viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
             binding.progressBarPopular.visibility =
                 if (viewModel.listIsEmpty() && it == NetworkState.LOADING
                 ) View.VISIBLE else View.GONE
@@ -90,9 +91,7 @@ class SearchFragment : Fragment() {
             if (!viewModel.listIsEmpty()) {
                 movieAdapter.setNetworkState(it)
             }
-        })*/
-
-
+        })
     }
 
     private fun getViewModel(): SearchViewModel {

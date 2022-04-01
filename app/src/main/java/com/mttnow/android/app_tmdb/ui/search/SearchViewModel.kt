@@ -17,21 +17,13 @@ import io.reactivex.disposables.CompositeDisposable
 
 class SearchViewModel() : MovieViewModelAll() {
 
+    lateinit var moviePagedList: LiveData<PagedList<Movie>>
     private val apiService: TMDBInterface = TMDBConnect.getClient()
-//    private val movieRepository: SearchMoviePagedListRepository =
-//        SearchMoviePagedListRepository(apiService)
     private lateinit var moviesDataSourceFactory: SearchMovieDataSourceFactory
-//    private lateinit var moviePagedList: LiveData<PagedList<Movie>>
-
-
-//    val  networkState : LiveData<NetworkState> by lazy {
-//        movieRepository.getNetworkState()
-//    }
 
     fun listIsEmpty(): Boolean {
-        return /*moviePagedList.value?.isEmpty() ?:*/ true
+        return moviePagedList.value?.isEmpty() ?: true
     }
-
 
     fun Search(searchMovietext: String): LiveData<PagedList<Movie>> {
         return fetchLiveMoviePagedList(
@@ -56,15 +48,15 @@ class SearchViewModel() : MovieViewModelAll() {
             .setPageSize(Const.POST_PER_PAGE)
             .build()
 
-        val moviePagedList = LivePagedListBuilder(moviesDataSourceFactory, config).build()
+        moviePagedList = LivePagedListBuilder(moviesDataSourceFactory, config).build()
         return moviePagedList
     }
 
-//        fun getNetworkState(): LiveData<NetworkState> {
-//        return Transformations.switchMap<SearchMovieDataSource, NetworkState>(
-//            moviesDataSourceFactory.moviesLiveDataSource, SearchMovieDataSource::networkState
-//        )
-//    }
+    fun getNetworkState(): LiveData<NetworkState> {
+        return Transformations.switchMap<SearchMovieDataSource, NetworkState>(
+            moviesDataSourceFactory.moviesLiveDataSource, SearchMovieDataSource::networkState
+        )
+    }
 
 //    fun invalidDataSource() {
 //        moviesDataSourceFactory.searchMovieDataSource?.invalidate()

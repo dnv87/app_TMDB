@@ -1,6 +1,7 @@
 package com.mttnow.android.app_tmdb.data.repository
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.modeldata.Movie
@@ -11,6 +12,7 @@ class SearchMovieDataSourceFactory(
     private val compositeDisposable: CompositeDisposable
 ) : DataSource.Factory<Int, Movie>() {
 
+    val moviesLiveDataSource =  MutableLiveData<SearchMovieDataSource>()
     var searchMovieDataSource: SearchMovieDataSource? = null
 
     private var searchMovieText = ""
@@ -22,6 +24,7 @@ class SearchMovieDataSourceFactory(
         searchMovieDataSource = SearchMovieDataSource(apiService, compositeDisposable)
         searchMovieDataSource?.textQueryMovie(searchMovieText)
 
+        moviesLiveDataSource.postValue(searchMovieDataSource)
         return searchMovieDataSource!!
     }
 }
