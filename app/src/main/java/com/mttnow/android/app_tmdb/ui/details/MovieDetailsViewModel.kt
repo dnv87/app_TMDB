@@ -2,31 +2,32 @@ package com.mttnow.android.app_tmdb.ui.details
 
 import androidx.lifecycle.LiveData
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
+import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
+import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
+import com.mttnow.android.app_tmdb.data.repository.MovieDataSourceDetails
 import com.mttnow.android.app_tmdb.modeldata.MovieDetails
 import com.mttnow.android.app_tmdb.ui.MovieViewModelAll
-import io.reactivex.disposables.CompositeDisposable
 
-class MovieDetailsViewModel (private val movieRepository : MovieDetailsRepository)  : MovieViewModelAll() {
+class MovieDetailsViewModel() : MovieViewModelAll() {
 
-//    private val compositeDisposable = CompositeDisposable()
-
+    lateinit var movieDetailsNetworkDataSource: MovieDataSourceDetails
+    private val apiService: TMDBInterface = TMDBConnect.getClient()
 
     private var movieId: Int = 0
-    fun getMovieId(_i: Int){
+    fun getMovieId(_i: Int) {
         movieId = _i
     }
 
+    fun fetchSingleMovieDetails(): LiveData<MovieDetails> {
 
-    val  movieDetails : LiveData<MovieDetails> by lazy {
-        movieRepository.fetchSingleMovieDetails(compositeDisposable,movieId)
+        movieDetailsNetworkDataSource = MovieDataSourceDetails(apiService, compositeDisposable)
+        movieDetailsNetworkDataSource.fetchMovieDetails(movieId)
+
+        return movieDetailsNetworkDataSource.downloadedMovieResponse
+
     }
 
-    val networkState : LiveData<NetworkState> by lazy {
-        movieRepository.getMovieDetailsNetworkState()
+    fun getMovieDetailsNetworkState(): LiveData<NetworkState> {
+        return movieDetailsNetworkDataSource.networkState
     }
-
-//    override fun onCleared() {
-//        super.onCleared()
-//        compositeDisposable.dispose()
-//    }
 }

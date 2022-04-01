@@ -32,9 +32,6 @@ class MovieDetailsFragment : Fragment() {
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
 
-//    private lateinit var viewModel: MovieDetailsViewModel
-    private lateinit var movieRepository: MovieDetailsRepository
-
     val args: MovieDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -52,8 +49,6 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val apiService: TMDBInterface = TMDBConnect.getClient()
-        movieRepository = MovieDetailsRepository(apiService)
         val viewModel = getViewModel()
 
         //получаем аргумент из Safe Args
@@ -65,11 +60,11 @@ class MovieDetailsFragment : Fragment() {
         //передаём во ViewModel MovieId для запроса
         viewModel.getMovieId(argMovieId)
 
-        viewModel.movieDetails.observe(viewLifecycleOwner, Observer {
+        viewModel.fetchSingleMovieDetails().observe(viewLifecycleOwner, Observer {
             bindUI(it)
         })
 
-        viewModel.networkState.observe(viewLifecycleOwner, Observer {
+        viewModel.getMovieDetailsNetworkState().observe(viewLifecycleOwner, Observer {
             binding.progressBar.visibility =
                 if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
             binding.txtError.visibility = if (it == NetworkState.ERROR) View.VISIBLE else View.GONE
@@ -100,7 +95,7 @@ class MovieDetailsFragment : Fragment() {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return MovieDetailsViewModel(movieRepository) as T
+                return MovieDetailsViewModel() as T
             }
         })[MovieDetailsViewModel::class.java]
     }
