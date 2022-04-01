@@ -11,7 +11,6 @@ import com.mttnow.android.app_tmdb.ui.MovieViewModelAll
 class MovieDetailsViewModel() : MovieViewModelAll() {
 
     lateinit var movieDetailsNetworkDataSource: MovieDataSourceDetails
-    private val apiService: TMDBInterface = TMDBConnect.getClient()
 
     private var movieId: Int = 0
     fun getMovieId(_i: Int) {

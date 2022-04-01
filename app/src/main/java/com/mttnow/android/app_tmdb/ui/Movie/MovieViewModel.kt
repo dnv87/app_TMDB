@@ -18,7 +18,6 @@ class MovieViewModel() : MovieViewModelAll() {
 
     lateinit var moviePagedList: LiveData<PagedList<Movie>>
     lateinit var moviesDataSourceFactory: MovieDataSourceFactory
-    private val apiService: TMDBInterface = TMDBConnect.getClient()
     private var argQueryMovie: Boolean = Const.GET_POPULAR_MOVIE
 
     fun getMovieId(_i: Boolean) {

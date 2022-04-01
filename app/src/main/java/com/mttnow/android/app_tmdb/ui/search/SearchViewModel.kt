@@ -18,7 +18,6 @@ import io.reactivex.disposables.CompositeDisposable
 class SearchViewModel() : MovieViewModelAll() {
 
     lateinit var moviePagedList: LiveData<PagedList<Movie>>
-    private val apiService: TMDBInterface = TMDBConnect.getClient()
     private lateinit var moviesDataSourceFactory: SearchMovieDataSourceFactory
 
     fun listIsEmpty(): Boolean {
