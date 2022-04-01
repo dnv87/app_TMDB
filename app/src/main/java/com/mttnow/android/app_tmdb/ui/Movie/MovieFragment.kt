@@ -1,6 +1,5 @@
 package com.mttnow.android.app_tmdb.ui.Movie
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +14,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
-import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
-import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.databinding.FragmentMovieBinding
 import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
 
@@ -25,14 +22,11 @@ class MovieFragment : Fragment() {
 
     private var _binding: FragmentMovieBinding? = null
     private lateinit var viewModel: MovieViewModel
-    lateinit var movieRepository: MoviePagedListRepository
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
-    val args: MovieFragmentArgs by navArgs() // получаем аргумент Safe Args
-
+    private val args: MovieFragmentArgs by navArgs() // получаем аргумент Safe Args
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,21 +35,21 @@ class MovieFragment : Fragment() {
     ): View {
 
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        return root
+        return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val getMovie = args.top
+        val getQueryMovie = args.top
 
-        val apiService: TMDBInterface = TMDBConnect.getClient()
-        movieRepository = MoviePagedListRepository(apiService, getMovie)
-
+        //инициализировали viewModel
         viewModel = getViewModel()
+        //передали параметр загрузки Movie во viewModel
+        viewModel.getMovieId(getQueryMovie)
+
 
         val movieAdapter = MoviePagedListAdapter {
             val argTo = Bundle().apply {
@@ -64,9 +58,7 @@ class MovieFragment : Fragment() {
             findNavController().navigate(R.id.navigation_movie_detail, args = argTo)
         }
 
-
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
-
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 val viewType = movieAdapter.getItemViewType(position)
@@ -80,11 +72,12 @@ class MovieFragment : Fragment() {
         binding.rvMovieList.setHasFixedSize(true)
         binding.rvMovieList.adapter = movieAdapter
 
-        viewModel.moviePagedList.observe(viewLifecycleOwner, Observer {
+        //посылаем запрос Movie во viewModel и слушаем ответ
+        viewModel.fetchLiveMoviePagedList().observe(viewLifecycleOwner, Observer {
             movieAdapter.submitList(it)
         })
 
-        viewModel.networkState.observe(viewLifecycleOwner, Observer {
+        viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
             binding.progressBarPopular.visibility =
                 if (viewModel.listIsEmpty() && it == NetworkState.LOADING
                 ) View.VISIBLE else View.GONE
@@ -102,7 +95,7 @@ class MovieFragment : Fragment() {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return MovieViewModel(movieRepository) as T
+                return MovieViewModel() as T
             }
         })[MovieViewModel::class.java]
     }
