@@ -36,23 +36,25 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel = getViewModel()
+
         binding.editTextSearch.setOnEditorActionListener { textView, actionId, keyEvent ->
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
-                    val textbuf = binding.editTextSearch.text.toString()
-                    getRequestMovie(textbuf)
-                    Log.d("my", "editText $textbuf");
-                    binding.editTextSearch.isFocusable = false
+                    val searchMovieText = binding.editTextSearch.text.toString()
+                    viewModel.Search(searchMovieText)
+                    noNullMovie()
+//                    binding.editTextSearch.isFocusable = false
                     true
                 }
                 else -> false
             }
         }
-        viewModel = getViewModel()
+
+        if (viewModel.moviePagedList != null) noNullMovie()
     }
 
-    private fun getRequestMovie(searchMovieText: String) {
-
+    private fun noNullMovie() {
         val movieAdapter = MoviePagedListAdapter {
             //добавляем параметр для передачи его для MovieDetails
             val argTo = Bundle().apply {
@@ -60,7 +62,6 @@ class SearchFragment : Fragment() {
             }
             findNavController().navigate(R.id.navigation_movie_detail, args = argTo)
         }
-
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -70,13 +71,12 @@ class SearchFragment : Fragment() {
                 else return 3                                              // NETWORK_VIEW_TYPE will occupy all 3 span
             }
         }
-
         //adapter
         binding.rvMovieList.layoutManager = gridLayoutManager
         binding.rvMovieList.setHasFixedSize(true)
         binding.rvMovieList.adapter = movieAdapter
 
-        viewModel.Search(searchMovieText).observe(viewLifecycleOwner, Observer {
+        viewModel.moviePagedList?.observe(viewLifecycleOwner, Observer {
             movieAdapter.submitList(it)
         })
 

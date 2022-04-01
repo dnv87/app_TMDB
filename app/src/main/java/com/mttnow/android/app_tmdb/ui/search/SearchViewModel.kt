@@ -15,11 +15,11 @@ import io.reactivex.disposables.CompositeDisposable
 
 class SearchViewModel() : MovieViewModelAll() {
 
-    lateinit var moviePagedList: LiveData<PagedList<Movie>>
+    var moviePagedList: LiveData<PagedList<Movie>>? = null
     private lateinit var moviesDataSourceFactory: SearchMovieDataSourceFactory
 
     fun listIsEmpty(): Boolean {
-        return moviePagedList.value?.isEmpty() ?: true
+        return moviePagedList?.value?.isEmpty() ?: true
     }
 
     fun Search(searchMovietext: String): LiveData<PagedList<Movie>> {
@@ -46,7 +46,7 @@ class SearchViewModel() : MovieViewModelAll() {
             .build()
 
         moviePagedList = LivePagedListBuilder(moviesDataSourceFactory, config).build()
-        return moviePagedList
+        return moviePagedList!!
     }
 
     fun getNetworkState(): LiveData<NetworkState> {
