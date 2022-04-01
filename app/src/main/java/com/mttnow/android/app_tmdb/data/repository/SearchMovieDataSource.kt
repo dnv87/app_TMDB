@@ -31,8 +31,6 @@ class SearchMovieDataSource(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Movie>
     ) {
-
-        Log.d("my", "SearchMDS $SearchQueryMovie")
         networkState.postValue(NetworkState.LOADING)
         compositeDisposable.add(
             apiService.getSearchMovie(page = page, query = SearchQueryMovie)
@@ -41,15 +39,14 @@ class SearchMovieDataSource(
                     {
                         callback.onResult(it.movieList, null, page + 1)
                         networkState.postValue(NetworkState.LOADED)
-                        Log.d("my", "SearchMDS ${it.movieList.toString()}")
+                        Log.d("my", "SearchMovieDataSource ${it.toString()}")
                     },
                     {
                         networkState.postValue(NetworkState.ERROR)
-                        Log.e("MovieDataSource", it.message!!)
+                        Log.e("SearchMovieDataSource", it.message!!)
                     }
                 )
         )
-
     }
 
 
@@ -73,10 +70,9 @@ class SearchMovieDataSource(
                     }
                 )
         )
-
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
 
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
     }
 }

@@ -1,6 +1,5 @@
 package com.mttnow.android.app_tmdb.ui.adapter
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,6 +18,7 @@ class MovieItemViewHolder(view: View, val onMovieCkick: (Int) -> Unit) :
     private val ivMoviePoster = itemView.findViewById<ImageView>(R.id.cv_iv_movie_poster)
 
     private var movieId: Int = 0
+
     fun bind(movie: Movie?) {
 
         tvMovieTitle.text = movie?.title

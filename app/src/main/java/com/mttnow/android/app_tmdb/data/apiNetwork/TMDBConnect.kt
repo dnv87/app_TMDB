@@ -42,6 +42,5 @@ object TMDBConnect {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(TMDBInterface::class.java)
-
     }
 }

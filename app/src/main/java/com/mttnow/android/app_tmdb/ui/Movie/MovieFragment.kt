@@ -48,7 +48,7 @@ class MovieFragment : Fragment() {
         //инициализировали viewModel
         viewModel = getViewModel()
         //передали параметр загрузки Movie во viewModel
-        viewModel.getMovieId(getQueryMovie)
+        viewModel.getMovie(getQueryMovie)
 
 
         val movieAdapter = MoviePagedListAdapter {

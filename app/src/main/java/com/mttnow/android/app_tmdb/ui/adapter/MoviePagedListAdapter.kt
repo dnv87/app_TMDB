@@ -1,7 +1,5 @@
 package com.mttnow.android.app_tmdb.ui.adapter
 
-
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,7 +58,6 @@ class MoviePagedListAdapter(val onMovieCkick: (Int) -> Unit) :
             MOVIE_VIEW_TYPE
         }
     }
-
 
     fun setNetworkState(newNetworkState: NetworkState) {
         val previousState = this.networkState

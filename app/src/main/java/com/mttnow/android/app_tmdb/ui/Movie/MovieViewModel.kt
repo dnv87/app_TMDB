@@ -6,8 +6,6 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
-import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
-import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.data.repository.MovieDataSource
 import com.mttnow.android.app_tmdb.data.repository.MovieDataSourceFactory
 import com.mttnow.android.app_tmdb.modeldata.Movie
@@ -20,7 +18,7 @@ class MovieViewModel() : MovieViewModelAll() {
     lateinit var moviesDataSourceFactory: MovieDataSourceFactory
     private var argQueryMovie: Boolean = Const.GET_POPULAR_MOVIE
 
-    fun getMovieId(_i: Boolean) {
+    fun getMovie(_i: Boolean) {
         argQueryMovie = _i
     }
 
@@ -30,7 +28,8 @@ class MovieViewModel() : MovieViewModelAll() {
 
     fun fetchLiveMoviePagedList(): LiveData<PagedList<Movie>> {
         moviesDataSourceFactory =
-            MovieDataSourceFactory(apiService, compositeDisposable, argQueryMovie)
+            MovieDataSourceFactory(apiService, compositeDisposable)
+        moviesDataSourceFactory.queryMovie(argQueryMovie)
 
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)

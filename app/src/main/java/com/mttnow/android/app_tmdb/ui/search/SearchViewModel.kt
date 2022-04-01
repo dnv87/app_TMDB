@@ -7,8 +7,6 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
-import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
-import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.data.repository.SearchMovieDataSource
 import com.mttnow.android.app_tmdb.data.repository.SearchMovieDataSourceFactory
 import com.mttnow.android.app_tmdb.modeldata.Movie
