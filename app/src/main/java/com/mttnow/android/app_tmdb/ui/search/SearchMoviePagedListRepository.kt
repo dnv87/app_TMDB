@@ -36,11 +36,11 @@ class SearchMoviePagedListRepository(private val apiService: TMDBInterface) {
         return moviePagedList
     }
 
-    /*fun getNetworkState(): LiveData<NetworkState> {
-        return Transformations.switchMap<SearchMovieDataSource, NetworkState>(
-            moviesDataSourceFactory.moviesLiveDataSource, SearchMovieDataSource::networkState
-        )
-    }*/
+//    fun getNetworkState(): LiveData<NetworkState> {
+//        return Transformations.switchMap<SearchMovieDataSource, NetworkState>(
+//            moviesDataSourceFactory.moviesLiveDataSource?, SearchMovieDataSource::networkState
+//        )
+//    }
 
 //    fun invalidDataSource() {
 //        moviesDataSourceFactory.searchMovieDataSource?.invalidate()

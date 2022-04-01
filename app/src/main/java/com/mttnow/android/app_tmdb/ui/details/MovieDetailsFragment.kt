@@ -32,7 +32,7 @@ class MovieDetailsFragment : Fragment() {
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: MovieDetailsViewModel
+//    private lateinit var viewModel: MovieDetailsViewModel
     private lateinit var movieRepository: MovieDetailsRepository
 
     val args: MovieDetailsFragmentArgs by navArgs()
@@ -52,18 +52,18 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val argmovieId: Int = args.movieId
-        (requireActivity() as MainActivity)?.hideBottomNavigation(true)
-
-
-        val movieId: Int = argmovieId
-
-
         val apiService: TMDBInterface = TMDBConnect.getClient()
         movieRepository = MovieDetailsRepository(apiService)
+        val viewModel = getViewModel()
 
+        //получаем аргумент из Safe Args
+        val argMovieId: Int = args.movieId
 
-        viewModel = getViewModel(movieId)
+        //указываем Activity что при загрузки фрагмента нужно спрятать BottomNavigationView
+        (requireActivity() as MainActivity)?.hideBottomNavigation(true)
+
+        //передаём во ViewModel MovieId для запроса
+        viewModel.getMovieId(argMovieId)
 
         viewModel.movieDetails.observe(viewLifecycleOwner, Observer {
             bindUI(it)
@@ -96,11 +96,11 @@ class MovieDetailsFragment : Fragment() {
     }
 
 
-    private fun getViewModel(movieId: Int): MovieDetailsViewModel {
+    private fun getViewModel(): MovieDetailsViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return MovieDetailsViewModel(movieRepository, movieId) as T
+                return MovieDetailsViewModel(movieRepository) as T
             }
         })[MovieDetailsViewModel::class.java]
     }

@@ -11,9 +11,9 @@ class SearchMovieDataSourceFactory(
     private val compositeDisposable: CompositeDisposable
 ) : DataSource.Factory<Int, Movie>() {
 
-    private var searchMovieDataSource: SearchMovieDataSource? = null
-    private var searchMovieText = ""
+    var searchMovieDataSource: SearchMovieDataSource? = null
 
+    private var searchMovieText = ""
     fun searchMovieText (_str: String){
         searchMovieText = _str
     }
