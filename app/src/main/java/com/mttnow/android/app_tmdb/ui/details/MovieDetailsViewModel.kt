@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.repository.MovieDataSourceDetails
 import com.mttnow.android.app_tmdb.modeldata.MovieDetails
-import com.mttnow.android.app_tmdb.ui.MovieViewModelAll
+import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
 
-class MovieDetailsViewModel() : MovieViewModelAll() {
+class MovieDetailsViewModel() : BaseMovieViewModel() {
 
     lateinit var movieDetailsNetworkDataSource: MovieDataSourceDetails
 

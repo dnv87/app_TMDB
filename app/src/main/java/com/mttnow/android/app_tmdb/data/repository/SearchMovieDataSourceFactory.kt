@@ -11,8 +11,8 @@ class SearchMovieDataSourceFactory(
     private val compositeDisposable: CompositeDisposable
 ) : DataSource.Factory<Int, Movie>() {
 
-    val moviesLiveDataSource = MutableLiveData<SearchMovieDataSource>()
-    var searchMovieDataSource: SearchMovieDataSource? = null
+    val moviesLiveDataSource = MutableLiveData<MovieDataSourceSearch>()
+    var movieDataSourceSearch: MovieDataSourceSearch? = null
 
     private var searchMovieText = ""
     fun searchMovieText(_str: String) {
@@ -20,10 +20,10 @@ class SearchMovieDataSourceFactory(
     }
 
     override fun create(): DataSource<Int, Movie> {
-        searchMovieDataSource = SearchMovieDataSource(apiService, compositeDisposable)
-        searchMovieDataSource?.textQueryMovie(searchMovieText)
+        movieDataSourceSearch = MovieDataSourceSearch(apiService, compositeDisposable)
+        movieDataSourceSearch?.textQueryMovie(searchMovieText)
 
-        moviesLiveDataSource.postValue(searchMovieDataSource)
-        return searchMovieDataSource!!
+        moviesLiveDataSource.postValue(movieDataSourceSearch)
+        return movieDataSourceSearch!!
     }
 }

@@ -1,6 +1,7 @@
 package com.mttnow.android.app_tmdb.data.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.mttnow.android.app_tmdb.data.Const.FIRST_PAGE
@@ -10,62 +11,32 @@ import com.mttnow.android.app_tmdb.modeldata.Movie
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class SearchMovieDataSource(
+class MovieDataSourcePopular(
     private val apiService: TMDBInterface,
     private val compositeDisposable: CompositeDisposable,
 ) : PageKeyedDataSource<Int, Movie>() {
 
+    private val _networkState = MutableLiveData<NetworkState>()
+    val networkState: LiveData<NetworkState>
+        get() = _networkState
+
     private var page = FIRST_PAGE
-
-//--------------------------------------------------------------
-// пробрасываем SearchQueryMovie из SearchMovieDataFactory
-    private var SearchQueryMovie = ""
-    fun textQueryMovie(_str: String) {
-        SearchQueryMovie = _str
-    }
-//--------------------------------------------------------------
-
-    val networkState: MutableLiveData<NetworkState> = MutableLiveData()
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Movie>
     ) {
-        networkState.postValue(NetworkState.LOADING)
+        _networkState.postValue(NetworkState.LOADING)
         compositeDisposable.add(
-            apiService.getSearchMovie(page = page, query = SearchQueryMovie)
+            apiService.getPopularMovie(page)
                 .subscribeOn(Schedulers.io())
                 .subscribe(
                     {
                         callback.onResult(it.movieList, null, page + 1)
-                        networkState.postValue(NetworkState.LOADED)
-                        Log.d("my", "SearchMovieDataSource ${it.toString()}")
+                        _networkState.postValue(NetworkState.LOADED)
                     },
                     {
-                        networkState.postValue(NetworkState.ERROR)
-                        Log.e("SearchMovieDataSource", it.message!!)
-                    }
-                )
-        )
-    }
-
-
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
-        networkState.postValue(NetworkState.LOADING)
-        compositeDisposable.add(
-            apiService.getSearchMovie(page = params.key, query = SearchQueryMovie)
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                    {
-                        if (it.total_pages >= params.key) {
-                            callback.onResult(it.movieList, params.key + 1)
-                            networkState.postValue(NetworkState.LOADED)
-                        } else {
-                            networkState.postValue(NetworkState.ENDOFLIST)
-                        }
-                    },
-                    {
-                        networkState.postValue(NetworkState.ERROR)
+                        _networkState.postValue(NetworkState.ERROR)
                         Log.e("MovieDataSource", it.message!!)
                     }
                 )
@@ -73,6 +44,30 @@ class SearchMovieDataSource(
     }
 
 
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
+        _networkState.postValue(NetworkState.LOADING)
+        compositeDisposable.add(
+            apiService.getPopularMovie(params.key)
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    {
+                        if (it.total_pages >= params.key) {
+                            callback.onResult(it.movieList, params.key + 1)
+                            _networkState.postValue(NetworkState.LOADED)
+                        } else {
+                            _networkState.postValue(NetworkState.ENDOFLIST)
+                        }
+                    },
+                    {
+                        _networkState.postValue(NetworkState.ERROR)
+                        Log.e("MovieDataSource", it.message!!)
+                    }
+                )
+        )
+
+    }
+
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
+        //not used
     }
 }

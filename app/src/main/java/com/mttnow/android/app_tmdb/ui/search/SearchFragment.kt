@@ -95,6 +95,10 @@ class SearchFragment : Fragment() {
         })
     }
 
+    private fun adapterSearch(){
+
+    }
+
     private fun getViewModel(): SearchViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {

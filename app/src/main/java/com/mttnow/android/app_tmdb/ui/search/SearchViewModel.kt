@@ -1,19 +1,18 @@
 package com.mttnow.android.app_tmdb.ui.search
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
-import com.mttnow.android.app_tmdb.data.repository.SearchMovieDataSource
+import com.mttnow.android.app_tmdb.data.repository.MovieDataSourceSearch
 import com.mttnow.android.app_tmdb.data.repository.SearchMovieDataSourceFactory
 import com.mttnow.android.app_tmdb.modeldata.Movie
-import com.mttnow.android.app_tmdb.ui.MovieViewModelAll
+import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
 import io.reactivex.disposables.CompositeDisposable
 
-class SearchViewModel() : MovieViewModelAll() {
+class SearchViewModel() : BaseMovieViewModel() {
 
     var moviePagedList: LiveData<PagedList<Movie>>? = null
     private lateinit var moviesDataSourceFactory: SearchMovieDataSourceFactory
@@ -50,8 +49,8 @@ class SearchViewModel() : MovieViewModelAll() {
     }
 
     fun getNetworkState(): LiveData<NetworkState> {
-        return Transformations.switchMap<SearchMovieDataSource, NetworkState>(
-            moviesDataSourceFactory.moviesLiveDataSource, SearchMovieDataSource::networkState
+        return Transformations.switchMap<MovieDataSourceSearch, NetworkState>(
+            moviesDataSourceFactory.moviesLiveDataSource, MovieDataSourceSearch::networkState
         )
     }
 

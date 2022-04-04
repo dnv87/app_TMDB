@@ -5,7 +5,7 @@ import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import io.reactivex.disposables.CompositeDisposable
 
-open class MovieViewModelAll: ViewModel() {
+abstract class BaseMovieViewModel: ViewModel() {
     val compositeDisposable = CompositeDisposable()
     val apiService: TMDBInterface = TMDBConnect.getClient()
 
@@ -14,4 +14,9 @@ open class MovieViewModelAll: ViewModel() {
 //        compositeDisposable.dispose()
         compositeDisposable.clear()
     }
+
+    fun net(){
+
+    }
+
 }
