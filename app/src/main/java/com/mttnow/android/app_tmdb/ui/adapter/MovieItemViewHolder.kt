@@ -24,10 +24,12 @@ class MovieItemViewHolder(view: View, val onMovieCkick: (Int) -> Unit) :
         tvMovieTitle.text = movie?.title
         tvMovieRelease.text = movie?.releaseDate
 
-        val moviePosterURL = Const.THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE342 + movie?.poster_path
-        val into = Glide.with(itemView.context)
-            .load(moviePosterURL)
-            .into(ivMoviePoster)
+        if (movie?.poster_path != null) {
+            val moviePosterURL = Const.THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE342 + movie?.poster_path
+            val into = Glide.with(itemView.context)
+                .load(moviePosterURL)
+                .into(ivMoviePoster)
+        }else ivMoviePoster.setImageResource(R.drawable.poster_placeholder)
 
         movieId = movie!!.id
 
