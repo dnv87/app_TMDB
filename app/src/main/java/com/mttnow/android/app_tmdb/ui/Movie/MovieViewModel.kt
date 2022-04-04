@@ -26,9 +26,6 @@ class MovieViewModel() : BaseMovieViewModel() {
         return moviePagedList.value?.isEmpty() ?: true
     }
 
-    private lateinit var networkState:LiveData<NetworkState>
-
-
     fun fetchLiveMoviePagedList(): LiveData<PagedList<Movie>> {
         moviesDataSourceFactory = if (argQueryMoviePopular) {
             MovieDataSourceFactoryPopular(apiService, compositeDisposable)

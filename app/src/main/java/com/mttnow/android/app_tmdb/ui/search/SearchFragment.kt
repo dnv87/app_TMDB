@@ -18,6 +18,7 @@ class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private lateinit var viewModel: SearchViewModel
+    private lateinit var movieAdapter: MoviePagedListAdapter
 
     private val binding get() = _binding!!
 
@@ -37,23 +38,7 @@ class SearchFragment : Fragment() {
 
         viewModel = getViewModel()
 
-        binding.editTextSearch.setOnEditorActionListener { textView, actionId, keyEvent ->
-            when (actionId) {
-                EditorInfo.IME_ACTION_DONE -> {
-                    val searchMovieText = binding.editTextSearch.text.toString()
-                    viewModel.Search(searchMovieText)
-                    noNullMovie()
-                    true
-                }
-                else -> false
-            }
-        }
-        // если у нас остася список фильмов то при переходе с фрагмента Details мы его показываем
-        if (viewModel.moviePagedList != null) noNullMovie()
-    }
-
-    private fun noNullMovie() {
-        val movieAdapter = MoviePagedListAdapter {
+        movieAdapter = MoviePagedListAdapter {
             //добавляем параметр для передачи его для MovieDetails
             val argTo = Bundle().apply {
                 putInt("Movie_id", it)
@@ -65,6 +50,7 @@ class SearchFragment : Fragment() {
             requireContext(),
             Const.SPAN_COUNT
         )
+
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 val viewType = movieAdapter.getItemViewType(position)
@@ -72,11 +58,30 @@ class SearchFragment : Fragment() {
                 else return Const.SPAN_COUNT     //это исключение говорит о том сколько будет занимать NETWORK_VIEW_TYPE
             }
         }
+
         //adapter
         binding.rvMovieList.layoutManager = gridLayoutManager
         binding.rvMovieList.setHasFixedSize(true)
         binding.rvMovieList.adapter = movieAdapter
 
+        //Search
+        binding.editTextSearch.setOnEditorActionListener { textView, actionId, keyEvent ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    val searchMovieText = binding.editTextSearch.text.toString()
+                    viewModel.Search(searchMovieText)
+                    observeMovie()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // если у нас остася список фильмов то при переходе с фрагмента Details мы его показываем
+        if (!viewModel.listIsEmpty()) observeMovie()
+    }
+
+    private fun observeMovie() {
         viewModel.moviePagedList?.observe(viewLifecycleOwner, Observer {
             movieAdapter.submitList(it)
         })
@@ -93,10 +98,6 @@ class SearchFragment : Fragment() {
                 movieAdapter.setNetworkState(it)
             }
         })
-    }
-
-    private fun adapterSearch(){
-
     }
 
     private fun getViewModel(): SearchViewModel {

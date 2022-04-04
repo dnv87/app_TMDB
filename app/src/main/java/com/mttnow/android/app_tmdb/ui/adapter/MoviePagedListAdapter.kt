@@ -16,7 +16,6 @@ class MoviePagedListAdapter(val onMovieCkick: (Int) -> Unit) :
 
     val MOVIE_VIEW_TYPE = 1
     val NETWORK_VIEW_TYPE = 2
-
     private var networkState: NetworkState? = null
 
 
@@ -44,11 +43,6 @@ class MoviePagedListAdapter(val onMovieCkick: (Int) -> Unit) :
         }
     }
 
-
-    private fun hasExtraRow(): Boolean {
-        return networkState != null && networkState != NetworkState.LOADED
-    }
-
     override fun getItemCount(): Int {
         return super.getItemCount() + if (hasExtraRow()) 1 else 0
     }
@@ -61,6 +55,9 @@ class MoviePagedListAdapter(val onMovieCkick: (Int) -> Unit) :
         }
     }
 
+    private fun hasExtraRow(): Boolean {
+        return networkState != null && networkState != NetworkState.LOADED
+    }
 
     fun setNetworkState(newNetworkState: NetworkState) {
         val previousState = this.networkState
@@ -77,7 +74,5 @@ class MoviePagedListAdapter(val onMovieCkick: (Int) -> Unit) :
         } else if (hasExtraRow && previousState != newNetworkState) { //hasExtraRow is true and hadExtraRow true and (NetworkState.ERROR or NetworkState.ENDOFLIST)
             notifyItemChanged(itemCount - 1)       //add the network message at the end
         }
-
     }
-
 }
