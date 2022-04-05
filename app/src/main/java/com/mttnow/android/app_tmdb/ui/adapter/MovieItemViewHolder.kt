@@ -30,7 +30,7 @@ class MovieItemViewHolder(view: View, val onMovieCkick: (Int) -> Unit) :
             Glide.with(itemView.context)
                 .load(moviePosterURL)
                 .into(ivMoviePoster)
-        } else ivMoviePoster.setImageResource(R.drawable.poster_placeholder)
+        } else ivMoviePoster.setImageResource(R.drawable.ic_baseline_local_movies_24)
 
         movieId = movie!!.id
     }

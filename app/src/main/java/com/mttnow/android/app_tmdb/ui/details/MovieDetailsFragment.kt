@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.mttnow.android.app_tmdb.MainActivity
+import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.databinding.FragmentMovieDetailsBinding
@@ -79,10 +80,13 @@ class MovieDetailsFragment : Fragment() {
         binding.movieBudget.text = formatCurrency.format(it.budget)
         binding.movieRevenue.text = formatCurrency.format(it.revenue)
 
-        val moviePosterURL = Const.THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE500 + it.posterPath
-        Glide.with(this)
-            .load(moviePosterURL)
-            .into(binding.ivMoviePoster);
+        if (it.posterPath != null){
+            val moviePosterURL = Const.THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE500 + it.posterPath
+            Glide.with(this)
+                .load(moviePosterURL)
+                .into(binding.ivMoviePoster);
+        }else binding.ivMoviePoster.setImageResource(R.drawable.ic_baseline_local_movies_24)
+
     }
 
 
