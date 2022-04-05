@@ -7,43 +7,43 @@
     android:orientation="vertical"
     tools:context=".ui.search.SearchFragment">
 
-        <ProgressBar
-            android:id="@+id/progress_bar_popular"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:visibility="gone" />
+    <ProgressBar
+        android:id="@+id/progress_bar_popular"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/txt_error_popular"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Connection Problem!!"
-            android:visibility="gone" />
-
-
-        <EditText
-            android:id="@+id/edit_text_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/search"
-            android:imeOptions="actionDone"
-            android:singleLine="true" />
+    <TextView
+        android:id="@+id/txt_error_popular"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Connection Problem!!"
+        android:visibility="gone" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_movie_list"
-            android:layout_width="match_parent"
-            android:layout_height="550dp"
-            android:layout_margin="4dp"
-            android:scrollbars="vertical" />
+    <EditText
+        android:id="@+id/edit_text_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search"
+        android:imeOptions="actionDone"
+        android:singleLine="true" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar_next_page"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
-            android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_movie_list"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:layout_margin="4dp"
+        android:scrollbars="vertical" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar_next_page"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 </LinearLayout>
