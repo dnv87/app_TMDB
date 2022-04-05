@@ -19,6 +19,10 @@ class MovieDataSourcePopular(
 
     val networkState: MutableLiveData<NetworkState> = MutableLiveData()
 
+//    fun getNetworkStateLiveData():LiveData<NetworkState>{
+//        return  networkState
+//    }
+
     private var page = FIRST_PAGE
 
     override fun loadInitial(
@@ -47,8 +51,8 @@ class MovieDataSourcePopular(
         networkState.postValue(NetworkState.LOADING)
         compositeDisposable.add(
             apiService.getPopularMovie(params.key)
+                .delay(1000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
-                .delaySubscription(2000, TimeUnit.MILLISECONDS)
                 .subscribe(
                     {
                         if (it.total_pages >= params.key) {

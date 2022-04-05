@@ -24,18 +24,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         val navView: BottomNavigationView = binding.navView
 
         navControl = findNavController(R.id.nav_host_fragment_activity_main)
 
-
-//         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_movie,
+                R.id.navigation_movie_popular,
                 R.id.navigation_movie_top,
                 R.id.navigation_search
             )
@@ -43,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navControl, appBarConfiguration)
         navView.setupWithNavController(navControl)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -53,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+
 
     fun hideBottomNavigation(hide: Boolean) {
         val nav = findViewById<BottomNavigationView>(R.id.nav_view)

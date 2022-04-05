@@ -14,8 +14,7 @@ class MovieDataSourceFactoryTop(
 ) : DataSource.Factory<Int, Movie>() {
 
     val moviesLiveDataSource = MutableLiveData<MovieDataSourceTop>()
-    private var movieDataSource:MovieDataSourceTop? = null
-
+    private var movieDataSource: MovieDataSourceTop? = null
 
 
     override fun create(): DataSource<Int, Movie> {

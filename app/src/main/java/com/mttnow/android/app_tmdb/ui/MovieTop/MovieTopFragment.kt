@@ -1,6 +1,7 @@
-package com.mttnow.android.app_tmdb.ui.Movie
+package com.mttnow.android.app_tmdb.ui.MovieTop
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,33 +11,27 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
-import com.mttnow.android.app_tmdb.databinding.FragmentMovieBinding
+import com.mttnow.android.app_tmdb.databinding.FragmentMovieTopBinding
 import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
 
 
-class MovieFragment : Fragment() {
+class MovieTopFragment : Fragment() {
 
-    private var _binding: FragmentMovieBinding? = null
-    private lateinit var viewModel: MovieViewModel
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    private var _binding: FragmentMovieTopBinding? = null
+    private lateinit var viewModel: MovieTopViewModel
     private val binding get() = _binding!!
-    private val args: MovieFragmentArgs by navArgs() // получаем аргумент Safe Args
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        _binding = FragmentMovieBinding.inflate(inflater, container, false)
-
+        _binding = FragmentMovieTopBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,13 +39,8 @@ class MovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val getQueryMovie = args.top
-
         //инициализировали viewModel
         viewModel = getViewModel()
-        //передали параметр загрузки Movie во viewModel
-        viewModel.getMovie(getQueryMovie)
-
 
         val movieAdapter = MoviePagedListAdapter {
             val argTo = Bundle().apply {
@@ -79,10 +69,11 @@ class MovieFragment : Fragment() {
         })
 
         viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
-            binding.progressBarPopular.visibility =
+            Log.d("my", "${it.msg}")
+            binding.progressBarTop.visibility =
                 if (/*viewModel.listIsEmpty() &&*/ it == NetworkState.LOADING
                 ) View.VISIBLE else View.GONE
-            binding.txtErrorPopular.visibility =
+            binding.txtErrorTop.visibility =
                 if (/*viewModel.listIsEmpty() &&*/ it == NetworkState.ERROR
                 ) View.VISIBLE else View.GONE
 
@@ -92,13 +83,14 @@ class MovieFragment : Fragment() {
         })
     }
 
-    private fun getViewModel(): MovieViewModel {
+
+    private fun getViewModel(): MovieTopViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return MovieViewModel() as T
+                return MovieTopViewModel() as T
             }
-        })[MovieViewModel::class.java]
+        })[MovieTopViewModel::class.java]
     }
 
 

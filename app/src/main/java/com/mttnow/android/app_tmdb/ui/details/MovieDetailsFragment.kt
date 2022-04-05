@@ -97,7 +97,7 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        (requireActivity() as MainActivity)?.hideBottomNavigation(false)
+        (requireActivity() as MainActivity).hideBottomNavigation(false)
         _binding = null
     }
 }

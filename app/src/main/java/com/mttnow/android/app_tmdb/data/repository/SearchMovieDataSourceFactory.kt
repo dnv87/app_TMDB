@@ -12,7 +12,7 @@ class SearchMovieDataSourceFactory(
 ) : DataSource.Factory<Int, Movie>() {
 
     val moviesLiveDataSource = MutableLiveData<MovieDataSourceSearch>()
-    var movieDataSourceSearch: MovieDataSourceSearch? = null
+    private var movieDataSourceSearch: MovieDataSourceSearch? = null
 
     private var searchMovieText = ""
     fun searchMovieText(_str: String) {
@@ -23,7 +23,7 @@ class SearchMovieDataSourceFactory(
         movieDataSourceSearch = MovieDataSourceSearch(apiService, compositeDisposable)
         movieDataSourceSearch?.textQueryMovie(searchMovieText)
 
-        moviesLiveDataSource.postValue(movieDataSourceSearch)
+        moviesLiveDataSource.postValue(movieDataSourceSearch!!)
         return movieDataSourceSearch!!
     }
 }

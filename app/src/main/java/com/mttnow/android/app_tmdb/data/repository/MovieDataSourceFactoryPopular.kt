@@ -15,15 +15,13 @@ class MovieDataSourceFactoryPopular(
 ) : DataSource.Factory<Int, Movie>() {
 
     val moviesLiveDataSource = MutableLiveData<MovieDataSourcePopular>()
-    private lateinit var movieDataSource:MovieDataSourcePopular
+    private var movieDataSource: MovieDataSourcePopular? = null
 
 
     override fun create(): DataSource<Int, Movie> {
         movieDataSource = MovieDataSourcePopular(apiService, compositeDisposable)
-
-        moviesLiveDataSource.postValue(movieDataSource)
-
-        return movieDataSource
+        moviesLiveDataSource.postValue(movieDataSource!!)
+        return movieDataSource!!
     }
 
 }

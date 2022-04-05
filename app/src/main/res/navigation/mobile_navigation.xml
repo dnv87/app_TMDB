@@ -3,34 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_movie">
+    app:startDestination="@+id/navigation_movie_popular">
 
     <fragment
-        android:id="@+id/navigation_movie"
-        android:name="com.mttnow.android.app_tmdb.ui.Movie.MovieFragment"
+        android:id="@+id/navigation_movie_popular"
+        android:name="com.mttnow.android.app_tmdb.ui.MoviePopular.MoviePopularFragment"
         android:label="@string/title_Popular"
-        tools:layout="@layout/fragment_movie">
-        <argument
-            android:name="top"
-            app:argType="boolean"
-            android:defaultValue="true" />
+        tools:layout="@layout/fragment_movie_popular">
         <action
-            android:id="@+id/action_navigation_movie_to_navigation_movie_detail"
+            android:id="@+id/action_navigation_movie_popular_to_navigation_movie_detail"
             app:destination="@id/navigation_movie_detail" />
     </fragment>
 
 
     <fragment
         android:id="@+id/navigation_movie_top"
-        android:name="com.mttnow.android.app_tmdb.ui.Movie.MovieFragment"
+        android:name="com.mttnow.android.app_tmdb.ui.MovieTop.MovieTopFragment"
         android:label="@string/title_Top"
-        tools:layout="@layout/fragment_movie" >
-        <argument
-        android:name="top"
-        app:argType="boolean"
-        android:defaultValue="false" />
+        tools:layout="@layout/fragment_movie_top" >
         <action
-            android:id="@+id/action_navigation_movie_to_navigation_movie_detail"
+            android:id="@+id/action_navigation_movie_top_to_navigation_movie_detail"
             app:destination="@id/navigation_movie_detail" />
     </fragment>
 

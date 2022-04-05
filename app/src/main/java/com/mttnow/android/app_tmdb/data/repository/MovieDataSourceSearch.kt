@@ -18,7 +18,7 @@ class MovieDataSourceSearch(
 
     private var page = FIRST_PAGE
 
-//--------------------------------------------------------------
+    //--------------------------------------------------------------
 // пробрасываем SearchQueryMovie из SearchMovieDataFactory
     private var SearchQueryMovie = ""
     fun textQueryMovie(_str: String) {
@@ -53,10 +53,10 @@ class MovieDataSourceSearch(
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         networkState.postValue(NetworkState.LOADING)
-         compositeDisposable.add(
+        compositeDisposable.add(
             apiService.getSearchMovie(page = params.key, query = SearchQueryMovie)
                 .subscribeOn(Schedulers.io())
-                //.delaySubscription(5000, TimeUnit.MILLISECONDS)
+                .delay(1000, TimeUnit.MILLISECONDS)
                 .subscribe(
                     {
                         if (it.total_pages >= params.key) {

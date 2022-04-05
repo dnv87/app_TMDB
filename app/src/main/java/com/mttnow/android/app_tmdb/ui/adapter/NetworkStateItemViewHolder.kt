@@ -12,6 +12,7 @@ class NetworkStateItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val tvErrMessageItemV = itemView.findViewById<View>(R.id.error_msg_item)
     private val tvErrMessageItemTv = itemView.findViewById<TextView>(R.id.error_msg_item)
 
+
     fun bind(networkState: NetworkState?) {
         if (networkState != null && networkState == NetworkState.LOADING) {
             pbItemLoad.visibility = View.VISIBLE;

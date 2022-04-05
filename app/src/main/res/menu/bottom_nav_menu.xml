@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_movie"
+        android:id="@+id/navigation_movie_popular"
         android:icon="@drawable/ic_baseline_emoji_emotions_24"
         android:title="@string/title_Popular" />
 

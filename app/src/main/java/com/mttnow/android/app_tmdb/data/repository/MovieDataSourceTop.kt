@@ -18,29 +18,30 @@ class MovieDataSourceTop(
     private val compositeDisposable: CompositeDisposable,
 ) : PageKeyedDataSource<Int, Movie>() {
 
-//    private val _networkState = MutableLiveData<NetworkState>()
-//    val networkState: LiveData<NetworkState>
-//        get() = _networkState //with this get, no need to implement get function to get networkSate
+    private val _networkState = MutableLiveData<NetworkState>()
+    val networkState: LiveData<NetworkState>
+        get() = _networkState //with this get, no need to implement get function to get networkSate
 
-    val networkState: MutableLiveData<NetworkState> = MutableLiveData()
+//    val networkState: MutableLiveData<NetworkState> = MutableLiveData()
+
+
     private var page = FIRST_PAGE
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Movie>
     ) {
-//        _networkState.postValue(NetworkState.LOADING)
-        networkState.postValue(NetworkState.LOADING)
+        _networkState.postValue(NetworkState.LOADING)
             compositeDisposable.add(
                 apiService.getTopMovie(page)
                     .subscribeOn(Schedulers.io())
                     .subscribe(
                         {
                             callback.onResult(it.movieList, null, page + 1)
-                            networkState.postValue(NetworkState.LOADED)
+                            _networkState.postValue(NetworkState.LOADED)
                         },
                         {
-                            networkState.postValue(NetworkState.ERROR)
+                            _networkState.postValue(NetworkState.ERROR)
                             Log.e("MovieDataSource", it.message!!)
                         }
                     )
@@ -49,22 +50,22 @@ class MovieDataSourceTop(
 
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
-        networkState.postValue(NetworkState.LOADING)
+        _networkState.postValue(NetworkState.LOADING)
             compositeDisposable.add(
                 apiService.getTopMovie(params.key)
                     .subscribeOn(Schedulers.io())
-//                    .delay(500, TimeUnit.MILLISECONDS)
+                    .delay(1000, TimeUnit.MILLISECONDS)
                     .subscribe(
                         {
                             if (it.total_pages >= params.key) {
                                 callback.onResult(it.movieList, params.key + 1)
-                                networkState.postValue(NetworkState.LOADED)
+                                _networkState.postValue(NetworkState.LOADED)
                             } else {
-                                networkState.postValue(NetworkState.ENDOFLIST)
+                                _networkState.postValue(NetworkState.ENDOFLIST)
                             }
                         },
                         {
-                            networkState.postValue(NetworkState.ERROR)
+                            _networkState.postValue(NetworkState.ERROR)
                             Log.e("MovieDataSource", it.message!!)
                         }
                     )
