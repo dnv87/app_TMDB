@@ -8,6 +8,7 @@ class NetworkState(val status: Status, val msg: String) {
         val LOADING: NetworkState
         val ERROR: NetworkState
         val ENDOFLIST: NetworkState
+        val FIRSTLOADING:NetworkState
 
         init {
             LOADED = NetworkState(Status.SUCCESS, "Success")
@@ -17,6 +18,8 @@ class NetworkState(val status: Status, val msg: String) {
             ERROR = NetworkState(Status.FAILED, "Something went wrong")
 
             ENDOFLIST = NetworkState(Status.FAILED, "You have reached the end")
+
+            FIRSTLOADING = NetworkState(Status.RUNNING, "Running first Page")
         }
     }
 }

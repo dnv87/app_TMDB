@@ -70,12 +70,14 @@ class MoviePopularFragment : Fragment() {
         })
 
         viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
-            Log.d("my", "${it.msg}")
+            binding.progressBarNextPage.visibility =
+                if (viewModel.listIsEmpty() && it == NetworkState.LOADING
+                ) View.VISIBLE else View.GONE
             binding.progressBarPopular.visibility =
-                if (/*viewModel.listIsEmpty() &&*/ it == NetworkState.LOADING
+                if (viewModel.listIsEmpty() || it == NetworkState.FIRSTLOADING
                 ) View.VISIBLE else View.GONE
             binding.txtErrorPopular.visibility =
-                if (/*viewModel.listIsEmpty() &&*/ it == NetworkState.ERROR
+                if (viewModel.listIsEmpty() && it == NetworkState.ERROR
                 ) View.VISIBLE else View.GONE
 
             if (!viewModel.listIsEmpty()) {

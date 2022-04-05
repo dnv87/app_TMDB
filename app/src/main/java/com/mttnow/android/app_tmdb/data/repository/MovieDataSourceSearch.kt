@@ -39,7 +39,7 @@ class MovieDataSourceSearch(
                 .subscribe(
                     {
                         callback.onResult(it.movieList, null, page + 1)
-                        networkState.postValue(NetworkState.LOADED)
+                        networkState.postValue(NetworkState.FIRSTLOADING)
                         Log.d("my", "SearchMovieDataSource ${it.toString()}")
                     },
                     {
@@ -56,7 +56,7 @@ class MovieDataSourceSearch(
         compositeDisposable.add(
             apiService.getSearchMovie(page = params.key, query = SearchQueryMovie)
                 .subscribeOn(Schedulers.io())
-                .delay(1000, TimeUnit.MILLISECONDS)
+                .delay(2000, TimeUnit.MILLISECONDS)
                 .subscribe(
                     {
                         if (it.total_pages >= params.key) {

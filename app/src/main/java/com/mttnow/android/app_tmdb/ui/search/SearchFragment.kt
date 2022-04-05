@@ -74,7 +74,6 @@ class SearchFragment : Fragment() {
                 else -> false
             }
         }
-
         // если у нас остася список фильмов то при переходе с фрагмента Details мы его показываем
         if (!viewModel.listIsEmpty()) observeMovie()
     }
@@ -86,8 +85,10 @@ class SearchFragment : Fragment() {
         })
 
         viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
-            binding.progressBarPopular.visibility =
+            binding.progressBarNextPage.visibility =
                 if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
+            binding.progressBarPopular.visibility =
+                if (it == NetworkState.FIRSTLOADING) View.VISIBLE else View.GONE
             binding.txtErrorPopular.visibility =
                 if (it == NetworkState.ERROR) View.VISIBLE else View.GONE
 

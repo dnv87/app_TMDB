@@ -69,12 +69,14 @@ class MovieTopFragment : Fragment() {
         })
 
         viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
-            Log.d("my", "${it.msg}")
+            binding.progressBarNextPage.visibility =
+                if (viewModel.listIsEmpty() && it == NetworkState.LOADING
+                ) View.VISIBLE else View.GONE
             binding.progressBarTop.visibility =
-                if (/*viewModel.listIsEmpty() &&*/ it == NetworkState.LOADING
+                if (viewModel.listIsEmpty() || it == NetworkState.FIRSTLOADING
                 ) View.VISIBLE else View.GONE
             binding.txtErrorTop.visibility =
-                if (/*viewModel.listIsEmpty() &&*/ it == NetworkState.ERROR
+                if (viewModel.listIsEmpty() && it == NetworkState.ERROR
                 ) View.VISIBLE else View.GONE
 
             if (!viewModel.listIsEmpty()) {
