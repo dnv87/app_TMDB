@@ -16,6 +16,7 @@ import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.databinding.FragmentMovieTopBinding
 import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
+import com.mttnow.android.app_tmdb.ui.search.SearchFragmentDirections
 
 
 class MovieTopFragment : Fragment() {
@@ -42,10 +43,9 @@ class MovieTopFragment : Fragment() {
         viewModel = getViewModel()
 
         val movieAdapter = MoviePagedListAdapter {
-            val argTo = Bundle().apply {
-                putInt("Movie_id", it)
-            }
-            findNavController().navigate(R.id.navigation_movie_detail, args = argTo)
+            val action =
+                MovieTopFragmentDirections.actionNavigationMovieTopToNavigationMovieDetail(it)
+            findNavController().navigate(action)
         }
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
