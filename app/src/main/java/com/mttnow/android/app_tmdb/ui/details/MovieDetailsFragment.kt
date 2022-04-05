@@ -1,6 +1,6 @@
 package com.mttnow.android.app_tmdb.ui.details
 
-
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +48,7 @@ class MovieDetailsFragment : Fragment() {
         val argMovieId: Int = args.movieId
 
         //указываем Activity что при загрузки фрагмента нужно спрятать BottomNavigationView
-        (requireActivity() as MainActivity)?.hideBottomNavigation(true)
+        (requireActivity() as MainActivity).hideBottomNavigation(true)
 
         //передаём во ViewModel MovieId для запроса
         viewModel.getMovieId(argMovieId)
@@ -66,6 +66,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun bindUI(it: MovieDetails) {
         binding.movieTitle.text = it.title
         binding.movieTagline.text = it.tagline

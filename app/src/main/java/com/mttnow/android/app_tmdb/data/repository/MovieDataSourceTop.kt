@@ -32,45 +32,46 @@ class MovieDataSourceTop(
         callback: LoadInitialCallback<Int, Movie>
     ) {
         _networkState.postValue(NetworkState.LOADING)
-            compositeDisposable.add(
-                apiService.getTopMovie(page)
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(
-                        {
-                            callback.onResult(it.movieList, null, page + 1)
-                            _networkState.postValue(NetworkState.LOADED)
-                        },
-                        {
-                            _networkState.postValue(NetworkState.ERROR)
-                            Log.e("MovieDataSource", it.message!!)
-                        }
-                    )
-            )
+        compositeDisposable.add(
+            apiService.getTopMovie(page)
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    {
+                        callback.onResult(it.movieList, null, page + 1)
+                        _networkState.postValue(NetworkState.FIRSTLOADING)
+                    },
+                    {
+                        _networkState.postValue(NetworkState.ERROR)
+                        Log.e("MovieDataSource", it.message!!)
+                    }
+                )
+        )
     }
 
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         _networkState.postValue(NetworkState.LOADING)
-            compositeDisposable.add(
-                apiService.getTopMovie(params.key)
-                    .subscribeOn(Schedulers.io())
-                    .delay(1000, TimeUnit.MILLISECONDS)
-                    .subscribe(
-                        {
-                            if (it.total_pages >= params.key) {
-                                callback.onResult(it.movieList, params.key + 1)
-                                _networkState.postValue(NetworkState.LOADED)
-                            } else {
-                                _networkState.postValue(NetworkState.ENDOFLIST)
-                            }
-                        },
-                        {
-                            _networkState.postValue(NetworkState.ERROR)
-                            Log.e("MovieDataSource", it.message!!)
+        compositeDisposable.add(
+            apiService.getTopMovie(params.key)
+                .subscribeOn(Schedulers.io())
+                .delay(1000, TimeUnit.MILLISECONDS)
+                .subscribe(
+                    {
+                        if (it.total_pages >= params.key) {
+                            callback.onResult(it.movieList, params.key + 1)
+                            _networkState.postValue(NetworkState.LOADED)
+                        } else {
+                            _networkState.postValue(NetworkState.ENDOFLIST)
                         }
-                    )
-            )
+                    },
+                    {
+                        _networkState.postValue(NetworkState.ERROR)
+                        Log.e("MovieDataSource", it.message!!)
+                    }
+                )
+        )
     }
+
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
     }

@@ -8,7 +8,7 @@ class NetworkState(val status: Status, val msg: String) {
         val LOADING: NetworkState
         val ERROR: NetworkState
         val ENDOFLIST: NetworkState
-        val FIRSTLOADING:NetworkState
+        val FIRSTLOADING: NetworkState
 
         init {
             LOADED = NetworkState(Status.SUCCESS, "Success")
@@ -24,9 +24,9 @@ class NetworkState(val status: Status, val msg: String) {
     }
 }
 
+
 enum class Status {
     RUNNING,
     SUCCESS,
     FAILED
-
 }

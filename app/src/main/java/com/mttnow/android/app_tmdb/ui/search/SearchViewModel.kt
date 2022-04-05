@@ -49,7 +49,8 @@ class SearchViewModel() : BaseMovieViewModel() {
 
     fun getNetworkState(): LiveData<NetworkState> {
         return Transformations.switchMap<MovieDataSourceSearch, NetworkState>(
-            moviesDataSourceFactory.moviesLiveDataSource, MovieDataSourceSearch::networkState)
+            moviesDataSourceFactory.moviesLiveDataSource, MovieDataSourceSearch::networkState
+        )
     }
 
 

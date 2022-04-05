@@ -1,7 +1,5 @@
 package com.mttnow.android.app_tmdb.ui.adapter
 
-
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +33,7 @@ class MoviePagedListAdapter(val onMovieCkick: (Int) -> Unit) :
         }
     }
 
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == MOVIE_VIEW_TYPE) {
             (holder as MovieItemViewHolder).bind(getItem(position))
@@ -43,9 +42,11 @@ class MoviePagedListAdapter(val onMovieCkick: (Int) -> Unit) :
         }
     }
 
+
     override fun getItemCount(): Int {
         return super.getItemCount() + if (hasExtraRow()) 1 else 0
     }
+
 
     override fun getItemViewType(position: Int): Int {
         return if (hasExtraRow() && position == itemCount - 1) {
@@ -55,9 +56,11 @@ class MoviePagedListAdapter(val onMovieCkick: (Int) -> Unit) :
         }
     }
 
+
     private fun hasExtraRow(): Boolean {
         return networkState != null && networkState != NetworkState.LOADED
     }
+
 
     fun setNetworkState(newNetworkState: NetworkState) {
         val previousState = this.networkState

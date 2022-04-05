@@ -47,7 +47,8 @@ class SearchFragment : Fragment() {
 
         val gridLayoutManager = GridLayoutManager(
             requireContext(),
-            Const.SPAN_COUNT)
+            Const.SPAN_COUNT
+        )
 
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {

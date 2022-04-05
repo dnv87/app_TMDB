@@ -1,7 +1,6 @@
 package com.mttnow.android.app_tmdb.data.repository
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.mttnow.android.app_tmdb.data.Const.FIRST_PAGE
@@ -18,12 +17,8 @@ class MovieDataSourcePopular(
 ) : PageKeyedDataSource<Int, Movie>() {
 
     val networkState: MutableLiveData<NetworkState> = MutableLiveData()
-
-//    fun getNetworkStateLiveData():LiveData<NetworkState>{
-//        return  networkState
-//    }
-
     private var page = FIRST_PAGE
+
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -36,7 +31,7 @@ class MovieDataSourcePopular(
                 .subscribe(
                     {
                         callback.onResult(it.movieList, null, page + 1)
-                        networkState.postValue(NetworkState.LOADED)
+                        networkState.postValue(NetworkState.FIRSTLOADING)
                     },
                     {
                         networkState.postValue(NetworkState.ERROR)
@@ -70,6 +65,7 @@ class MovieDataSourcePopular(
         )
 
     }
+
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         //not used

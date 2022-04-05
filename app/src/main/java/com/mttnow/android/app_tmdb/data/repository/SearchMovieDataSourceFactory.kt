@@ -14,10 +14,12 @@ class SearchMovieDataSourceFactory(
     val moviesLiveDataSource = MutableLiveData<MovieDataSourceSearch>()
     private var movieDataSourceSearch: MovieDataSourceSearch? = null
 
+
     private var searchMovieText = ""
     fun searchMovieText(_str: String) {
         searchMovieText = _str
     }
+
 
     override fun create(): DataSource<Int, Movie> {
         movieDataSourceSearch = MovieDataSourceSearch(apiService, compositeDisposable)

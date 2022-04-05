@@ -31,7 +31,8 @@ class MoviePopularViewModel() : BaseMovieViewModel() {
 
     fun getNetworkState(): LiveData<NetworkState> {
         return Transformations.switchMap<MovieDataSourcePopular, NetworkState>(
-        moviesDataSourceFactory.moviesLiveDataSource, MovieDataSourcePopular::networkState)
+            moviesDataSourceFactory.moviesLiveDataSource, MovieDataSourcePopular::networkState
+        )
     }
 
 

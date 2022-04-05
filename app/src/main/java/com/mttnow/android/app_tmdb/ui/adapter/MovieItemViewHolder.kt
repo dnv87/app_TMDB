@@ -17,8 +17,8 @@ class MovieItemViewHolder(view: View, val onMovieCkick: (Int) -> Unit) :
     private val tvMovieRelease = itemView.findViewById<TextView>(R.id.cv_movie_release_date)
     private val ivMoviePoster = itemView.findViewById<ImageView>(R.id.cv_iv_movie_poster)
 
-
     private var movieId: Int = 0
+
 
     fun bind(movie: Movie?) {
 
@@ -30,7 +30,7 @@ class MovieItemViewHolder(view: View, val onMovieCkick: (Int) -> Unit) :
             Glide.with(itemView.context)
                 .load(moviePosterURL)
                 .into(ivMoviePoster)
-        }else ivMoviePoster.setImageResource(R.drawable.poster_placeholder)
+        } else ivMoviePoster.setImageResource(R.drawable.poster_placeholder)
 
         movieId = movie!!.id
     }
