@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mttnow.android.app_tmdb.R
+import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.databinding.FragmentMovieBinding
 import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
@@ -62,7 +63,7 @@ class MovieFragment : Fragment() {
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 val viewType = movieAdapter.getItemViewType(position)
-                if (viewType == movieAdapter.MOVIE_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 2 span
+                if (viewType == Const.MOVIE_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 2 span
                 else return 2                                              // NETWORK_VIEW_TYPE will occupy all 2 span
             }
         }
@@ -73,16 +74,16 @@ class MovieFragment : Fragment() {
         binding.rvMovieList.adapter = movieAdapter
 
         //посылаем запрос Movie во viewModel и слушаем ответ
-        viewModel.fetchLiveMoviePagedList().observe(viewLifecycleOwner, Observer {
+        viewModel.getLiveMoviePagedList().observe(viewLifecycleOwner, Observer {
             movieAdapter.submitList(it)
         })
 
         viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
             binding.progressBarPopular.visibility =
-                if (viewModel.listIsEmpty() && it == NetworkState.LOADING
+                if (/*viewModel.listIsEmpty() &&*/ it == NetworkState.LOADING
                 ) View.VISIBLE else View.GONE
             binding.txtErrorPopular.visibility =
-                if (viewModel.listIsEmpty() && it == NetworkState.ERROR
+                if (/*viewModel.listIsEmpty() &&*/ it == NetworkState.ERROR
                 ) View.VISIBLE else View.GONE
 
             if (!viewModel.listIsEmpty()) {

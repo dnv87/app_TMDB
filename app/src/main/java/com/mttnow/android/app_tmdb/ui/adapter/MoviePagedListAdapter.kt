@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mttnow.android.app_tmdb.R
+import com.mttnow.android.app_tmdb.data.Const.MOVIE_VIEW_TYPE
+import com.mttnow.android.app_tmdb.data.Const.NETWORK_VIEW_TYPE
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.modeldata.Movie
 
 class MoviePagedListAdapter(val onMovieCkick: (Int) -> Unit) :
     PagedListAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffCallback()) {
 
-    val MOVIE_VIEW_TYPE = 1
-    val NETWORK_VIEW_TYPE = 2
     private var networkState: NetworkState? = null
 
 

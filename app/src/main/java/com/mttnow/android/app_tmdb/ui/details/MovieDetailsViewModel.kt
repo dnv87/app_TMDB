@@ -11,18 +11,17 @@ class MovieDetailsViewModel() : BaseMovieViewModel() {
     lateinit var movieDetailsNetworkDataSource: MovieDataSourceDetails
 
     private var movieId: Int = 0
-    fun getMovieId(_i: Int) {
-        movieId = _i
+    fun getMovieId(_id: Int) {
+        movieId = _id
     }
 
-    fun fetchSingleMovieDetails(): LiveData<MovieDetails> {
 
+    fun getSingleMovieDetails(): LiveData<MovieDetails> {
         movieDetailsNetworkDataSource = MovieDataSourceDetails(apiService, compositeDisposable)
         movieDetailsNetworkDataSource.fetchMovieDetails(movieId)
-
         return movieDetailsNetworkDataSource.downloadedMovieResponse
-
     }
+
 
     fun getMovieDetailsNetworkState(): LiveData<NetworkState> {
         return movieDetailsNetworkDataSource.networkState

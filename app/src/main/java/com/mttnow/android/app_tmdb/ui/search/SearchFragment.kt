@@ -19,8 +19,8 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private lateinit var viewModel: SearchViewModel
     private lateinit var movieAdapter: MoviePagedListAdapter
-
     private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,7 +54,7 @@ class SearchFragment : Fragment() {
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 val viewType = movieAdapter.getItemViewType(position)
-                if (viewType == movieAdapter.MOVIE_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 2 span
+                if (viewType == Const.MOVIE_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 2 span
                 else return Const.SPAN_COUNT     //это исключение говорит о том сколько будет занимать NETWORK_VIEW_TYPE
             }
         }
@@ -69,7 +69,7 @@ class SearchFragment : Fragment() {
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     val searchMovieText = binding.editTextSearch.text.toString()
-                    viewModel.Search(searchMovieText)
+                    viewModel.getSearch(searchMovieText)
                     observeMovie()
                     true
                 }
@@ -81,6 +81,7 @@ class SearchFragment : Fragment() {
         if (!viewModel.listIsEmpty()) observeMovie()
     }
 
+
     private fun observeMovie() {
         viewModel.moviePagedList?.observe(viewLifecycleOwner, Observer {
             movieAdapter.submitList(it)
@@ -88,7 +89,7 @@ class SearchFragment : Fragment() {
 
         viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
             binding.progressBarPopular.visibility =
-                if ( it == NetworkState.LOADING) View.VISIBLE else View.GONE
+                if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
             binding.txtErrorPopular.visibility =
                 if (it == NetworkState.ERROR) View.VISIBLE else View.GONE
 
@@ -97,6 +98,7 @@ class SearchFragment : Fragment() {
             }
         })
     }
+
 
     private fun getViewModel(): SearchViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {

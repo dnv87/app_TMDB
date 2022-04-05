@@ -25,8 +25,8 @@ class MovieDetailsFragment : Fragment() {
 
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
+    private val args: MovieDetailsFragmentArgs by navArgs()
 
-    val args: MovieDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +53,7 @@ class MovieDetailsFragment : Fragment() {
         //передаём во ViewModel MovieId для запроса
         viewModel.getMovieId(argMovieId)
 
-        viewModel.fetchSingleMovieDetails().observe(viewLifecycleOwner, Observer {
+        viewModel.getSingleMovieDetails().observe(viewLifecycleOwner, Observer {
             bindUI(it)
         })
 
@@ -65,7 +65,8 @@ class MovieDetailsFragment : Fragment() {
         })
     }
 
-    fun bindUI(it: MovieDetails) {
+
+    private fun bindUI(it: MovieDetails) {
         binding.movieTitle.text = it.title
         binding.movieTagline.text = it.tagline
         binding.movieReleaseDate.text = it.releaseDate
@@ -92,6 +93,7 @@ class MovieDetailsFragment : Fragment() {
             }
         })[MovieDetailsViewModel::class.java]
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

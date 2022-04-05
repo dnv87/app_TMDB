@@ -18,18 +18,21 @@ class SearchViewModel() : BaseMovieViewModel() {
 
     private lateinit var moviesDataSourceFactory: SearchMovieDataSourceFactory
 
+
     fun listIsEmpty(): Boolean {
         return moviePagedList?.value?.isEmpty() ?: true
     }
 
-    fun Search(searchMovietext: String): LiveData<PagedList<Movie>> {
-        return fetchLiveMoviePagedList(
+
+    fun getSearch(searchMovietext: String): LiveData<PagedList<Movie>> {
+        return getLiveMoviePagedList(
             compositeDisposable,
             searchMovietext
         )
     }
 
-    private fun fetchLiveMoviePagedList(
+
+    private fun getLiveMoviePagedList(
         compositeDisposable: CompositeDisposable,
         searchQueryMovie: String
     ): LiveData<PagedList<Movie>> {
@@ -48,6 +51,7 @@ class SearchViewModel() : BaseMovieViewModel() {
         moviePagedList = LivePagedListBuilder(moviesDataSourceFactory, config).build()
         return moviePagedList!!
     }
+
 
     fun getNetworkState(): LiveData<NetworkState> {
         return Transformations.switchMap<MovieDataSourceSearch, NetworkState>(

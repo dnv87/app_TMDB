@@ -15,19 +15,21 @@ import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
 class MovieViewModel() : BaseMovieViewModel() {
 
     private lateinit var moviePagedList: LiveData<PagedList<Movie>>
-    private lateinit var moviesDataSource:Pair <DataSource.Factory<Int, Movie>, LiveData<NetworkState>>
-    private var argQueryMoviePopular: Boolean = Const.GET_POPULAR_MOVIE
+    private lateinit var moviesDataSource: Pair<DataSource.Factory<Int, Movie>, LiveData<NetworkState>>
 
+    //получаем аргумент с выбором запроса
+    private var argQueryMoviePopular: Boolean = Const.GET_POPULAR_MOVIE
     fun getMovie(_i: Boolean) {
         argQueryMoviePopular = _i
     }
+
 
     fun listIsEmpty(): Boolean {
         return moviePagedList.value?.isEmpty() ?: true
     }
 
-    fun fetchLiveMoviePagedList(): LiveData<PagedList<Movie>> {
 
+    fun getLiveMoviePagedList(): LiveData<PagedList<Movie>> {
         moviesDataSource = choisQery(argQueryMoviePopular)
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
@@ -38,27 +40,34 @@ class MovieViewModel() : BaseMovieViewModel() {
         return moviePagedList
     }
 
+
     fun getNetworkState(): LiveData<NetworkState> {
         moviesDataSource = choisQery(argQueryMoviePopular)
         return moviesDataSource.second
     }
 
 
-    private fun choisQery(QueryMovie:Boolean):Pair<DataSource.Factory<Int, Movie>, LiveData<NetworkState>>{
+    private fun choisQery(QueryMovie: Boolean): Pair<DataSource.Factory<Int, Movie>, LiveData<NetworkState>> {
         if (QueryMovie) {
-            var moviesDataSourceFactory = MovieDataSourceFactoryPopular(apiService, compositeDisposable)
+            val moviesDataSourceFactory =
+                MovieDataSourceFactoryPopular(apiService, compositeDisposable)
 
-            var networkStateDaeasource = Transformations.switchMap<MovieDataSourcePopular, NetworkState>(
-                moviesDataSourceFactory.moviesLiveDataSource, MovieDataSourcePopular::networkState)
-            return Pair(moviesDataSourceFactory, networkStateDaeasource)
+            val networkStateDataSource =
+                Transformations.switchMap<MovieDataSourcePopular, NetworkState>(
+                    moviesDataSourceFactory.moviesLiveDataSource,
+                    MovieDataSourcePopular::networkState
+                )
+            return Pair(moviesDataSourceFactory, networkStateDataSource)
 
-        }else{
-            var moviesDataSourceFactory = MovieDataSourceFactoryTop(apiService, compositeDisposable)
+        } else {
+            val moviesDataSourceFactory =
+                MovieDataSourceFactoryTop(apiService, compositeDisposable)
 
-            var networkStateDaeasource = Transformations.switchMap<MovieDataSourceTop, NetworkState>(
-                moviesDataSourceFactory.moviesLiveDataSource, MovieDataSourceTop::networkState)
-            return Pair(moviesDataSourceFactory, networkStateDaeasource)
+            val networkStateDataSource =
+                Transformations.switchMap<MovieDataSourceTop, NetworkState>(
+                    moviesDataSourceFactory.moviesLiveDataSource, MovieDataSourceTop::networkState
+                )
+            return Pair(moviesDataSourceFactory, networkStateDataSource)
         }
     }
-
 }

@@ -18,4 +18,7 @@ object Const {
     const val GET_POPULAR_MOVIE = true
 
     const val SPAN_COUNT = 2
+
+    val MOVIE_VIEW_TYPE = 1
+    val NETWORK_VIEW_TYPE = 2
 }
