@@ -7,8 +7,9 @@ object Const {
     const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/"
     private const val IMAGE_SIZE_DEFAULT_500 = "w500/"
     private const val IMAGE_SIZE_DEFAULT_342 = "w342/"
+    private const val IMAGE_SIZE_DEFAULT_154 = "w154/"
     const val THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE500 = IMAGE_BASE_URL + IMAGE_SIZE_DEFAULT_500
-    const val THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE342 = IMAGE_BASE_URL + IMAGE_SIZE_DEFAULT_342
+    const val THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE342 = IMAGE_BASE_URL + IMAGE_SIZE_DEFAULT_154
 
     const val FIRST_PAGE = 1
     const val POST_PER_PAGE = 20

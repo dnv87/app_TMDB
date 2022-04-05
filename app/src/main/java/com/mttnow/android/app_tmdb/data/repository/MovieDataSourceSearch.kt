@@ -9,6 +9,7 @@ import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.modeldata.Movie
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class MovieDataSourceSearch(
     private val apiService: TMDBInterface,
@@ -52,9 +53,10 @@ class MovieDataSourceSearch(
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         networkState.postValue(NetworkState.LOADING)
-        compositeDisposable.add(
+         compositeDisposable.add(
             apiService.getSearchMovie(page = params.key, query = SearchQueryMovie)
                 .subscribeOn(Schedulers.io())
+                //.delaySubscription(5000, TimeUnit.MILLISECONDS)
                 .subscribe(
                     {
                         if (it.total_pages >= params.key) {

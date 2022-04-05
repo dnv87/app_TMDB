@@ -35,7 +35,6 @@ class MovieDetailsFragment : Fragment() {
     ): View {
 
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 

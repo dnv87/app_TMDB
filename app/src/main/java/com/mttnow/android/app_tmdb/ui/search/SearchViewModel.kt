@@ -15,6 +15,7 @@ import io.reactivex.disposables.CompositeDisposable
 class SearchViewModel() : BaseMovieViewModel() {
 
     var moviePagedList: LiveData<PagedList<Movie>>? = null
+
     private lateinit var moviesDataSourceFactory: SearchMovieDataSourceFactory
 
     fun listIsEmpty(): Boolean {
@@ -54,8 +55,5 @@ class SearchViewModel() : BaseMovieViewModel() {
         )
     }
 
-//    fun invalidDataSource() {
-//        moviesDataSourceFactory.searchMovieDataSource?.invalidate()
-//    }
 
 }

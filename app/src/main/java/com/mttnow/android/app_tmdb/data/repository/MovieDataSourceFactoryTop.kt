@@ -1,7 +1,7 @@
 package com.mttnow.android.app_tmdb.data.repository
 
-
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
@@ -13,15 +13,15 @@ class MovieDataSourceFactoryTop(
     private val compositeDisposable: CompositeDisposable
 ) : DataSource.Factory<Int, Movie>() {
 
-    private lateinit var movieDataSource:MovieDataSourceTop
+    val moviesLiveDataSource = MutableLiveData<MovieDataSourceTop>()
+    private var movieDataSource:MovieDataSourceTop? = null
 
-    fun getMovieNetworkState(): LiveData<NetworkState> {
-        return movieDataSource.networkState
-    }
+
 
     override fun create(): DataSource<Int, Movie> {
         movieDataSource = MovieDataSourceTop(apiService, compositeDisposable)
-        return movieDataSource
-    }
 
+        moviesLiveDataSource.postValue(movieDataSource!!)
+        return movieDataSource!!
+    }
 }

@@ -88,11 +88,9 @@ class SearchFragment : Fragment() {
 
         viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
             binding.progressBarPopular.visibility =
-                if (viewModel.listIsEmpty() && it == NetworkState.LOADING
-                ) View.VISIBLE else View.GONE
+                if ( it == NetworkState.LOADING) View.VISIBLE else View.GONE
             binding.txtErrorPopular.visibility =
-                if (viewModel.listIsEmpty() && it == NetworkState.ERROR
-                ) View.VISIBLE else View.GONE
+                if (it == NetworkState.ERROR) View.VISIBLE else View.GONE
 
             if (!viewModel.listIsEmpty()) {
                 movieAdapter.setNetworkState(it)

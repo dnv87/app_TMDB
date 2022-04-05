@@ -15,8 +15,4 @@ abstract class BaseMovieViewModel: ViewModel() {
         compositeDisposable.clear()
     }
 
-    fun net(){
-
-    }
-
 }
