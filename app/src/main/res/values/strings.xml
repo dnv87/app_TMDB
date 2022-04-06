@@ -5,4 +5,6 @@
     <string name="title_Search">Поиск фильмов</string>
     <string name="title_Detal">О Фильме</string>
     <string name="search">Поиск фильмов</string>
+    <string name="connection_problem">Connection Problem!!</string>
+    <string name="error_message">Error Message</string>
 </resources>

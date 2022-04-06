@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Connection Problem!!"
+        android:text="@string/connection_problem"
         android:visibility="gone" />
 
     <ScrollView
@@ -30,7 +30,7 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
 
