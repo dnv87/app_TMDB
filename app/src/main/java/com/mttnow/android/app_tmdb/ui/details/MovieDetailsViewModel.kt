@@ -23,7 +23,7 @@ class MovieDetailsViewModel() : BaseMovieViewModel() {
     }
 
 
-    fun getMovieDetailsNetworkState(): LiveData<NetworkState> {
+    fun getNetworkState(): LiveData<NetworkState> {
         return movieDetailsNetworkDataSource.networkState
     }
 }

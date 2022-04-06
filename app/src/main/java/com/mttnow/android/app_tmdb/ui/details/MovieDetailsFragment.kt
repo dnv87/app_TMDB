@@ -58,7 +58,7 @@ class MovieDetailsFragment : Fragment() {
             bindUI(it)
         })
 
-        viewModel.getMovieDetailsNetworkState().observe(viewLifecycleOwner, Observer {
+        viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
             binding.progressBar.visibility =
                 if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
             binding.txtError.visibility = if (it == NetworkState.ERROR) View.VISIBLE else View.GONE
@@ -80,12 +80,12 @@ class MovieDetailsFragment : Fragment() {
         binding.movieBudget.text = formatCurrency.format(it.budget)
         binding.movieRevenue.text = formatCurrency.format(it.revenue)
 
-        if (it.posterPath != null){
+        if (it.posterPath != null) {
             val moviePosterURL = Const.THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE500 + it.posterPath
             Glide.with(this)
                 .load(moviePosterURL)
                 .into(binding.ivMoviePoster);
-        }else binding.ivMoviePoster.setImageResource(R.drawable.ic_baseline_local_movies_24)
+        } else binding.ivMoviePoster.setImageResource(R.drawable.ic_baseline_local_movies_24)
 
     }
 
