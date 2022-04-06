@@ -15,7 +15,7 @@ class NetworkState(val status: Status, val msg: String) {
 
             LOADING = NetworkState(Status.RUNNING, "Running")
 
-            ERROR = NetworkState(Status.FAILED, "Something went wrong")
+            ERROR = NetworkState(Status.FAILED, "ERROR connection")
 
             ENDOFLIST = NetworkState(Status.FAILED, "You have reached the end")
 

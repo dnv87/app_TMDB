@@ -62,23 +62,29 @@ class MovieTopFragment : Fragment() {
         binding.rvMovieList.setHasFixedSize(true)
         binding.rvMovieList.adapter = movieAdapter
 
-        //посылаем запрос Movie во viewModel и слушаем ответ
-        viewModel.getLiveMoviePagedList().observe(viewLifecycleOwner, Observer {
-            movieAdapter.submitList(it)
-        })
+        //при создании фрагмента проверяем если ли загруженные данные
+        if (viewModel.pageIsEmpty()) {
+            viewModel.getLiveMoviePagedList().observe(viewLifecycleOwner, Observer {
+                movieAdapter.submitList(it)
+            })
+        }else {
+            viewModel.moviePagedList?.observe(viewLifecycleOwner, Observer {
+                movieAdapter.submitList(it)
+            })
+        }
 
         viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
             binding.progressBarNextPage.visibility =
-                if (viewModel.listIsEmpty() && it == NetworkState.LOADING
+                if (viewModel.pageIsEmpty() && it == NetworkState.LOADING
                 ) View.VISIBLE else View.GONE
             binding.progressBarTop.visibility =
-                if (viewModel.listIsEmpty() || it == NetworkState.FIRSTLOADING
+                if (viewModel.pageIsEmpty() || it == NetworkState.FIRSTLOADING
                 ) View.VISIBLE else View.GONE
             binding.txtErrorTop.visibility =
-                if (viewModel.listIsEmpty() && it == NetworkState.ERROR
+                if (viewModel.pageIsEmpty() && it == NetworkState.ERROR
                 ) View.VISIBLE else View.GONE
 
-            if (!viewModel.listIsEmpty()) {
+            if (!viewModel.pageIsEmpty()) {
                 movieAdapter.setNetworkState(it)
             }
         })

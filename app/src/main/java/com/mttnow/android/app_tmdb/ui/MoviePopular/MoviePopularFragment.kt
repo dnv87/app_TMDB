@@ -64,7 +64,7 @@ class MoviePopularFragment : Fragment() {
         binding.rvMovieList.setHasFixedSize(true)
         binding.rvMovieList.adapter = movieAdapter
 
-        //посылаем запрос Movie во viewModel и слушаем ответ
+        //каждый раз при загрузки фрагмента начинаем с первой страницы
         viewModel.getLiveMoviePagedList().observe(viewLifecycleOwner, Observer {
             movieAdapter.submitList(it)
         })

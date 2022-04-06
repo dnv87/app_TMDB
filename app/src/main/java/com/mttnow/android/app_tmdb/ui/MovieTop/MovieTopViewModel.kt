@@ -13,7 +13,7 @@ import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
 
 class MovieTopViewModel() : BaseMovieViewModel() {
 
-    private lateinit var moviePagedList: LiveData<PagedList<Movie>>
+    var moviePagedList: LiveData<PagedList<Movie>>? = null
     private lateinit var moviesDataSourceFactory: MovieDataSourceFactoryTop
 
 
@@ -24,7 +24,7 @@ class MovieTopViewModel() : BaseMovieViewModel() {
             .setPageSize(Const.POST_PER_PAGE)
             .build()
         moviePagedList = LivePagedListBuilder(moviesDataSourceFactory, config).build()
-        return moviePagedList
+        return moviePagedList!!
     }
 
 
@@ -35,7 +35,7 @@ class MovieTopViewModel() : BaseMovieViewModel() {
     }
 
 
-    fun listIsEmpty(): Boolean {
-        return moviePagedList.value?.isEmpty() ?: true
+    fun pageIsEmpty(): Boolean {
+        return moviePagedList?.value?.isEmpty() ?: true
     }
 }
