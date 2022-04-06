@@ -17,7 +17,7 @@ class NetworkState(val status: Status, val msg: String) {
 
             ERROR = NetworkState(Status.FAILED, "ERROR connection")
 
-            ENDOFLIST = NetworkState(Status.FAILED, "You have reached the end")
+            ENDOFLIST = NetworkState(Status.FAILED, "Нет новых страниц")
 
             FIRSTLOADING = NetworkState(Status.RUNNING, "Running first Page")
         }
