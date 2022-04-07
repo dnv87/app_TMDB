@@ -1,6 +1,7 @@
 package com.mttnow.android.app_tmdb.data.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.mttnow.android.app_tmdb.data.Const.FIRST_PAGE
@@ -16,7 +17,11 @@ class MovieDataSourcePopular(
     private val compositeDisposable: CompositeDisposable,
 ) : PageKeyedDataSource<Int, Movie>() {
 
-    val networkState: MutableLiveData<NetworkState> = MutableLiveData()
+    private val networkState: MutableLiveData<NetworkState> = MutableLiveData()
+
+    fun getNetworkStateLiveData(): LiveData<NetworkState> {
+        return networkState
+    }
     private var page = FIRST_PAGE
 
 
