@@ -46,7 +46,7 @@ class MovieDataSourcePopular(
         networkState.postValue(NetworkState.LOADING)
         compositeDisposable.add(
             apiService.getPopularMovie(params.key)
-                .delay(1000, TimeUnit.MILLISECONDS)
+                .delay(10000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .subscribe(
                     {

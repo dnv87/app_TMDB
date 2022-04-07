@@ -20,6 +20,6 @@ object Const {
     const val SPAN_COUNT = 2
 
 
-    val MOVIE_VIEW_TYPE = 1
-    val NETWORK_VIEW_TYPE = 2
+    const val MOVIE_VIEW_TYPE = 1
+    const val NETWORK_VIEW_TYPE = 2
 }

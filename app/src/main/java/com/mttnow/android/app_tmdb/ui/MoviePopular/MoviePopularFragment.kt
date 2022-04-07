@@ -40,9 +40,6 @@ class MoviePopularFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //инициализировали viewModel
-        viewModel = getViewModel()
-
         val movieAdapter = MoviePagedListAdapter {
             val argTo = Bundle().apply {
                 putInt("Movie_id", it)
@@ -63,6 +60,10 @@ class MoviePopularFragment : Fragment() {
         binding.rvMovieList.layoutManager = gridLayoutManager
         binding.rvMovieList.setHasFixedSize(true)
         binding.rvMovieList.adapter = movieAdapter
+
+
+        //инициализировали viewModel
+        viewModel = getViewModel()
 
         //каждый раз при загрузки фрагмента начинаем с первой страницы
         viewModel.getLiveMoviePagedList().observe(viewLifecycleOwner, Observer {

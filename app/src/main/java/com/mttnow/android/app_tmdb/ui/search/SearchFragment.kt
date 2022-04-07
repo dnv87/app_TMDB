@@ -31,11 +31,8 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = getViewModel()
 
         movieAdapter = MoviePagedListAdapter {
             //добавляем параметр для передачи его для MovieDetails
@@ -63,6 +60,7 @@ class SearchFragment : Fragment() {
         binding.rvMovieList.setHasFixedSize(true)
         binding.rvMovieList.adapter = movieAdapter
 
+        viewModel = getViewModel()
         //Search
         binding.editTextSearch.setOnEditorActionListener { textView, actionId, keyEvent ->
             when (actionId) {

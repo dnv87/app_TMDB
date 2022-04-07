@@ -11,12 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.databinding.FragmentMovieTopBinding
 import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
-import com.mttnow.android.app_tmdb.ui.search.SearchFragmentDirections
 
 
 class MovieTopFragment : Fragment() {
@@ -39,9 +37,6 @@ class MovieTopFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //инициализировали viewModel
-        viewModel = getViewModel()
-
         val movieAdapter = MoviePagedListAdapter {
             val action =
                 MovieTopFragmentDirections.actionNavigationMovieTopToNavigationMovieDetail(it)
@@ -62,32 +57,38 @@ class MovieTopFragment : Fragment() {
         binding.rvMovieList.setHasFixedSize(true)
         binding.rvMovieList.adapter = movieAdapter
 
-        //при создании фрагмента проверяем если ли загруженные данные
-        if (viewModel.pageIsEmpty()) {
-            viewModel.getLiveMoviePagedList().observe(viewLifecycleOwner, Observer {
-                movieAdapter.submitList(it)
-            })
-        }else {
-            viewModel.moviePagedList?.observe(viewLifecycleOwner, Observer {
-                movieAdapter.submitList(it)
+        //инициализировали viewModel
+        viewModel = getViewModel()
+
+        with(viewModel) {
+            //при создании фрагмента проверяем если ли загруженные данные
+            if (pageIsEmpty()) {
+                getLiveMoviePagedList().observe(viewLifecycleOwner, Observer {
+                    movieAdapter.submitList(it)
+                })
+            } else {
+                moviePagedList?.observe(viewLifecycleOwner, Observer {
+                    movieAdapter.submitList(it)
+                })
+            }
+
+            getNetworkState().observe(viewLifecycleOwner, Observer {
+                binding.progressBarNextPage.visibility =
+                    if (pageIsEmpty() && it == NetworkState.LOADING
+                    ) View.VISIBLE else View.GONE
+                binding.progressBarTop.visibility =
+                    if (pageIsEmpty() || it == NetworkState.FIRSTLOADING
+                    ) View.VISIBLE else View.GONE
+                binding.txtErrorTop.visibility =
+                    if (pageIsEmpty() && it == NetworkState.ERROR
+                    ) View.VISIBLE else View.GONE
+
+                if (!pageIsEmpty()) {
+                    movieAdapter.setNetworkState(it)
+                }
             })
         }
 
-        viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
-            binding.progressBarNextPage.visibility =
-                if (viewModel.pageIsEmpty() && it == NetworkState.LOADING
-                ) View.VISIBLE else View.GONE
-            binding.progressBarTop.visibility =
-                if (viewModel.pageIsEmpty() || it == NetworkState.FIRSTLOADING
-                ) View.VISIBLE else View.GONE
-            binding.txtErrorTop.visibility =
-                if (viewModel.pageIsEmpty() && it == NetworkState.ERROR
-                ) View.VISIBLE else View.GONE
-
-            if (!viewModel.pageIsEmpty()) {
-                movieAdapter.setNetworkState(it)
-            }
-        })
     }
 
 

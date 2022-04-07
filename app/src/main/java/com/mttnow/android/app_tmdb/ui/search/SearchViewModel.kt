@@ -14,10 +14,8 @@ import io.reactivex.disposables.CompositeDisposable
 
 class SearchViewModel() : BaseMovieViewModel() {
 
-    var moviePagedList: LiveData<PagedList<Movie>>? = null
-
     private lateinit var moviesDataSourceFactory: SearchMovieDataSourceFactory
-
+    var moviePagedList: LiveData<PagedList<Movie>>? = null
 
     fun getSearch(searchMovietext: String): LiveData<PagedList<Movie>> {
         return getLiveMoviePagedList(

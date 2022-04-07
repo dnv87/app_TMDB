@@ -11,7 +11,7 @@ import com.mttnow.android.app_tmdb.data.Const.NETWORK_VIEW_TYPE
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.modeldata.Movie
 
-class MoviePagedListAdapter(val onMovieCkick: (Int) -> Unit) :
+class MoviePagedListAdapter(private val onMovieClick: (Int) -> Unit) :
     PagedListAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffCallback()) {
 
     private var networkState: NetworkState? = null
@@ -24,7 +24,7 @@ class MoviePagedListAdapter(val onMovieCkick: (Int) -> Unit) :
 
         if (viewType == MOVIE_VIEW_TYPE) {
             view = layoutInflater.inflate(R.layout.movie_list_item, parent, false)
-            val holder = MovieItemViewHolder(view, onMovieCkick)
+            val holder = MovieItemViewHolder(view, onMovieClick)
             holder.setOnClick() //инициализируем действие на элементе при создании холдера
             return holder
         } else {

@@ -43,27 +43,30 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = getViewModel()
-
         //получаем аргумент из Safe Args
         val argMovieId: Int = args.movieId
 
         //указываем Activity что при загрузки фрагмента нужно спрятать BottomNavigationView
         (requireActivity() as MainActivity).hideBottomNavigation(true)
 
-        //передаём во ViewModel MovieId для запроса
-        viewModel.getMovieId(argMovieId)
+        val viewModel = getViewModel()
+        with(viewModel) {
+            //передаём во ViewModel MovieId для запроса
+            getMovieId(argMovieId)
 
-        viewModel.getSingleMovieDetails().observe(viewLifecycleOwner, Observer {
-            bindUI(it)
-        })
+            getSingleMovieDetails().observe(viewLifecycleOwner, Observer {
+                bindUI(it)
+            })
 
-        viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
-            binding.progressBar.visibility =
-                if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
-            binding.txtError.visibility = if (it == NetworkState.ERROR) View.VISIBLE else View.GONE
+            getNetworkState().observe(viewLifecycleOwner, Observer {
+                binding.progressBar.visibility =
+                    if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
+                binding.txtError.visibility =
+                    if (it == NetworkState.ERROR) View.VISIBLE else View.GONE
 
-        })
+            })
+        }
+
     }
 
 
