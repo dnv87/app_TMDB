@@ -7,24 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.databinding.FragmentMoviePopularBinding
 
-import com.mttnow.android.app_tmdb.ui.adapter.MoviePagedListAdapter
-
 
 class MoviePopularFragment : Fragment() {
 
     private var _binding: FragmentMoviePopularBinding? = null
-    private lateinit var viewModel: MoviePopularViewModel
+//    private lateinit var viewModel: MoviePopularViewModel
     private val binding get() = _binding!!
+
+    //инициализировали viewModel
+    private val viewModel = MoviePopularViewModelNoPaging()
 
 
     override fun onCreateView(
@@ -40,7 +39,7 @@ class MoviePopularFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movieAdapter = MoviePagedListAdapter {
+        val movieAdapter = MoviePopularAdapter {
             val argTo = Bundle().apply {
                 putInt("Movie_id", it)
             }
@@ -62,40 +61,52 @@ class MoviePopularFragment : Fragment() {
         binding.rvMovieList.adapter = movieAdapter
 
 
-        //инициализировали viewModel
-        viewModel = getViewModel()
+
+
+
+        //загрузка первой страницы
 
         //каждый раз при загрузки фрагмента начинаем с первой страницы
-        viewModel.getLiveMoviePagedList().observe(viewLifecycleOwner, Observer {
-            movieAdapter.submitList(it)
+        viewModel.itemsMovie.observe(viewLifecycleOwner, Observer {
+            Log.d("my", "observe")
+            movieAdapter.addNewListToList(it)
         })
 
-        viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
-            binding.progressBarNextPage.visibility =
-                if (viewModel.listIsEmpty() && it == NetworkState.LOADING
-                ) View.VISIBLE else View.GONE
-            binding.progressBarPopular.visibility =
-                if (viewModel.listIsEmpty() || it == NetworkState.FIRSTLOADING
-                ) View.VISIBLE else View.GONE
-            binding.txtErrorPopular.visibility =
-                if (viewModel.listIsEmpty() && it == NetworkState.ERROR
-                ) View.VISIBLE else View.GONE
-
-            if (!viewModel.listIsEmpty()) {
-                movieAdapter.setNetworkState(it)
+        viewModel.itemsMovie.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                NetworkState.LOADING -> {
+                    movieAdapter.addLoadingToList()
+                }
+//                NetworkState.LOADED -> {
+//                    movieAdapter.deleteLoadingToList()
+//                }
             }
         })
+//        viewModel.loadNextPage(3)
     }
 
 
-    private fun getViewModel(): MoviePopularViewModel {
-        return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                @Suppress("UNCHECKED_CAST")
-                return MoviePopularViewModel() as T
-            }
-        })[MoviePopularViewModel::class.java]
+    private fun inintListebers(){
+        binding.rvMovieList.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (!recyclerView.canScrollVertically(1)) {
+                        //function that add new elements to my recycler view
+                    }
+                }
+            })
     }
+
+//    private fun getViewModel(): MoviePopularViewModel {
+//        return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//                @Suppress("UNCHECKED_CAST")
+//                return MoviePopularViewModel() as T
+//            }
+//        })[MoviePopularViewModel::class.java]
+//    }
+
 
 
     override fun onDestroyView() {
