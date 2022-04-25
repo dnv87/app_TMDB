@@ -40,7 +40,7 @@ class MoviePagedListAdapter(private val onMovieClick: (Int) -> Unit) :
         if (getItemViewType(position) == MOVIE_VIEW_TYPE) {
             (holder as MovieItemViewHolder).bind(getItem(position))
         } else {
-            (holder as NetworkStateItemViewHolder).bind(/*networkState*/)
+            (holder as NetworkStateItemViewHolder).bind(networkState)
         }
     }
 

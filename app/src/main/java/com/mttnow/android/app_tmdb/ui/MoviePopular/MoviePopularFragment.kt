@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
-import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.databinding.FragmentMoviePopularBinding
 
 
 class MoviePopularFragment : Fragment() {
 
     private var _binding: FragmentMoviePopularBinding? = null
-//    private lateinit var viewModel: MoviePopularViewModel
+
+    //    private lateinit var viewModel: MoviePopularViewModel
     private val binding get() = _binding!!
 
     //инициализировали viewModel
@@ -61,9 +61,6 @@ class MoviePopularFragment : Fragment() {
         binding.rvMovieList.adapter = movieAdapter
 
 
-
-
-
         //загрузка первой страницы
 
         //каждый раз при загрузки фрагмента начинаем с первой страницы
@@ -72,21 +69,21 @@ class MoviePopularFragment : Fragment() {
             movieAdapter.addNewListToList(it)
         })
 
-        viewModel.itemsMovie.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                NetworkState.LOADING -> {
-                    movieAdapter.addLoadingToList()
-                }
-//                NetworkState.LOADED -> {
-//                    movieAdapter.deleteLoadingToList()
+//        viewModel.itemsMovie.observe(viewLifecycleOwner, Observer {
+//            when (it) {
+//                NetworkState.LOADING -> {
+//                    movieAdapter.addLoadingToList()
 //                }
-            }
-        })
+////                NetworkState.LOADED -> {
+////                    movieAdapter.deleteLoadingToList()
+////                }
+//            }
+//        })
 //        viewModel.loadNextPage(3)
     }
 
 
-    private fun inintListebers(){
+    private fun inintListebers() {
         binding.rvMovieList.addOnScrollListener(
             object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -106,7 +103,6 @@ class MoviePopularFragment : Fragment() {
 //            }
 //        })[MoviePopularViewModel::class.java]
 //    }
-
 
 
     override fun onDestroyView() {

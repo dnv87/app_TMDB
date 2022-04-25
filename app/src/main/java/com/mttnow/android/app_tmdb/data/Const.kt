@@ -2,7 +2,10 @@ package com.mttnow.android.app_tmdb.data
 
 object Const {
     const val API_KEY = "a980b9c5403a48a0b70e5b9f0ba35a17"
+    const val API_KEY_NEWS = "e7a4d3493ec84a1a9232789bf7a943cf"
     const val URL_TMDB = "https://api.themoviedb.org/3/"
+    const val URL_NEWS = "https://newsapi.org/v2/"
+
 
 
     const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/"

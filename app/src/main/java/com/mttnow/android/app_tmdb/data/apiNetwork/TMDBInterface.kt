@@ -8,6 +8,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TMDBInterface {
+
     @GET("movie/popular")
     fun getPopularMovie(
         @Query("page") page: Int,

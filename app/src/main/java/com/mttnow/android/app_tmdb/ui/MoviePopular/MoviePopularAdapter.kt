@@ -8,7 +8,7 @@ import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.modeldata.Movie
 import com.mttnow.android.app_tmdb.ui.adapter.MovieItemViewHolder
-import com.mttnow.android.app_tmdb.ui.adapter.NetworkStateItemViewHolder
+
 
 class MoviePopularAdapter(private val onMovieClick: (Int) -> Unit) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -49,7 +49,7 @@ class MoviePopularAdapter(private val onMovieClick: (Int) -> Unit) :
             }
             Const.NETWORK_VIEW_TYPE -> {
                 view = layoutInflater.inflate(R.layout.network_state_item, parent, false)
-                NetworkStateItemViewHolder(view)
+                NetworkStateItemViewHolderPopular(view)
             }
             else -> throw RuntimeException("Unknown view type: $viewType")
         }
@@ -60,7 +60,7 @@ class MoviePopularAdapter(private val onMovieClick: (Int) -> Unit) :
         if (getItemViewType(position) == Const.MOVIE_VIEW_TYPE) {
             (holder as MovieItemViewHolder).bind(listMovie[position] as Movie)
         } else {
-            (holder as NetworkStateItemViewHolder).bind()
+            (holder as NetworkStateItemViewHolderPopular).bind()
         }
     }
 

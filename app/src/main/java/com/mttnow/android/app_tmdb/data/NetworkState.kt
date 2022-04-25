@@ -1,7 +1,6 @@
 package com.mttnow.android.app_tmdb.data.apiNetwork
 
 class NetworkState(val status: Status, val msg: String) {
-
     companion object {
 
         val LOADED: NetworkState

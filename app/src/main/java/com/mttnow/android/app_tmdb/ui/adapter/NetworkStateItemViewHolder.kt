@@ -13,23 +13,23 @@ class NetworkStateItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val tvErrMessageItemTv = itemView.findViewById<TextView>(R.id.error_msg_item)
 
 
-    fun bind(/*networkState: NetworkState?*/) {
-        pbItemLoad.visibility = View.VISIBLE
-        tvErrMessageItemTv.text = "Loading"
-//        if (networkState != null && networkState == NetworkState.LOADING) {
-//            pbItemLoad.visibility = View.VISIBLE;
-//        } else {
-//            pbItemLoad.visibility = View.GONE;
-//        }
-//
-//        if (networkState != null && networkState == NetworkState.ERROR) {
-//            tvErrMessageItemV.visibility = View.VISIBLE;
-//            tvErrMessageItemTv.text = networkState.msg;
-//        } else if (networkState != null && networkState == NetworkState.ENDOFLIST) {
-//            tvErrMessageItemV.visibility = View.VISIBLE;
-//            tvErrMessageItemTv.text = networkState.msg;
-//        } else {
-//            tvErrMessageItemV.visibility = View.GONE;
-//        }
+    fun bind(networkState: NetworkState?) {
+//        pbItemLoad.visibility = View.VISIBLE
+//        tvErrMessageItemTv.text = "Loading"
+        if (networkState != null && networkState == NetworkState.LOADING) {
+            pbItemLoad.visibility = View.VISIBLE;
+        } else {
+            pbItemLoad.visibility = View.GONE;
+        }
+
+        if (networkState != null && networkState == NetworkState.ERROR) {
+            tvErrMessageItemV.visibility = View.VISIBLE;
+            tvErrMessageItemTv.text = networkState.msg;
+        } else if (networkState != null && networkState == NetworkState.ENDOFLIST) {
+            tvErrMessageItemV.visibility = View.VISIBLE;
+            tvErrMessageItemTv.text = networkState.msg;
+        } else {
+            tvErrMessageItemV.visibility = View.GONE;
+        }
     }
 }
