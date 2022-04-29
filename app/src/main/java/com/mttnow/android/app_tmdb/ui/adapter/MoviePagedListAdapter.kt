@@ -9,12 +9,13 @@ import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const.MOVIE_VIEW_TYPE
 import com.mttnow.android.app_tmdb.data.Const.NETWORK_VIEW_TYPE
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
-import com.mttnow.android.app_tmdb.modeldata.Movie
+import com.mttnow.android.app_tmdb.modeldata.Article
 
-class MoviePagedListAdapter(private val onMovieClick: (Int) -> Unit) :
-    PagedListAdapter<Movie, RecyclerView.ViewHolder>(MovieDiffCallback()) {
 
-    private var networkState: NetworkState? = null
+class MoviePagedListAdapter(private val onMovieClick: (Int) -> Unit) /*:
+    PagedListAdapter<Article, RecyclerView.ViewHolder>(MovieDiffCallback())*/ {
+
+    /*private var networkState: NetworkState? = null
 
 
 
@@ -79,5 +80,5 @@ class MoviePagedListAdapter(private val onMovieClick: (Int) -> Unit) :
         } else if (hasExtraRow && previousState != newNetworkState) { //hasExtraRow is true and hadExtraRow true and (NetworkState.ERROR or NetworkState.ENDOFLIST)
             notifyItemChanged(itemCount - 1)       //add the network message at the end
         }
-    }
+    }*/
 }

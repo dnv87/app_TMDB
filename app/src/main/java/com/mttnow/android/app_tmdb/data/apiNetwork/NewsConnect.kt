@@ -17,7 +17,7 @@ object NewsConnect {
             val url = chain.request()
                 .url()
                 .newBuilder()
-                .addQueryParameter("api_key", Const.API_KEY_NEWS)
+                .addQueryParameter("apikey", Const.API_KEY_NEWS)
                 .build()
 
             val request = chain.request()

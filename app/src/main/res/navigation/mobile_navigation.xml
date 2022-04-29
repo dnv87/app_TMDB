@@ -3,16 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_movie_popular">
+    app:startDestination="@+id/navigation_news_sports">
 
     <fragment
-        android:id="@+id/navigation_movie_popular"
-        android:name="com.mttnow.android.app_tmdb.ui.MoviePopular.MoviePopularFragment"
-        android:label="@string/title_Popular"
-        tools:layout="@layout/fragment_movie_popular">
-        <action
-            android:id="@+id/action_navigation_movie_popular_to_navigation_movie_detail"
-            app:destination="@id/navigation_movie_detail" />
+        android:id="@+id/navigation_news_sports"
+        android:name="com.mttnow.android.app_tmdb.ui.MoviePopular.NewsSportsFragment"
+        android:label="@string/title_News"
+        tools:layout="@layout/fragment_news_sports">
     </fragment>
 
 

@@ -6,8 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mttnow.android.app_tmdb.R
-import com.mttnow.android.app_tmdb.data.Const
-import com.mttnow.android.app_tmdb.modeldata.Movie
+import com.mttnow.android.app_tmdb.modeldata.Article
 
 class MovieItemViewHolder(view: View, val onMovieCkick: (Int) -> Unit) :
     RecyclerView.ViewHolder(view) {
@@ -20,19 +19,19 @@ class MovieItemViewHolder(view: View, val onMovieCkick: (Int) -> Unit) :
     private var movieId: Int = 0
 
 
-    fun bind(movie: Movie?) {
+    fun bind(news: Article?) {
 
-        tvMovieTitle.text = movie?.title
-        tvMovieRelease.text = movie?.releaseDate
+        tvMovieTitle.text = news?.title
+        tvMovieRelease.text = news?.description
 
-        if (movie?.poster_path != null) {
-            val moviePosterURL = Const.THE_MOVIES_DB_IMAGE_BASE_URL_WITH_SIZE342 + movie.poster_path
+        if (news?.urlToImage!= null) {
+            val newsPosterURL =  news.urlToImage
             Glide.with(itemView.context)
-                .load(moviePosterURL)
+                .load(newsPosterURL)
                 .into(ivMoviePoster)
         } else ivMoviePoster.setImageResource(R.drawable.ic_baseline_local_movies_24)
 
-        movieId = movie!!.id
+//        movieId = news!!
     }
 
 

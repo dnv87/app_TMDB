@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">app_TMDB</string>
     <string name="title_Popular">Популярные фильмы</string>
+    <string name="title_News">Новости спорта</string>
     <string name="title_Top">Top фильмов</string>
     <string name="title_Search">Поиск фильмов</string>
     <string name="title_Detal">О Фильме</string>

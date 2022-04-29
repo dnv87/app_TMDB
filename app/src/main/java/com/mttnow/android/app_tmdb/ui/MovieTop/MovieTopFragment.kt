@@ -44,33 +44,33 @@ class MovieTopFragment : Fragment() {
         }
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                val viewType = movieAdapter.getItemViewType(position)
-                if (viewType == Const.MOVIE_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 2 span
-                else return 2                                              // NETWORK_VIEW_TYPE will occupy all 2 span
-            }
-        }
+//        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+//            override fun getSpanSize(position: Int): Int {
+//                val viewType = movieAdapter.getItemViewType(position)
+//                if (viewType == Const.MOVIE_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 2 span
+//                else return 2                                              // NETWORK_VIEW_TYPE will occupy all 2 span
+//            }
+//        }
 
         //adapter
         binding.rvMovieList.layoutManager = gridLayoutManager
         binding.rvMovieList.setHasFixedSize(true)
-        binding.rvMovieList.adapter = movieAdapter
+//        binding.rvMovieList.adapter = movieAdapter
 
         //инициализировали viewModel
         viewModel = getViewModel()
 
         with(viewModel) {
             //при создании фрагмента проверяем если ли загруженные данные
-            if (pageIsEmpty()) {
-                getLiveMoviePagedList().observe(viewLifecycleOwner, Observer {
-                    movieAdapter.submitList(it)
-                })
-            } else {
-                moviePagedList?.observe(viewLifecycleOwner, Observer {
-                    movieAdapter.submitList(it)
-                })
-            }
+//            if (pageIsEmpty()) {
+//                getLiveMoviePagedList().observe(viewLifecycleOwner, Observer {
+//                    movieAdapter.submitList(it)
+//                })
+//            } else {
+//                moviePagedList?.observe(viewLifecycleOwner, Observer {
+//                    movieAdapter.submitList(it)
+//                })
+//            }
 
             getNetworkState().observe(viewLifecycleOwner, Observer {
                 binding.progressBarNextPage.visibility =
@@ -84,7 +84,7 @@ class MovieTopFragment : Fragment() {
                     ) View.VISIBLE else View.GONE
 
                 if (!pageIsEmpty()) {
-                    movieAdapter.setNetworkState(it)
+//                    movieAdapter.setNetworkState(it)
                 }
             })
         }

@@ -15,7 +15,7 @@ import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.databinding.FragmentMoviePopularBinding
 
 
-class MoviePopularFragment : Fragment() {
+class MoviePopularFragmentOld : Fragment() {
 
     private var _binding: FragmentMoviePopularBinding? = null
 
@@ -23,7 +23,7 @@ class MoviePopularFragment : Fragment() {
     private val binding get() = _binding!!
 
     //инициализировали viewModel
-    private val viewModel = MoviePopularViewModelNoPaging()
+    private val viewModel = NewsSportsViewModelNoPaging()
 
 
     override fun onCreateView(
@@ -64,7 +64,7 @@ class MoviePopularFragment : Fragment() {
         //загрузка первой страницы
 
         //каждый раз при загрузки фрагмента начинаем с первой страницы
-        viewModel.itemsMovie.observe(viewLifecycleOwner, Observer {
+        viewModel.itemsNews.observe(viewLifecycleOwner, Observer {
             Log.d("my", "observe")
             movieAdapter.addNewListToList(it)
         })

@@ -47,55 +47,55 @@ class SearchFragment : Fragment() {
             Const.SPAN_COUNT
         )
 
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                val viewType = movieAdapter.getItemViewType(position)
-                if (viewType == Const.MOVIE_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 2 span
-                else return Const.SPAN_COUNT     //это исключение говорит о том сколько будет занимать NETWORK_VIEW_TYPE
-            }
-        }
+//        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+//            override fun getSpanSize(position: Int): Int {
+//                val viewType = movieAdapter.getItemViewType(position)
+//                if (viewType == Const.MOVIE_VIEW_TYPE) return 1    // Movie_VIEW_TYPE will occupy 1 out of 2 span
+//                else return Const.SPAN_COUNT     //это исключение говорит о том сколько будет занимать NETWORK_VIEW_TYPE
+//            }
+//        }
 
         //adapter
         binding.rvMovieList.layoutManager = gridLayoutManager
         binding.rvMovieList.setHasFixedSize(true)
-        binding.rvMovieList.adapter = movieAdapter
+//        binding.rvMovieList.adapter = movieAdapter
 
         viewModel = getViewModel()
         //Search
-        binding.editTextSearch.setOnEditorActionListener { textView, actionId, keyEvent ->
-            when (actionId) {
-                EditorInfo.IME_ACTION_DONE -> {
-                    val searchMovieText = binding.editTextSearch.text.toString()
-                    viewModel.getSearch(searchMovieText)
-                    observeMovie()
-                    true
-                }
-                else -> false
-            }
-        }
-        // если у нас остася список фильмов то при переходе с фрагмента Details мы его показываем
-        if (!viewModel.listIsEmpty()) observeMovie()
+//        binding.editTextSearch.setOnEditorActionListener { textView, actionId, keyEvent ->
+//            when (actionId) {
+//                EditorInfo.IME_ACTION_DONE -> {
+//                    val searchMovieText = binding.editTextSearch.text.toString()
+//                    viewModel.getSearch(searchMovieText)
+//                    observeMovie()
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
+//        // если у нас остася список фильмов то при переходе с фрагмента Details мы его показываем
+//        if (!viewModel.listIsEmpty()) observeMovie()
     }
 
 
-    private fun observeMovie() {
-        viewModel.moviePagedList?.observe(viewLifecycleOwner, Observer {
-            movieAdapter.submitList(it)
-        })
-
-        viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
-            binding.progressBarNextPage.visibility =
-                if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
-            binding.progressBarPopular.visibility =
-                if (it == NetworkState.FIRSTLOADING) View.VISIBLE else View.GONE
-            binding.txtErrorPopular.visibility =
-                if (it == NetworkState.ERROR) View.VISIBLE else View.GONE
-
-            if (!viewModel.listIsEmpty()) {
-                movieAdapter.setNetworkState(it)
-            }
-        })
-    }
+//    private fun observeMovie() {
+//        viewModel.moviePagedList?.observe(viewLifecycleOwner, Observer {
+//            movieAdapter.submitList(it)
+//        })
+//
+//        viewModel.getNetworkState().observe(viewLifecycleOwner, Observer {
+//            binding.progressBarNextPage.visibility =
+//                if (it == NetworkState.LOADING) View.VISIBLE else View.GONE
+//            binding.progressBarPopular.visibility =
+//                if (it == NetworkState.FIRSTLOADING) View.VISIBLE else View.GONE
+//            binding.txtErrorPopular.visibility =
+//                if (it == NetworkState.ERROR) View.VISIBLE else View.GONE
+//
+//            if (!viewModel.listIsEmpty()) {
+//                movieAdapter.setNetworkState(it)
+//            }
+//        })
+//    }
 
 
     private fun getViewModel(): SearchViewModel {

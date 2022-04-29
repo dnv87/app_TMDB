@@ -2,6 +2,8 @@ package com.mttnow.android.app_tmdb.ui.details
 
 import androidx.lifecycle.LiveData
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
+import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
+import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.data.repository.MovieDataSourceDetails
 import com.mttnow.android.app_tmdb.modeldata.MovieDetails
 import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
@@ -9,6 +11,8 @@ import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
 class MovieDetailsViewModel() : BaseMovieViewModel() {
 
     lateinit var movieDetailsNetworkDataSource: MovieDataSourceDetails
+
+    val apiService: TMDBInterface = TMDBConnect.getClient()
 
     private var movieId: Int = 0
     fun getMovieId(_id: Int) {

@@ -7,11 +7,10 @@ import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseMovieViewModel : ViewModel() {
     val compositeDisposable = CompositeDisposable()
-    val apiService: TMDBInterface = TMDBConnect.getClient()
+
 
     override fun onCleared() {
         super.onCleared()
-//        compositeDisposable.dispose()
         compositeDisposable.clear()
     }
 }

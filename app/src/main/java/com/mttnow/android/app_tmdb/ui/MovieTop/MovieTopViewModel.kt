@@ -6,6 +6,8 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
+import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBConnect
+import com.mttnow.android.app_tmdb.data.apiNetwork.TMDBInterface
 import com.mttnow.android.app_tmdb.data.repository.*
 import com.mttnow.android.app_tmdb.modeldata.Movie
 import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
@@ -13,6 +15,7 @@ import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
 
 class MovieTopViewModel() : BaseMovieViewModel() {
 
+    val apiService: TMDBInterface = TMDBConnect.getClient()
     var moviePagedList: LiveData<PagedList<Movie>>? = null
     private lateinit var moviesDataSourceFactory: MovieDataSourceFactoryTop
 
