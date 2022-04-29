@@ -5,35 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.MovieTop.MovieTopFragment">
+    tools:context=".ui.Autorization.AutorizFragment">
 
-    <ProgressBar
-        android:id="@+id/progress_bar_top"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:visibility="gone" />
+    <EditText
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Login"/>
 
-    <TextView
-        android:id="@+id/txt_error_top"
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"/>
+
+    <Button
+        android:id="@+id/autoriz_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Autorization"/>
+
+    <ImageView
+        android:id="@+id/iv_autoriz"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/connection_problem"
-        android:visibility="gone" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_movie_list"
-        android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:layout_margin="4dp"
-        android:scrollbars="vertical" />
-
-    <ProgressBar
-        android:id="@+id/progress_bar_next_page"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="center"
-        android:visibility="gone" />
+        android:src="@drawable/ic_baseline_cancel_24"/>
 
 </LinearLayout>

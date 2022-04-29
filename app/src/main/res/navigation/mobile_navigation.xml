@@ -15,8 +15,8 @@
 
     <fragment
         android:id="@+id/navigation_movie_top"
-        android:name="com.mttnow.android.app_tmdb.ui.MovieTop.MovieTopFragment"
-        android:label="@string/title_Top"
+        android:name="com.mttnow.android.app_tmdb.ui.Autorization.AutorizFragment"
+        android:label="@string/title_autorisation"
         tools:layout="@layout/fragment_movie_top">
         <action
             android:id="@+id/action_navigation_movie_top_to_navigation_movie_detail"

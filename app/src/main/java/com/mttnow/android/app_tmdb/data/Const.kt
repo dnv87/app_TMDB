@@ -26,4 +26,6 @@ object Const {
 
     const val MOVIE_VIEW_TYPE = 1
     const val NETWORK_VIEW_TYPE = 2
+
+    const val CUSTOM_PREF_AUTORIZ = "User_data"
 }
