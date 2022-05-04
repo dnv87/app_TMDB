@@ -1,5 +1,6 @@
 package com.mttnow.android.app_tmdb.ui.Autorization
 
+
 import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
 
 
@@ -9,11 +10,9 @@ class AutorizViewModel() : BaseMovieViewModel() {
     fun checkBtnAutoriz(login: String?, password: String?): Boolean {
         val result: Boolean
         if ((login == trueLogPass.first) && (password == trueLogPass.second)) {
-            saveUserDataInSP()
             result = true
         } else {
             result = false
-            removeUserDataInSP()
         }
         return result
     }
@@ -27,6 +26,8 @@ class AutorizViewModel() : BaseMovieViewModel() {
     }
 
     fun isAutorize():Boolean {
+
+
         TODO("проверяем есть ли в SharedPreferences состояние вход")
     }
 

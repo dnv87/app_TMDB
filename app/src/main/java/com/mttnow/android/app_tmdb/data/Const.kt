@@ -28,4 +28,7 @@ object Const {
     const val NETWORK_VIEW_TYPE = 2
 
     const val CUSTOM_PREF_AUTORIZ = "User_data"
+
+    const val LOGIN = "login"
+    const val PASSWORD = "password"
 }

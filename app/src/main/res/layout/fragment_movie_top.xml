@@ -11,7 +11,9 @@
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Login"/>
+        android:editable="true"
+        android:hint="Login"
+        android:text="" />
 
     <EditText
         android:id="@+id/password"
