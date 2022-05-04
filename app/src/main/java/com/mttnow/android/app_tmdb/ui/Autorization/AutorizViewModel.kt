@@ -17,24 +17,4 @@ class AutorizViewModel() : BaseMovieViewModel() {
         return result
     }
 
-    private fun saveUserDataInSP() {
-        TODO("следует добавить данные об авторизации в SharedPreferences")
-    }
-
-    private fun removeUserDataInSP() {
-        TODO("следует удалить данные об авторизации из SharedPreferences")
-    }
-
-    fun isAutorize():Boolean {
-
-
-        TODO("проверяем есть ли в SharedPreferences состояние вход")
-    }
-
-    fun getLogPassSP():Pair<String,String>{
-        TODO("достаём созранённые данные об авторизации из SharedPreferences")
-    }
-
-
-
 }

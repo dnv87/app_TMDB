@@ -19,7 +19,6 @@ class AutorizFragment : Fragment() {
     private var _binding: FragmentMovieTopBinding? = null
     private lateinit var viewModel: AutorizViewModel
     private val binding get() = _binding!!
-    private val MAIN = (requireActivity() as MainActivity)
 
 
     override fun onCreateView(
@@ -40,17 +39,17 @@ class AutorizFragment : Fragment() {
         val btnAutoriz = binding.autorizBtn
 
         // подгружаем сохранённые данные
-        val log = MAIN.SharedPrefGet(Const.LOGIN)
+        val log = (requireActivity() as MainActivity).SharedPrefGet(Const.LOGIN)
         binding.login.setText(log)
-        val pass = MAIN.SharedPrefGet(Const.PASSWORD)
+        val pass = (requireActivity() as MainActivity).SharedPrefGet(Const.PASSWORD)
         binding.password.setText(pass)
-        val imageTrue = binding.ivAutoriz.setImageResource(R.drawable.ic_baseline_check_circle_24)
-        val imageFalse = binding.ivAutoriz.setImageResource(R.drawable.ic_baseline_cancel_24)
+        val isLogging = (requireActivity() as MainActivity).isLoggedIn()
 
-        if (viewModel.checkBtnAutoriz(log, pass)) {
-            imageTrue
+
+        if (isLogging) {
+            binding.ivAutoriz.setImageResource(R.drawable.ic_baseline_check_circle_24)
         } else {
-            imageFalse
+            binding.ivAutoriz.setImageResource(R.drawable.ic_baseline_cancel_24)
         }
 
         btnAutoriz.setOnClickListener {
@@ -58,14 +57,18 @@ class AutorizFragment : Fragment() {
             val eitTextInputPassword = binding.password.text.toString()
             if (viewModel.checkBtnAutoriz(eitTextInputLogin, eitTextInputPassword)) {
                 //авторизовались
-                imageTrue
+                binding.ivAutoriz.setImageResource(R.drawable.ic_baseline_check_circle_24)
 
-                MAIN.SharedPrefPut(Const.LOGIN, eitTextInputLogin)
-                MAIN.SharedPrefPut(Const.PASSWORD, eitTextInputPassword)
+                (requireActivity() as MainActivity).SharedPrefPut(Const.LOGIN, eitTextInputLogin)
+                (requireActivity() as MainActivity).SharedPrefPut(
+                    Const.PASSWORD,
+                    eitTextInputPassword
+                )
 
                 //через Rх-Java послать разрешение на загрузку данных в 1е окно (сделать видимым recyclerview)
             } else {
-                imageFalse
+                (requireActivity() as MainActivity).SharedPrefClean()
+                binding.ivAutoriz.setImageResource(R.drawable.ic_baseline_cancel_24)
                 //если есть разрешение загрузки данных в 1м окне, то отправить команду (скрыть recyclerview)
             }
         }

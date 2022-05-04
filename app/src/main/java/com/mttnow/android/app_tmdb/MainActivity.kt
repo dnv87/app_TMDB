@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -67,10 +68,23 @@ class MainActivity : AppCompatActivity() {
     fun SharedPrefPut(key:String, value:String){
         val edit = shared.edit()
         edit.putString(key, value)
+        edit.putBoolean(Const.AUTORIZ, true)
+        edit.apply()
+    }
+
+    fun SharedPrefClean(){
+        val edit = shared.edit()
+        edit.putString(Const.LOGIN, "")
+        edit.putString(Const.PASSWORD, "")
+        edit.putBoolean(Const.AUTORIZ, false)
         edit.apply()
     }
 
     fun SharedPrefGet(key:String): String {
         return shared.getString(key, "").toString()
+    }
+
+    fun isLoggedIn():Boolean{
+        return shared.getBoolean(Const.AUTORIZ, false)
     }
 }
