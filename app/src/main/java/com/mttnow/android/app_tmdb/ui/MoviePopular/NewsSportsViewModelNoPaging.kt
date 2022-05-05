@@ -1,6 +1,5 @@
 package com.mttnow.android.app_tmdb.ui.MoviePopular
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,19 +32,22 @@ class NewsSportsViewModelNoPaging() : BaseMovieViewModel() {
     val networkState: LiveData<NetworkState>
         get() = _networkState
 
+    private val _validate = MutableLiveData<Boolean>()
+    val validate: LiveData<Boolean>
+        get() = _validate
 
+    private val savesUsers = ModelPreferencesManager.SharedPrefGet(Const.USER)
 
-    @SuppressLint("CheckResult")
-    fun checkValidation(): Boolean {
-        val savesUsers = ModelPreferencesManager.SharedPrefGet(Const.USER)
-        var result = false
+    init {
         ValidateUser.validateUser(savesUsers)
-        ValidateUser.isValidate.subscribe {
-            result = it
-        }
-        return result
     }
 
+    fun checkValidation() {
+        val valid = ValidateUser.isValidate.subscribe {
+            _validate.postValue(it)
+        }
+
+    }
 
 
     fun loadItems() {

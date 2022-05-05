@@ -43,17 +43,17 @@ class NewsSportsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        if (viewModel.checkValidation()) {
-//            binding.txtErrorPopular.visibility = View.VISIBLE
-//            binding.txtErrorPopular.text = "Абра-кадабра"
-            binding.rvNewsList.visibility = View.VISIBLE
-
-        } else {
-            binding.txtErrorPopular.visibility = View.VISIBLE
-            binding.txtErrorPopular.text = "Авторизуйся!!!"
-            binding.rvNewsList.visibility = View.GONE
-        }
+        viewModel.checkValidation()
+        viewModel.validate.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                binding.rvNewsList.visibility = View.VISIBLE
+                binding.txtErrorPopular.visibility = View.GONE
+            } else {
+                binding.txtErrorPopular.visibility = View.VISIBLE
+                binding.txtErrorPopular.text = "Авторизуйся!!!"
+                binding.rvNewsList.visibility = View.GONE
+            }
+        })
 
 
         //инициализируем
