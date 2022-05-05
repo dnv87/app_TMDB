@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.mttnow.android.app_tmdb.R
-import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.databinding.FragmentMovieTopBinding
-import com.mttnow.android.app_tmdb.ui.utils.ModelPreferencesManager
 
 
 class AutorizFragment : Fragment() {
@@ -34,11 +32,12 @@ class AutorizFragment : Fragment() {
         //инициализировали viewModel
         viewModel = AutorizViewModel()
 
-        val btnAutoriz = binding.autorizBtn
+        val btnValidate = binding.autorizBtn
 
-
+        //заполняем данными если они есть
         binding.login.setText(viewModel.user.first)
         binding.password.setText(viewModel.user.second)
+
 
         viewModel.checkValidation()
 
@@ -46,8 +45,8 @@ class AutorizFragment : Fragment() {
             choisImage(it)
         })
 
-
-        btnAutoriz.setOnClickListener {
+        //обрабатываем нажатие кнопки
+        btnValidate.setOnClickListener {
             val eitTextUser = Pair(binding.login.text.toString(), binding.password.text.toString())
             viewModel.updateUser(eitTextUser)
             viewModel.checkValidation()

@@ -14,7 +14,6 @@ import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.databinding.FragmentNewsSportsBinding
 import com.mttnow.android.app_tmdb.ui.MoviePopular.NewsSportAdapter.Companion.MAX_POOL_SIZE
 import com.mttnow.android.app_tmdb.ui.growapp_Package.InfiniteScrollListener
-import com.mttnow.android.app_tmdb.ui.utils.ModelPreferencesManager
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -25,7 +24,6 @@ class NewsSportsFragment : Fragment() {
 
     private var _binding: FragmentNewsSportsBinding? = null
     private val binding get() = _binding!!
-
 
     //инициализировали viewModel
     private val viewModel = NewsSportsViewModelNoPaging()
@@ -43,6 +41,7 @@ class NewsSportsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // проверям авторизацию пользователя
         viewModel.checkValidation()
         viewModel.validate.observe(viewLifecycleOwner, Observer {
             if (it) {
@@ -83,7 +82,6 @@ class NewsSportsFragment : Fragment() {
                 }
             }
         }
-
         setButtonAction(newsAdapter)
     }
 
