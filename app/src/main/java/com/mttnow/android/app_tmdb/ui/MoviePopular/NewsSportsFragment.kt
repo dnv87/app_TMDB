@@ -42,7 +42,6 @@ class NewsSportsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // проверям авторизацию пользователя
-        viewModel.checkValidation()
         viewModel.validate.observe(viewLifecycleOwner, Observer {
             if (it) {
                 binding.rvNewsList.visibility = View.VISIBLE
@@ -53,6 +52,7 @@ class NewsSportsFragment : Fragment() {
                 binding.rvNewsList.visibility = View.GONE
             }
         })
+        viewModel.checkValidation()
 
 
         //инициализируем

@@ -38,12 +38,10 @@ class AutorizFragment : Fragment() {
         binding.login.setText(viewModel.user.first)
         binding.password.setText(viewModel.user.second)
 
-
-        viewModel.checkValidation()
-
         viewModel.validate.observe(viewLifecycleOwner, Observer{
             choisImage(it)
         })
+        viewModel.checkValidation()
 
         //обрабатываем нажатие кнопки
         btnValidate.setOnClickListener {
