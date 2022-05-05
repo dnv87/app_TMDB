@@ -12,7 +12,7 @@ object ValidateUser {
 
         if (user == validUser) {
             isValidate.onNext(true)
-//            isValidate.onError(Exception("ошибка вышла однако"))
+            isValidate.onError(Exception("ошибка вышла однако"))
         } else {
             isValidate.onNext(false)
         }

@@ -43,9 +43,11 @@ class NewsSportsViewModelNoPaging() : BaseMovieViewModel() {
     }
 
     fun checkValidation() {
-        val valid = ValidateUser.isValidate.subscribe {
+        val valid = ValidateUser.isValidate.subscribe({
             _validate.postValue(it)
-        }
+        }, {
+            Log.d("my", "Throwable: ${it.message}")
+        })
         valid.dispose()
     }
 
