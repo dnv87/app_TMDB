@@ -1,7 +1,5 @@
 package com.mttnow.android.app_tmdb
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -13,19 +11,17 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.databinding.ActivityMainBinding
+import com.mttnow.android.app_tmdb.ui.utils.ModelPreferencesManager
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     lateinit var navControl: NavController
-    lateinit var shared : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        shared = getSharedPreferences("Test" , Context.MODE_PRIVATE)
+        ModelPreferencesManager.with(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -45,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navControl, appBarConfiguration)
         navView.setupWithNavController(navControl)
+
     }
 
 
@@ -63,28 +60,5 @@ class MainActivity : AppCompatActivity() {
         val nav = findViewById<BottomNavigationView>(R.id.nav_view)
         if (hide) nav.visibility = View.GONE
         else nav.visibility = View.VISIBLE
-    }
-
-    fun SharedPrefPut(key:String, value:String){
-        val edit = shared.edit()
-        edit.putString(key, value)
-        edit.putBoolean(Const.AUTORIZ, true)
-        edit.apply()
-    }
-
-    fun SharedPrefClean(){
-        val edit = shared.edit()
-        edit.putString(Const.LOGIN, "")
-        edit.putString(Const.PASSWORD, "")
-        edit.putBoolean(Const.AUTORIZ, false)
-        edit.apply()
-    }
-
-    fun SharedPrefGet(key:String): String {
-        return shared.getString(key, "").toString()
-    }
-
-    fun isLoggedIn():Boolean{
-        return shared.getBoolean(Const.AUTORIZ, false)
     }
 }

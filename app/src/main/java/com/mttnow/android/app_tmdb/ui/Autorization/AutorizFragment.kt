@@ -1,17 +1,14 @@
 package com.mttnow.android.app_tmdb.ui.Autorization
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.Fragment
-import com.mttnow.android.app_tmdb.MainActivity
 import com.mttnow.android.app_tmdb.R
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.databinding.FragmentMovieTopBinding
+import com.mttnow.android.app_tmdb.ui.utils.ModelPreferencesManager
 
 
 class AutorizFragment : Fragment() {
@@ -38,40 +35,40 @@ class AutorizFragment : Fragment() {
 
         val btnAutoriz = binding.autorizBtn
 
-        // подгружаем сохранённые данные
-        val log = (requireActivity() as MainActivity).SharedPrefGet(Const.LOGIN)
-        binding.login.setText(log)
-        val pass = (requireActivity() as MainActivity).SharedPrefGet(Const.PASSWORD)
-        binding.password.setText(pass)
-        val isLogging = (requireActivity() as MainActivity).isLoggedIn()
+        val user = ModelPreferencesManager.SharedPrefGet(Const.USER)
+        binding.login.setText(user.first)
+        binding.password.setText(user.second)
+
+        val initValid = viewModel.checkValidation(user)
+        changeData(initValid)
 
 
-        if (isLogging) {
+
+
+        btnAutoriz.setOnClickListener {
+            val eitTextUser = Pair(binding.login.text.toString(), binding.password.text.toString())
+            val clickValid = viewModel.checkValidation(eitTextUser)
+
+            changeData(clickValid)
+            saveOrCleanSharedPref(clickValid, eitTextUser)
+        }
+    }
+
+    private fun changeData(check: Boolean) {
+        if (check) {
             binding.ivAutoriz.setImageResource(R.drawable.ic_baseline_check_circle_24)
         } else {
             binding.ivAutoriz.setImageResource(R.drawable.ic_baseline_cancel_24)
         }
+    }
 
-        btnAutoriz.setOnClickListener {
-            val eitTextInputLogin = binding.login.text.toString()
-            val eitTextInputPassword = binding.password.text.toString()
-            if (viewModel.checkBtnAutoriz(eitTextInputLogin, eitTextInputPassword)) {
-                //авторизовались
-                binding.ivAutoriz.setImageResource(R.drawable.ic_baseline_check_circle_24)
-
-                (requireActivity() as MainActivity).SharedPrefPut(Const.LOGIN, eitTextInputLogin)
-                (requireActivity() as MainActivity).SharedPrefPut(
-                    Const.PASSWORD,
-                    eitTextInputPassword
-                )
-
-                //через Rх-Java послать разрешение на загрузку данных в 1е окно (сделать видимым recyclerview)
-            } else {
-                (requireActivity() as MainActivity).SharedPrefClean()
-                binding.ivAutoriz.setImageResource(R.drawable.ic_baseline_cancel_24)
-                //если есть разрешение загрузки данных в 1м окне, то отправить команду (скрыть recyclerview)
-            }
+    private fun saveOrCleanSharedPref(check: Boolean, user: Pair<String, String>) {
+        if (check) {
+            ModelPreferencesManager.SharedPrefPut(Const.USER, user)
+        } else {
+            ModelPreferencesManager.SharedPrefClean()
         }
+
     }
 
 

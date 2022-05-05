@@ -1,20 +1,21 @@
 package com.mttnow.android.app_tmdb.ui.Autorization
 
-
+import android.annotation.SuppressLint
 import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
+import com.mttnow.android.app_tmdb.ui.utils.ValidateUser
+import com.mttnow.android.app_tmdb.ui.utils.ValidateUser.isValidate
 
 
 class AutorizViewModel() : BaseMovieViewModel() {
-    private val trueLogPass = Pair("root", "admin")
 
-    fun checkBtnAutoriz(login: String?, password: String?): Boolean {
-        val result: Boolean
-        if ((login == trueLogPass.first) && (password == trueLogPass.second)) {
-            result = true
-        } else {
-            result = false
+
+    @SuppressLint("CheckResult")
+    fun checkValidation(user: Pair<String?, String?>?): Boolean {
+        var result = false
+        ValidateUser.validateUser(user)
+        isValidate.subscribe {
+            result = it
         }
         return result
     }
-
 }

@@ -14,8 +14,8 @@ import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.databinding.FragmentNewsSportsBinding
 import com.mttnow.android.app_tmdb.ui.MoviePopular.NewsSportAdapter.Companion.MAX_POOL_SIZE
 import com.mttnow.android.app_tmdb.ui.growapp_Package.InfiniteScrollListener
+import com.mttnow.android.app_tmdb.ui.utils.ModelPreferencesManager
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -26,7 +26,6 @@ class NewsSportsFragment : Fragment() {
     private var _binding: FragmentNewsSportsBinding? = null
     private val binding get() = _binding!!
 
-//    private var timer: Timer? = null
 
     //инициализировали viewModel
     private val viewModel = NewsSportsViewModelNoPaging()
@@ -43,6 +42,19 @@ class NewsSportsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        if (viewModel.checkValidation()) {
+//            binding.txtErrorPopular.visibility = View.VISIBLE
+//            binding.txtErrorPopular.text = "Абра-кадабра"
+            binding.rvNewsList.visibility = View.VISIBLE
+
+        } else {
+            binding.txtErrorPopular.visibility = View.VISIBLE
+            binding.txtErrorPopular.text = "Авторизуйся!!!"
+            binding.rvNewsList.visibility = View.GONE
+        }
+
 
         //инициализируем
         val (newsAdapter, recyclerView, scrollListener) = setupAdapter()
@@ -113,7 +125,7 @@ class NewsSportsFragment : Fragment() {
             recyclerView,
             newsAdapter,
             callback = { offset: Int ->
-                Log.d("scrollListener", offset.toString())
+//                Log.d("scrollListener", offset.toString())
                 viewModel.loadItems()
             }
         )
@@ -128,7 +140,7 @@ class NewsSportsFragment : Fragment() {
         val btnChangeColorToId = binding.setGreenColorIdBtn
         btnChangeColorToId.setOnClickListener {
             val eitTextInputId = binding.editTextInputId.text.toString()
-            Log.d("my", eitTextInputId)
+//            Log.d("my", eitTextInputId)
             newsAdapter.updateColorTitle(eitTextInputId.toInt())
         }
 

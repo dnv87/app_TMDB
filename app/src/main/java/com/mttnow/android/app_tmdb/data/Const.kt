@@ -29,6 +29,6 @@ object Const {
 
     const val AUTORIZ = "isLogin"
 
-    const val LOGIN = "login"
-    const val PASSWORD = "password"
+    const val USER = "login"
+
 }
