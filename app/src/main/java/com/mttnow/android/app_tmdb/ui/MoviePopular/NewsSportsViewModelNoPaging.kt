@@ -46,7 +46,7 @@ class NewsSportsViewModelNoPaging() : BaseMovieViewModel() {
         val valid = ValidateUser.isValidate.subscribe {
             _validate.postValue(it)
         }
-
+        valid.dispose()
     }
 
 

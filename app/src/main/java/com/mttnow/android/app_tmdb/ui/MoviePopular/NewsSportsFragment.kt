@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mttnow.android.app_tmdb.data.Const
@@ -24,15 +25,16 @@ class NewsSportsFragment : Fragment() {
 
     private var _binding: FragmentNewsSportsBinding? = null
     private val binding get() = _binding!!
-
-    //инициализировали viewModel
-    private val viewModel = NewsSportsViewModelNoPaging()
+    private lateinit var viewModel: NewsSportsViewModelNoPaging
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        //инициализировали viewModel
+        viewModel = ViewModelProvider(this)[NewsSportsViewModelNoPaging::class.java]
+
         _binding = FragmentNewsSportsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -153,7 +155,7 @@ class NewsSportsFragment : Fragment() {
                     .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-                        Log.d("ComingHere", "Inside_Timer")
+//                        Log.d("ComingHere", "Inside_Timer")
                         newsAdapter.updateListTimer()
                     }
             }

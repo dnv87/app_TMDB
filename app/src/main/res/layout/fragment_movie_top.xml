@@ -7,19 +7,38 @@
     android:orientation="vertical"
     tools:context=".ui.Autorization.AutorizFragment">
 
-    <EditText
-        android:id="@+id/login"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:editable="true"
-        android:hint="Login"
-        android:text="" />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp">
 
-    <EditText
-        android:id="@+id/password"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Login:"
+            android:inputType="textCapWords" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_pass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password:"
+            android:inputType="textCapWords" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/autoriz_btn"

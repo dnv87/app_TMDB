@@ -6,7 +6,7 @@ import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
 import com.mttnow.android.app_tmdb.ui.utils.ModelPreferencesManager
 import com.mttnow.android.app_tmdb.ui.utils.ValidateUser
-import com.mttnow.android.app_tmdb.ui.utils.ValidateUser.isValidate
+
 
 
 class AutorizViewModel() : BaseMovieViewModel() {
@@ -19,11 +19,11 @@ class AutorizViewModel() : BaseMovieViewModel() {
 
     fun updateUser(_user: Pair<String, String>) {
         user = _user
+        ValidateUser.validateUser(user)
     }
 
     fun checkValidation() {
-        ValidateUser.validateUser(user)
-        val valid = isValidate.subscribe {
+        val valid = ValidateUser.isValidate.subscribe {
             _validate.postValue(it)
             if (it){
                 ModelPreferencesManager.SharedPrefPut(Const.USER, user)
@@ -31,5 +31,6 @@ class AutorizViewModel() : BaseMovieViewModel() {
                 ModelPreferencesManager.SharedPrefClean()
             }
         }
+        valid.dispose()
     }
 }
