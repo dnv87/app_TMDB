@@ -13,7 +13,6 @@ import com.mttnow.android.app_tmdb.modeldata.ColorItem
 import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
 import com.mttnow.android.app_tmdb.ui.utils.ModelPreferencesManager
 import com.mttnow.android.app_tmdb.ui.utils.ValidateUser
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
@@ -41,9 +40,7 @@ class NewsSportsViewModelNoPaging() : BaseMovieViewModel() {
 
     private val savesUsers = ModelPreferencesManager.SharedPrefGet(Const.USER)
 
-    init {
-        ValidateUser.validateUser(savesUsers)
-    }
+    private var firstLoad = true
 
     fun checkValidation() {
 //        try {
@@ -59,6 +56,10 @@ class NewsSportsViewModelNoPaging() : BaseMovieViewModel() {
 //        }catch (e: Exception ){
 //            Log.d("my", "Throwable: ${e.message}")
 //        }
+        if (firstLoad) {
+            ValidateUser.validateUser(savesUsers)
+            firstLoad = false
+        }
 
     }
 

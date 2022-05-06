@@ -49,6 +49,7 @@ class NewsSportsFragment : Fragment() {
             if (it) {
                 binding.rvNewsList.visibility = View.VISIBLE
                 binding.txtErrorPopular.visibility = View.GONE
+                loadingItems()
             } else {
                 binding.txtErrorPopular.visibility = View.VISIBLE
                 binding.txtErrorPopular.text = "Авторизуйся!!!"
@@ -61,45 +62,39 @@ class NewsSportsFragment : Fragment() {
             binding.txtErrorPopular.visibility = View.VISIBLE
             binding.txtErrorPopular.text = "идёт авторизация"
             binding.rvNewsList.visibility = View.GONE
-        } else {
-
-            //инициализируем
-            val (newsAdapter, recyclerView, scrollListener) = setupAdapter()
-            recyclerView.addOnScrollListener(scrollListener)
-
-            //слушаем есть ли новые странички
-            viewModel.itemsNews.observe(viewLifecycleOwner, Observer {
-                newsAdapter.addNewListToList(it)
-            })
-
-            //загрузка первой страницы
-            viewModel.loadItems()
-
-            //отслеживаем состояния загрузки новых страничек
-            viewModel.networkState.observe(viewLifecycleOwner) {
-                when (it) {
-                    NetworkState.FIRSTLOADING -> {
-                        binding.progressBarStart.visibility = View.VISIBLE
-                    }
-                    NetworkState.LOADING -> {
-                        scrollListener.showProgressIndicator()
-                    }
-                    NetworkState.LOADED -> {
-                        binding.progressBarStart.visibility = View.GONE
-                        scrollListener.hideProgressIndicator()
-                    }
-                }
-            }
-            setButtonAction(newsAdapter)
         }
     }
 
-    override fun onDestroyView() {
-        Log.d("Fragment", "onDestroyView")
-        super.onDestroyView()
-        _binding = null
-    }
+    private fun loadingItems() {
+        //инициализируем
+        val (newsAdapter, recyclerView, scrollListener) = setupAdapter()
+        recyclerView.addOnScrollListener(scrollListener)
 
+        //слушаем есть ли новые странички
+        viewModel.itemsNews.observe(viewLifecycleOwner, Observer {
+            newsAdapter.addNewListToList(it)
+        })
+
+        //загрузка первой страницы
+        viewModel.loadItems()
+
+        //отслеживаем состояния загрузки новых страничек
+        viewModel.networkState.observe(viewLifecycleOwner) {
+            when (it) {
+                NetworkState.FIRSTLOADING -> {
+                    binding.progressBarStart.visibility = View.VISIBLE
+                }
+                NetworkState.LOADING -> {
+                    scrollListener.showProgressIndicator()
+                }
+                NetworkState.LOADED -> {
+                    binding.progressBarStart.visibility = View.GONE
+                    scrollListener.hideProgressIndicator()
+                }
+            }
+        }
+        setButtonAction(newsAdapter)
+    }
 
     /**
      * инициализируем Adapter, RecyclerView, ScrollListener
@@ -175,16 +170,15 @@ class NewsSportsFragment : Fragment() {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("Fragment", "onAttach")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         Log.d("Fragment", "onCreate")
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        Log.d("Fragment", "onAttach")
     }
 
     override fun onStart() {
@@ -199,27 +193,29 @@ class NewsSportsFragment : Fragment() {
         Log.d("Fragment", "onResume")
     }
 
+    override fun onPause() {
+        Log.d("Fragment", "onPause")
+        super.onPause()
+    }
+
     override fun onStop() {
         Log.d("Fragment", "onStop")
-
         super.onStop()
+    }
+
+    override fun onDestroyView() {
+        Log.d("Fragment", "onDestroyView")
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onDestroy() {
         Log.d("Fragment", "onDestroy")
-
         super.onDestroy()
     }
 
     override fun onDetach() {
         Log.d("Fragment", "onDetach")
-
         super.onDetach()
-    }
-
-
-    override fun onPause() {
-        Log.d("Fragment", "onPause")
-        super.onPause()
     }
 }

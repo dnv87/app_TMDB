@@ -5,7 +5,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
 object ValidateUser {
-    val isValidate: BehaviorSubject<Boolean> = BehaviorSubject.create()
+    val isValidate: PublishSubject<Boolean> = PublishSubject.create()
 
     fun validateUser(user: Pair<String?, String?>?) {
         val validUser = Pair("root", "admin")

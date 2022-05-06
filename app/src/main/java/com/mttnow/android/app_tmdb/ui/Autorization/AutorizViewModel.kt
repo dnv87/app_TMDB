@@ -18,6 +18,7 @@ class AutorizViewModel() : BaseMovieViewModel() {
         get() = _validate
 
     var user = ModelPreferencesManager.SharedPrefGet(Const.USER)
+    private var loadOnlyBtn = false
 
     fun updateUser(_user: Pair<String, String>) {
         user = _user
@@ -25,7 +26,6 @@ class AutorizViewModel() : BaseMovieViewModel() {
     }
 
     fun checkValidation() {
-        ValidateUser.validateUser(user)
         compositeDisposable.add(
             ValidateUser.isValidate
                 .delay(3, TimeUnit.SECONDS)
@@ -42,5 +42,6 @@ class AutorizViewModel() : BaseMovieViewModel() {
                 }
                 )
         )
+        ValidateUser.validateUser(user)
     }
 }
