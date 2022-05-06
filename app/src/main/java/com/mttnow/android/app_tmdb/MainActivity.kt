@@ -61,4 +61,5 @@ class MainActivity : AppCompatActivity() {
         if (hide) nav.visibility = View.GONE
         else nav.visibility = View.VISIBLE
     }
+
 }

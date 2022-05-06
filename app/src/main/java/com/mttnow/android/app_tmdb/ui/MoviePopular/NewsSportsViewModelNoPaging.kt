@@ -13,13 +13,16 @@ import com.mttnow.android.app_tmdb.modeldata.ColorItem
 import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
 import com.mttnow.android.app_tmdb.ui.utils.ModelPreferencesManager
 import com.mttnow.android.app_tmdb.ui.utils.ValidateUser
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 
 class NewsSportsViewModelNoPaging() : BaseMovieViewModel() {
 
     private val apiService: NEWSInterface = NewsConnect.getClient()
     private val newsNetworkDataSource = NewsDataSourceSportsNoPaging(apiService)
+
 
     private var pageToLoad = Const.FIRST_PAGE
     private var pageSize = Const.POST_PER_PAGE
@@ -43,12 +46,15 @@ class NewsSportsViewModelNoPaging() : BaseMovieViewModel() {
     }
 
     fun checkValidation() {
-        val valid = ValidateUser.isValidate.subscribe({
-            _validate.postValue(it)
-        }, {
-            Log.d("my", "Throwable: ${it.message}")
-        })
-        valid.dispose()
+        compositeDisposable.add(
+            ValidateUser.isValidate
+                .delay(3, TimeUnit.SECONDS)
+                .subscribe({
+                    _validate.postValue(it)
+                }, {
+                    Log.d("my", "Throwable: ${it.message}")
+                })
+        )
     }
 
 
@@ -85,7 +91,7 @@ class NewsSportsViewModelNoPaging() : BaseMovieViewModel() {
                     {
                         _itemsNews.postValue(it)
                         _networkState.postValue(NetworkState.LOADED)
-                        Log.d("my", "responce ${it.toString()}")
+//                        Log.d("my", "responce ${it.toString()}")
                         pageToLoad++
                     }, {
                         Log.e("MovieDetailsDataSource", it.message!!)
@@ -94,4 +100,5 @@ class NewsSportsViewModelNoPaging() : BaseMovieViewModel() {
                 )
         )
     }
+
 }

@@ -3,8 +3,8 @@ package com.mttnow.android.app_tmdb.data
 object Const {
     const val API_KEY = "a980b9c5403a48a0b70e5b9f0ba35a17"
 
-    //    const val API_KEY_NEWS = "e7a4d3493ec84a1a9232789bf7a943cf"
-    const val API_KEY_NEWS = "53bc8066d2c04b89b40ecaec64e20e77"
+    const val API_KEY_NEWS = "e7a4d3493ec84a1a9232789bf7a943cf"
+    //    const val API_KEY_NEWS = "53bc8066d2c04b89b40ecaec64e20e77"
     const val URL_TMDB = "https://api.themoviedb.org/3/"
     const val URL_NEWS = "https://newsapi.org/v2/"
 
@@ -18,7 +18,7 @@ object Const {
 
 
     const val FIRST_PAGE = 1
-    const val POST_PER_PAGE = 20
+    const val POST_PER_PAGE = 10
 
 
     const val SPAN_COUNT = 2

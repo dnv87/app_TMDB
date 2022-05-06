@@ -7,9 +7,11 @@ import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.ui.BaseMovieViewModel
 import com.mttnow.android.app_tmdb.ui.utils.ModelPreferencesManager
 import com.mttnow.android.app_tmdb.ui.utils.ValidateUser
+import java.util.concurrent.TimeUnit
 
 
 class AutorizViewModel() : BaseMovieViewModel() {
+
 
     private var _validate = MutableLiveData<Boolean>()
     val validate: LiveData<Boolean>
@@ -19,22 +21,26 @@ class AutorizViewModel() : BaseMovieViewModel() {
 
     fun updateUser(_user: Pair<String, String>) {
         user = _user
-        ValidateUser.validateUser(user)
+
     }
 
     fun checkValidation() {
-        val valid = ValidateUser.isValidate.subscribe({
-            _validate.postValue(it)
-            if (it) {
-                ModelPreferencesManager.SharedPrefPut(Const.USER, user)
-            } else {
-                ModelPreferencesManager.SharedPrefClean()
-            }
-        }, {
-            Log.d("my", "Throwable: ${it.message}")
-        }
+        ValidateUser.validateUser(user)
+        compositeDisposable.add(
+            ValidateUser.isValidate
+                .delay(3, TimeUnit.SECONDS)
+                .subscribe({
+                    _validate.postValue(it)
+                    if (it) {
+                        ModelPreferencesManager.SharedPrefPut(Const.USER, user)
+                    } else {
+                        ModelPreferencesManager.SharedPrefClean()
+                    }
+                }, {
+                    _validate.value = false
+                    Log.d("my", "Throwable: ${it.message}")
+                }
+                )
         )
-
-        valid.dispose()
     }
 }

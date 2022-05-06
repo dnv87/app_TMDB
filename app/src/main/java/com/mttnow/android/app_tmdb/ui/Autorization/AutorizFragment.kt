@@ -25,14 +25,15 @@ class AutorizFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieTopBinding.inflate(inflater, container, false)
-        //инициализировали viewModel
-        viewModel = ViewModelProvider(this)[AutorizViewModel::class.java]
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //инициализировали viewModel
+        viewModel = ViewModelProvider(this)[AutorizViewModel::class.java]
 
         val btnValidate = binding.autorizBtn
 

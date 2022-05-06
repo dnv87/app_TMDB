@@ -1,5 +1,6 @@
 package com.mttnow.android.app_tmdb.ui.MoviePopular
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mttnow.android.app_tmdb.data.Const
 import com.mttnow.android.app_tmdb.data.apiNetwork.NetworkState
 import com.mttnow.android.app_tmdb.databinding.FragmentNewsSportsBinding
-import com.mttnow.android.app_tmdb.ui.MoviePopular.NewsSportAdapter.Companion.MAX_POOL_SIZE
 import com.mttnow.android.app_tmdb.ui.growapp_Package.InfiniteScrollListener
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
@@ -32,16 +32,17 @@ class NewsSportsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //инициализировали viewModel
-        viewModel = ViewModelProvider(this)[NewsSportsViewModelNoPaging::class.java]
-
+        Log.d("Fragment", "onCreateView")
         _binding = FragmentNewsSportsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        Log.d("Fragment", "onViewCreated")
+        //инициализировали viewModel
+        viewModel = ViewModelProvider(this)[NewsSportsViewModelNoPaging::class.java]
 
         // проверям авторизацию пользователя
         viewModel.validate.observe(viewLifecycleOwner, Observer {
@@ -56,18 +57,24 @@ class NewsSportsFragment : Fragment() {
         })
         viewModel.checkValidation()
 
+        if (viewModel.validate.value == null){
+            binding.txtErrorPopular.visibility = View.VISIBLE
+            binding.txtErrorPopular.text = "идёт авторизация"
+            binding.rvNewsList.visibility = View.GONE
+        }
+
 
         //инициализируем
         val (newsAdapter, recyclerView, scrollListener) = setupAdapter()
         recyclerView.addOnScrollListener(scrollListener)
 
-        //загрузка первой страницы
-        viewModel.loadItems()
-
         //слушаем есть ли новые странички
         viewModel.itemsNews.observe(viewLifecycleOwner, Observer {
             newsAdapter.addNewListToList(it)
         })
+
+        //загрузка первой страницы
+        viewModel.loadItems()
 
         //отслеживаем состояния загрузки новых страничек
         viewModel.networkState.observe(viewLifecycleOwner) {
@@ -88,6 +95,7 @@ class NewsSportsFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        Log.d("Fragment", "onDestroyView")
         super.onDestroyView()
         _binding = null
     }
@@ -105,7 +113,10 @@ class NewsSportsFragment : Fragment() {
         }
 
         val recyclerView = binding.rvNewsList
-        recyclerView.recycledViewPool.setMaxRecycledViews(Const.MOVIE_VIEW_TYPE, MAX_POOL_SIZE)
+        recyclerView.recycledViewPool.setMaxRecycledViews(
+            Const.MOVIE_VIEW_TYPE,
+            NewsSportAdapter.MAX_POOL_SIZE
+        )
 
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -140,7 +151,6 @@ class NewsSportsFragment : Fragment() {
         val btnChangeColorToId = binding.setGreenColorIdBtn
         btnChangeColorToId.setOnClickListener {
             val eitTextInputId = binding.editTextInputId.text.toString()
-//            Log.d("my", eitTextInputId)
             newsAdapter.updateColorTitle(eitTextInputId.toInt())
         }
 
@@ -153,9 +163,7 @@ class NewsSportsFragment : Fragment() {
                 disposable = Observable.timer(1000, TimeUnit.MILLISECONDS)
                     .repeat() //to perform your task every 1 seconds
                     .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-//                        Log.d("ComingHere", "Inside_Timer")
                         newsAdapter.updateListTimer()
                     }
             }
@@ -165,5 +173,53 @@ class NewsSportsFragment : Fragment() {
         stopTimer.setOnClickListener {
             disposable?.dispose()
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        Log.d("Fragment", "onCreate")
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        Log.d("Fragment", "onAttach")
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        Log.d("Fragment", "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        Log.d("Fragment", "onResume")
+    }
+
+    override fun onStop() {
+        Log.d("Fragment", "onStop")
+
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        Log.d("Fragment", "onDestroy")
+
+        super.onDestroy()
+    }
+
+    override fun onDetach() {
+        Log.d("Fragment", "onDetach")
+
+        super.onDetach()
+    }
+
+
+    override fun onPause() {
+        Log.d("Fragment", "onPause")
+        super.onPause()
     }
 }
