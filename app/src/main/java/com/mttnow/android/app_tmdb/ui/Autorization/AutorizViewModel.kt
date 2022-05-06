@@ -12,13 +12,11 @@ import java.util.concurrent.TimeUnit
 
 class AutorizViewModel() : BaseMovieViewModel() {
 
-
     private var _validate = MutableLiveData<Boolean>()
     val validate: LiveData<Boolean>
         get() = _validate
 
     var user = ModelPreferencesManager.SharedPrefGet(Const.USER)
-    private var loadOnlyBtn = false
 
     fun updateUser(_user: Pair<String, String>) {
         user = _user
