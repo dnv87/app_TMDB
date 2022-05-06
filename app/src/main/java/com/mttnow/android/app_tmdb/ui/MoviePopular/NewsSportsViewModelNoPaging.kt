@@ -46,6 +46,7 @@ class NewsSportsViewModelNoPaging() : BaseMovieViewModel() {
     }
 
     fun checkValidation() {
+//        try {
         compositeDisposable.add(
             ValidateUser.isValidate
                 .delay(3, TimeUnit.SECONDS)
@@ -55,6 +56,10 @@ class NewsSportsViewModelNoPaging() : BaseMovieViewModel() {
                     Log.d("my", "Throwable: ${it.message}")
                 })
         )
+//        }catch (e: Exception ){
+//            Log.d("my", "Throwable: ${e.message}")
+//        }
+
     }
 
 

@@ -57,41 +57,41 @@ class NewsSportsFragment : Fragment() {
         })
         viewModel.checkValidation()
 
-        if (viewModel.validate.value == null){
+        if (viewModel.validate.value == null) {
             binding.txtErrorPopular.visibility = View.VISIBLE
             binding.txtErrorPopular.text = "идёт авторизация"
             binding.rvNewsList.visibility = View.GONE
-        }
+        } else {
 
+            //инициализируем
+            val (newsAdapter, recyclerView, scrollListener) = setupAdapter()
+            recyclerView.addOnScrollListener(scrollListener)
 
-        //инициализируем
-        val (newsAdapter, recyclerView, scrollListener) = setupAdapter()
-        recyclerView.addOnScrollListener(scrollListener)
+            //слушаем есть ли новые странички
+            viewModel.itemsNews.observe(viewLifecycleOwner, Observer {
+                newsAdapter.addNewListToList(it)
+            })
 
-        //слушаем есть ли новые странички
-        viewModel.itemsNews.observe(viewLifecycleOwner, Observer {
-            newsAdapter.addNewListToList(it)
-        })
+            //загрузка первой страницы
+            viewModel.loadItems()
 
-        //загрузка первой страницы
-        viewModel.loadItems()
-
-        //отслеживаем состояния загрузки новых страничек
-        viewModel.networkState.observe(viewLifecycleOwner) {
-            when (it) {
-                NetworkState.FIRSTLOADING -> {
-                    binding.progressBarStart.visibility = View.VISIBLE
-                }
-                NetworkState.LOADING -> {
-                    scrollListener.showProgressIndicator()
-                }
-                NetworkState.LOADED -> {
-                    binding.progressBarStart.visibility = View.GONE
-                    scrollListener.hideProgressIndicator()
+            //отслеживаем состояния загрузки новых страничек
+            viewModel.networkState.observe(viewLifecycleOwner) {
+                when (it) {
+                    NetworkState.FIRSTLOADING -> {
+                        binding.progressBarStart.visibility = View.VISIBLE
+                    }
+                    NetworkState.LOADING -> {
+                        scrollListener.showProgressIndicator()
+                    }
+                    NetworkState.LOADED -> {
+                        binding.progressBarStart.visibility = View.GONE
+                        scrollListener.hideProgressIndicator()
+                    }
                 }
             }
+            setButtonAction(newsAdapter)
         }
-        setButtonAction(newsAdapter)
     }
 
     override fun onDestroyView() {
